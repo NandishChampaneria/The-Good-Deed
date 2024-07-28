@@ -4,7 +4,7 @@ import { getSuggestedUsers, getUserProfile, updateUser } from "../controllers/us
 
 const router = express.Router();
 
-router.get("/profile/:username", protectRoute, getUserProfile);
+router.get("/profile/:username", getUserProfile);
 router.get("/suggested", protectRoute, getSuggestedUsers);
 router.post("/update", protectRoute, updateUser);
 

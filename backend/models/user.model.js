@@ -20,13 +20,6 @@ const userSchema = new mongoose.Schema({
             required: true,
             unique: true
         },
-        createdEvents: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Event",
-                default: []
-            }
-        ],
         profileImg: {
             type: String,
             default: ""
@@ -38,7 +31,14 @@ const userSchema = new mongoose.Schema({
         link: {
             type: String,
             default: ""
-        }
+        },
+        joinedEvents: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Event",
+                default: []
+            }
+        ]
     }, 
     {timestamps: true}
 );
