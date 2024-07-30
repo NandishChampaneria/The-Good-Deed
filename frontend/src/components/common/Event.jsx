@@ -6,6 +6,21 @@ const Event = ({ event }) => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
     const sidebarRef = useRef(null);
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const formattedDate = date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        });
+        const formattedTime = date.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true, // Use 12-hour clock
+        });
+        return `${formattedDate} at ${formattedTime}`;
+    };
+
     const toggleSidebar = () => {
         setSidebarOpen(!isSidebarOpen);
     };
@@ -44,11 +59,9 @@ const Event = ({ event }) => {
                         <MdLocationOn className="mr-2" /> {event.location}
                     </p>
                     <p className="text-gray-500 flex items-center mt-2">
-                        <MdDateRange className="mr-2" /> {event.startDate}
+                        <MdDateRange className="mr-2" /> {formatDate(event.startDate)}
                     </p>
-                    <p className="text-gray-500 flex items-center mt-1">
-                        <MdAccessTime className="mr-2" /> {event.startDate} - {event.endDate.toDateString()}
-                    </p>
+
                     <div className="card-actions justify-end mt-4">
                         <button
                             className="btn btn-primary"
@@ -95,10 +108,10 @@ const Event = ({ event }) => {
                     </div>
                     <div className='flex justify-between'>
                         <p className="text-gray-500 flex items-center mb-2">
-                            <MdLocationOn className="mr-2" /> {event.location}
+                            <MdLocationOn className="mr-2" /> {formatDate(event.location)}
                         </p>
                         <p className="text-gray-500 flex items-center mb-2">
-                            <MdDateRange className="mr-2" /> {event.startDate}
+                            <MdDateRange className="mr-2" /> {formatDate(event.startDate)}
                         </p>
                     </div>
                     <div className="card-actions justify-center mt-4 mb-5">
