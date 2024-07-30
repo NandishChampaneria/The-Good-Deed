@@ -1,15 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
-import {MdAdd} from "react-icons/md"
+import {MdAdd} from "react-icons/md";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {toast} from "react-hot-toast";
 
 const Navbar = () => {
+    const{data:authUser, error, isPending} = useQuery({queryKey: ["authUser"]});
     const [scrolled, setScrolled] = useState(false);
 
-    const data = {
-        fullName: "John Doe",
-        username: "johndoe",
-        profileImg: "/avatars/boy1.png",
-    };
+    const queryClient = useQueryClient();
+
+    const{mutate:logout} = useMutation({
+        mutationFn: async() => {
+            try {
+                const res = await fetch("/api/auth/logout", {
+                    method: "POST",
+                });
+                const data = await res.json();
+
+                if(!res.ok) {
+                    throw new Error(data.error || "Failed to log out");
+                }
+            } catch(error) {
+                throw new Error(error);
+            }
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ["authUser"]});
+        },
+        onError: () => {
+            toast.error("Failed to log out");
+        }
+    })
 
     useEffect(() => {
         const handleScroll = () => {
@@ -60,7 +82,7 @@ const Navbar = () => {
                 <Link to="/" className="btn btn-ghost text-xl">The Good Deed</Link>
             </div>
             <div className="navbar-end">
-                {data && (
+                {authUser && (
                     <div className="responsive-content">
                         <Link to="/createevent" className=" btn-ce">Create Event</Link>
                         <MdAdd className="svg-icon-ce" />
@@ -97,30 +119,30 @@ const Navbar = () => {
                         <span className="badge badge-xs badge-primary indicator-item"></span>
                     </div>
                 </button>
-                {!data && (
+                {!authUser && (
                     <div className="">
                         <Link to="/login" className="btn">Sign In</Link>
                     </div>
                 )}
-                {data && (
+                {authUser && (
                     <div className="dropdown dropdown-end">
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
                                 <img
                                     alt="Profile"
-                                    src={data.profileImg || "/avatar-placeholder.png"} />
+                                    src={authUser.profileImg || "/avatar-placeholder.png"} />
                             </div>
                         </div>
                         <ul
                             tabIndex={0}
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                             <li onClick={closeDropdown}>
-                                <Link to={`/profile/${data.username}`} className="justify-between text-2xl text-green-500">
-                                    {data.fullName}
+                                <Link to={`/profile/${authUser.username}`} className="justify-between text-2xl text-green-500">
+                                    {authUser.fullName}
                                 </Link>
                             </li>
                             <li onClick={closeDropdown}><a>Settings</a></li>
-                            <li onClick={closeDropdown}><a>Logout</a></li>
+                            <li onClick={(e)=>{e.preventDefault();logout()}}><a>Logout</a></li>
                         </ul>
                     </div>
                 )}

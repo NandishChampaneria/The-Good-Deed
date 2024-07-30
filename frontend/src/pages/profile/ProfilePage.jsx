@@ -11,8 +11,10 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { IoCalendarOutline } from "react-icons/io5";
 import { FaLink } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
+import { useQuery } from "@tanstack/react-query";
 
 const ProfilePage = () => {
+
 	const [profileImg, setProfileImg] = useState(null);
 	const [feedType, setFeedType] = useState("events");
 
@@ -44,7 +46,7 @@ const ProfilePage = () => {
 
 	return (
 		<>
-			<div className='flex-[4_4_0]  border-r border-gray-700 min-h-screen '>
+			<div className='flex-[4_4_0] min-h-screen '>
 				{/* HEADER */}
 				{isLoading && <ProfileHeaderSkeleton />}
 				{!isLoading && !user && <p className='text-center text-lg mt-4'>User not found</p>}
