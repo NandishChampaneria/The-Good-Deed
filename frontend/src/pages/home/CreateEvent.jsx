@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import React, { useRef, useState } from 'react';
 import { MdLocationOn, MdDateRange, MdAccessTime } from 'react-icons/md'; // Import icons for location, date, and time
+import { toast } from'react-hot-toast';
+import { CiImageOn } from "react-icons/ci";
 
 const CreateEvent = () => {
     const now = new Date();
@@ -12,50 +15,80 @@ const CreateEvent = () => {
     const [startDate, setStartDate] = useState(startDateDefault);
     const [endDate, setEndDate] = useState(endDateDefault);
     const [img, setImg] = useState(null);
-    const [imgPreview, setImgPreview] = useState('/posts/post1.png'); // Replace with default image path
+    const [imgPreview, setImgPreview] = useState('/posts/post1.png');// Replace with default image path
+    const imgRef = useRef(null)
+
+    const{data:authUser} = useQuery({queryKey: ['authUser']});
+    const queryClient = useQueryClient();
+
+    const {mutate:createEvent, isPending} = useMutation({
+        mutationFn: async ({title, description, location, startDate, endDate, img}) => {
+            try {
+                const res = await fetch("/api/events/create", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ title, description, location, startDate, endDate, img }),
+                })
+                const data = await res.json();
+                if(!res.ok) throw new Error(data.error || "Failed to create event");
+                return data;
+            } catch(error) {
+                throw new Error(error);
+            }
+        },
+        onSuccess: () => {
+            setTitle("");
+            setDescription("");
+            setLocation("");
+            setStartDate("");
+            setEndDate("");
+            setImg(null);
+            toast.success("Event created successfully");
+            queryClient.invalidateQueries({queryKey: ["events"]});
+        }
+    })
 
     const handleImgChange = (event) => {
         const file = event.target.files[0];
-        if (file) {
-            setImg(file);
-            setImgPreview(URL.createObjectURL(file));
-        }
+		if (file) {
+			const reader = new FileReader();
+			reader.onload = () => {
+				setImg(reader.result);
+			};
+			reader.readAsDataURL(file);
+		}
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Handle form submission
-        console.log({
-            title,
-            description,
-            location,
-            startDateDefault: startDate,
-            endDateDefault: endDate,
-            img,
-        });
+        createEvent({title, description, location, startDate, endDate, img})
     };
 
     return (
         <div className="max-w-4xl mx-auto p-6">
-            <div className=" shadow-lg rounded-lg p-6 flex flex-col lg:flex-row items-center lg:items-start">
+            <form onSubmit={handleSubmit} className=" shadow-lg rounded-lg p-6 flex flex-col lg:flex-row items-center lg:items-start">
                 {/* Image Section */}
                 <div className="w-80 h-80 object-cover mb-20">
                     <img
-                        src={imgPreview}
+                        src={img}
                         alt="Event"
                         className="w-full h-full object-cover rounded-lg"
                     />
                     <input
-                        type="file"
-                        accept="image/*"
+                        type='file' 
+                        hidden ref={imgRef} 
                         onChange={handleImgChange}
                         className="mt-4 w-full"
                     />
+                    <CiImageOn
+						className='fill-primary w-6 h-6 cursor-pointer'
+						onClick={() => imgRef.current.click()}
+					/>
                 </div>
 
                 {/* Details Section */}
                 <div className="w-full lg:w-2/3 lg:pl-6">
-                    <form onSubmit={handleSubmit}>
+                    <div>
                         <div className="mb-4">
                             <input
                                 type="text"
@@ -123,14 +156,13 @@ const CreateEvent = () => {
                             />
                         </div>
                         <button
-                            type="submit"
                             className="btn btn-primary w-full py-3 mt-4"
                         >
-                            Create Event
+                            {isPending ? "Creating Event..." : "Create Event"}
                         </button>
-                    </form>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     );
 };

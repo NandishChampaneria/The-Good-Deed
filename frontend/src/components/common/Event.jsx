@@ -108,7 +108,7 @@ const Event = ({ event }) => {
                     </div>
                     <div className='flex justify-between'>
                         <p className="text-gray-500 flex items-center mb-2">
-                            <MdLocationOn className="mr-2" /> {formatDate(event.location)}
+                            <MdLocationOn className="mr-2" /> {event.location}
                         </p>
                         <p className="text-gray-500 flex items-center mb-2">
                             <MdDateRange className="mr-2" /> {formatDate(event.startDate)}
