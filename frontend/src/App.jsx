@@ -46,7 +46,7 @@ function App() {
       <Routes>
         <Route path='/' element={authUser ? <HomePage /> : <Navigate to="/login" />} />
         <Route path='/discover' element={<Discover />} />
-        <Route path='/event/:id' element={<EventPage />} />
+        <Route path='/event/:eventId' element={<EventPage />} />
         <Route path='/createevent' element={authUser && <CreateEvent />} />
         <Route path='/profile/:username' element={<ProfilePage />} />
         <Route path='/login' element={!authUser ? <LoginPage /> : <Navigate to="/discover" />} />

@@ -78,7 +78,7 @@ export const joinUnjoinEvent = async (req, res) => {
         if(userJoinedEvent) {
             await Event.updateOne({_id: eventId}, {$pull: {attendees: userId}});
             await User.updateOne({ _id: userId }, { $pull: {joinedEvents: eventId} });
-            res.status(200).json({message: "Event unjioined successfully"});
+            res.status(200).json({message: "Event unjoiined successfully"});
         } else {
             event.attendees.push(userId);
             await User.updateOne({ _id: userId }, { $push: {joinedEvents: eventId} });

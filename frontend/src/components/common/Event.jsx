@@ -1,10 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MdLocationOn, MdDateRange, MdAccessTime } from 'react-icons/md'; // Import icons for location, date, and time
+import { MdLocationOn, MdDateRange } from 'react-icons/md'; // Import icons for location, date, and time
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { FaCheck } from 'react-icons/fa';
+
+import LoadingSpinner from './LoadingSpinner';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const Event = ({ event }) => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
+    const { data: authUser } = useQuery({ queryKey: ["authUser"], enabled: true });
+    const queryClient = useQueryClient();
     const sidebarRef = useRef(null);
+    const isJoined = authUser ? authUser.joinedEvents.includes(event._id) : false;
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -21,6 +29,39 @@ const Event = ({ event }) => {
         return `${formattedDate} at ${formattedTime}`;
     };
 
+    const { mutate: joinEvent, isPending: isJoining } = useMutation({
+        mutationFn: async () => {
+            try {
+                const res = await fetch(`/api/events/join/${event._id}`, {
+                    method: 'POST',
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || "Something went wrong");
+                return data;
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        onSuccess: (updatedJoins) => {
+            const action = isJoined ? 'unjoined' : 'joined';
+            toast.success(`Successfully ${action} the event!`);
+            queryClient.setQueryData(["events"], (oldData) =>
+                oldData.map((e) =>
+                    e._id === event._id ? { ...e, joins: updatedJoins } : e
+                )
+            );
+            queryClient.setQueryData(["authUser"], (oldAuthUser) => ({
+                ...oldAuthUser,
+                joinedEvents: isJoined
+                    ? oldAuthUser.joinedEvents.filter(id => id !== event._id)
+                    : [...oldAuthUser.joinedEvents, event._id],
+            }));
+        },
+        onError: (error) => {
+            toast.error(error.message);
+        },
+    });
+
     const toggleSidebar = () => {
         setSidebarOpen(!isSidebarOpen);
     };
@@ -29,6 +70,11 @@ const Event = ({ event }) => {
         if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
             setSidebarOpen(false);
         }
+    };
+
+    const handleJoinEvent = () => {
+        if (isJoining || !authUser) return;
+        joinEvent();
     };
 
     useEffect(() => {
@@ -115,7 +161,9 @@ const Event = ({ event }) => {
                         </p>
                     </div>
                     <div className="card-actions justify-center mt-4 mb-5">
-                        <button className="btn w-full btn-primary">Join</button>
+                        <button className="btn w-full btn-primary" onClick={handleJoinEvent} disabled={isJoining || !authUser}>
+                            {isJoining ? <LoadingSpinner size="sm" /> : (isJoined ? <FaCheck /> : "Join")}
+                        </button>
                     </div>
                 </div>
             </div>
