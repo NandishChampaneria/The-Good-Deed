@@ -1,37 +1,43 @@
-import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 import Events from "../../components/common/Events";
 import ProfileHeaderSkeleton from "../../components/skeletons/ProfileHeaderSkeleton";
 import EditProfileModal from "./EditProfileModal";
 
-import { EVENTS } from "../../utils/db/dummy";
+import {formatMemberSinceDate} from "../../utils/date"
 
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoCalendarOutline } from "react-icons/io5";
 import { FaLink } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
-import { useQuery } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 
 const ProfilePage = () => {
 
 	const [profileImg, setProfileImg] = useState(null);
 	const [feedType, setFeedType] = useState("events");
 
+	const { data: authUser } = useQuery({ queryKey: ["authUser"] });
+
 	const profileImgRef = useRef(null);
 
-	const isLoading = false;
-	const isMyProfile = true;
+	const { username } = useParams();
 
-	const user = {
-		_id: "1",
-		fullName: "John Doe",
-		username: "johndoe",
-		profileImg: "/avatars/boy2.png",
-		bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-		link: "https://youtube.com/@asaprogrammer_",
-		joinedEvents: ["1", "2", "3"],
-	};
+	const { data:user, isLoading, refetch, isRefetching } = useQuery({
+		queryKey: ["userProfile"],
+        queryFn: async () => {
+            try {
+                const res = await fetch(`/api/users/profile/${username}`);
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || "Failed to fetch user");
+                return data;
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+	});
+	const memberSinceDate = formatMemberSinceDate(user?.createdAt)
 
 	const handleImgChange = (e, state) => {
 		const file = e.target.files[0];
@@ -44,14 +50,20 @@ const ProfilePage = () => {
 		}
 	};
 
+	useEffect(() => {
+		refetch()
+	}, [username, refetch]);
+
+	const isMyProfile = authUser._id === user?._id;
+
 	return (
 		<>
 			<div className='flex-[4_4_0] min-h-screen '>
 				{/* HEADER */}
-				{isLoading && <ProfileHeaderSkeleton />}
-				{!isLoading && !user && <p className='text-center text-lg mt-4'>User not found</p>}
+				{(isLoading || isRefetching) && <ProfileHeaderSkeleton />}
+				{!isLoading && !isRefetching && !user && <p className='text-center text-lg mt-4'>User not found</p>}
 				<div className='flex flex-col'>
-					{!isLoading && user && (
+					{!isLoading && !isRefetching && user && (
 						<>
 							{/* COVER IMG */}
 							<div className='relative group/cover mt-16'>
@@ -95,7 +107,7 @@ const ProfilePage = () => {
                                         <span className='text-sm text-slate-500'>@{user?.username}</span>
                                         <div className='flex gap-2 items-center'>
                                             <IoCalendarOutline className='w-4 h-4 text-slate-500' />
-                                            <span className='text-sm text-slate-500'>Joined July 2021</span>
+                                            <span className='text-sm text-slate-500'>{memberSinceDate}</span>
                                         </div>
                                     </div>
                                     {user?.link && (
@@ -108,7 +120,7 @@ const ProfilePage = () => {
 													rel='noreferrer'
 													className='text-sm text-blue-500 hover:underline'
 												>
-													youtube.com/@asaprogrammer_
+													{user?.link}
 												</a>
 											</>
 										</div>
@@ -116,12 +128,12 @@ const ProfilePage = () => {
 									<span className='text-sm my-1'>{user?.bio}</span>
 								</div>
 							</div>
-							<div className='flex w-full border-b border-gray-700 mt-4'>
+							{/* <div className='flex w-full border-b border-gray-700 mt-4'>
 								<div
 									className='flex justify-center flex-1 p-3 hover:bg-secondary transition duration-300 relative cursor-pointer'
 									onClick={() => setFeedType("events")}
 								>
-									Posts
+									Events
 									{feedType === "events" && (
 										<div className='absolute bottom-0 w-10 h-1 rounded-full bg-primary' />
 									)}
@@ -135,11 +147,18 @@ const ProfilePage = () => {
 										<div className='absolute bottom-0 w-10  h-1 rounded-full bg-primary' />
 									)}
 								</div>
+							</div> */}
+							<div className="join flex justify-center w-full">
+								<input className="join-item btn w-80" type="radio" name="options" aria-label="My Events" defaultChecked onClick={() => setFeedType("events")} />
+								{feedType === "events"}
+							
+								<input className="join-item btn w-80" type="radio" name="options" aria-label="Joined Events" onClick={() => setFeedType("joined")} />
+								{feedType === "joined"}
 							</div>
 						</>
 					)}
 
-					<Events />
+					<Events feedType={feedType} username={username} userId={user?._id} />
 				</div>
 			</div>
 		</>
