@@ -84,6 +84,11 @@
   background-color: black;
 }
 
+
+.title-hidden {
+  display: none;
+}
+
 @media (max-width: 768px) {
     .btn-ce {
         display: none;
@@ -101,6 +106,17 @@
 
   .ep1 {
     display: block;
+  }
+}
+
+@media (max-width: 441px) {
+  .title-block {
+      display: none;
+  }
+
+  .title-hidden {
+      display: inline-flex;
+      justify-content: left;
   }
 }
 

@@ -66,13 +66,13 @@ const CreateEvent = () => {
 
     return (
         <div className="max-w-4xl mx-auto p-6">
-            <form onSubmit={handleSubmit} className=" shadow-lg rounded-lg p-6 flex flex-col lg:flex-row items-center lg:items-start">
+            <form onSubmit={handleSubmit} className=" shadow-lg rounded-lg p-6 flex flex-col lg:flex-row items-center lg:items-center">
                 {/* Image Section */}
-                <div className="w-80 h-80 object-cover mb-20">
+                <div className="w-full sm:w-80 h-80 object-cover mb-20 mx-auto flex justify-center items-center">
                     <img
                         src={img}
                         alt="Event"
-                        className="w-full h-full object-cover rounded-lg"
+                        className=" sm:w-80 h-80 object-cover rounded-lg"
                     />
                     <input
                         type='file' 

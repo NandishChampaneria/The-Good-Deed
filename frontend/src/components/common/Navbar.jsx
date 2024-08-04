@@ -76,10 +76,11 @@ const Navbar = () => {
                         <li onClick={closeDropdown}><Link to="/discover">Discover</Link></li>
                         <li onClick={closeDropdown}><a>About</a></li>
                     </ul>
+                    <Link to="/" className="btn btn-ghost text-xl title-hidden">TGD</Link>
                 </div>
             </div>
             <div className="navbar-center">
-                <Link to="/" className="btn btn-ghost text-xl">The Good Deed</Link>
+                <Link to="/" className="btn btn-ghost text-xl title-block">The Good Deed</Link>
             </div>
             <div className="navbar-end">
                 {authUser && (
@@ -141,7 +142,7 @@ const Navbar = () => {
                                     {authUser.fullName}
                                 </Link>
                             </li>
-                            <li onClick={closeDropdown}><a>Settings</a></li>
+                            <li onClick={closeDropdown}><Link to={`/profile/settings/${authUser.username}`}>Settings</Link></li>
                             <li onClick={(e)=>{e.preventDefault();logout()}}><a>Logout</a></li>
                         </ul>
                     </div>

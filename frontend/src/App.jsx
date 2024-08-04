@@ -11,6 +11,7 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import { Toaster } from "react-hot-toast"
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "./components/common/LoadingSpinner";
+import EditProfileModal from "./pages/profile/EditProfileModal";
 
 function App() {
   const{ data: authUser, isLoading } = useQuery({
@@ -49,6 +50,7 @@ function App() {
         <Route path='/event/:eventId' element={<EventPage />} />
         <Route path='/createevent' element={authUser && <CreateEvent />} />
         <Route path='/profile/:username' element={<ProfilePage />} />
+        <Route path='/profile/settings/:username' element={authUser ? <EditProfileModal /> : <Navigate to="/login" />} />
         <Route path='/login' element={!authUser ? <LoginPage /> : <Navigate to="/discover" />} />
         <Route path='/signup' element={!authUser ? <SignUpPage /> : <Navigate to="/" />} />
       </Routes>

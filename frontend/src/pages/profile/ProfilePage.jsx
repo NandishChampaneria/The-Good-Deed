@@ -3,7 +3,6 @@ import { Link, useParams } from "react-router-dom";
 
 import Events from "../../components/common/Events";
 import ProfileHeaderSkeleton from "../../components/skeletons/ProfileHeaderSkeleton";
-import EditProfileModal from "./EditProfileModal";
 
 import {formatMemberSinceDate} from "../../utils/date"
 
@@ -89,7 +88,7 @@ const ProfilePage = () => {
 								</div>
 							</div>
 							<div className='flex justify-end px-4 mt-5'>
-								{isMyProfile && <EditProfileModal />}
+								{isMyProfile}
 								{(profileImg) && (
 									<button
 										className='btn btn-primary rounded-full btn-sm text-white px-4 ml-2'
@@ -149,10 +148,10 @@ const ProfilePage = () => {
 								</div>
 							</div> */}
 							<div className="join flex justify-center w-full">
-								<input className="join-item btn w-80" type="radio" name="options" aria-label="My Events" defaultChecked onClick={() => setFeedType("events")} />
+								<input className="join-item btn w-36 sm:w-60" type="radio" name="options" aria-label="My Events" defaultChecked onClick={() => setFeedType("events")} />
 								{feedType === "events"}
 							
-								<input className="join-item btn w-80" type="radio" name="options" aria-label="Joined Events" onClick={() => setFeedType("joined")} />
+								<input className="join-item btn w-36 sm:w-60" type="radio" name="options" aria-label="Joined Events" onClick={() => setFeedType("joined")} />
 								{feedType === "joined"}
 							</div>
 						</>
