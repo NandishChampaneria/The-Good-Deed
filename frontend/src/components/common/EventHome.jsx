@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MdLocationOn, MdDateRange } from 'react-icons/md'; // Import icons for location, date, and time
+import { MdLocationOn, MdDateRange } from 'react-icons/md';
+import { IoPeople } from "react-icons/io5"; // Import icons for location, date, and time
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { FaCheck } from 'react-icons/fa';
+import { format } from "date-fns";
 
 import LoadingSpinner from './LoadingSpinner';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -13,6 +15,7 @@ const Event = ({ event }) => {
     const queryClient = useQueryClient();
     const sidebarRef = useRef(null);
     const isJoined = authUser ? authUser.joinedEvents.includes(event._id) : false;
+    const isOwner = authUser._id === event.user._id;
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -28,6 +31,16 @@ const Event = ({ event }) => {
         });
         return `${formattedDate} at ${formattedTime}`;
     };
+
+    const formatTime = (timeString) => {
+        const date = new Date(timeString);
+        const formattedTime = date.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true, // Use 12-hour clock
+        });
+        return formattedTime;
+    }
 
     const { mutate: joinEvent, isPending: isJoining } = useMutation({
         mutationFn: async () => {
@@ -89,39 +102,59 @@ const Event = ({ event }) => {
         };
     }, [isSidebarOpen]);
 
+    const now = new Date();
+    const isEventInFuture = new Date(event.startDate) >= now;
+
     return (
         <div className="relative">
-            <div className="card lg:card-side bg-base-100 shadow-xl p-2">
+            <div className="card flex-row-small lg:card-side bg-base-100 w-101 shadow-xl p-2 cursor-pointer hover:bg-base-300" onClick={toggleSidebar}>
                 <figure>
                     <img
-                        className="w-72 h-72 object-cover"
+                        className="w-60 h-60 object-cover"
                         src={event.img}
                         alt="Album"
                     />
                 </figure>
-                <div className="card-body">
-                    <h2 className="card-title text-2xl font-bold">{event.title}</h2>
-                    <p className='text-gray-500 items-center flex flex-row'>
-                        <div className='w-4 h-4 mr-2'>
-                            <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" />  
+                <div className="card-body relative">
+                    <div>
+                        <p className='text-gray-500 text-start lg:absolute lg:top-2'>{formatTime(event.startDate)}</p>
+                        {isOwner && (
+                            <Link to={`/event/manage/${event._id}`} className='lg:absolute lg:top-2 right-2 bg-gray-700 text-white hover:bg-white hover:text-black p-1 rounded-lg text-sm'>Manage</Link>
+                        )}
+                    </div>
+                    <h2 className="card-title md:text-start text-2xl font-bold">{event.title}</h2>                            
+
+                    <p className="text-gray-500 flex items-center lg:absolute lg:bottom-20">
+                        <div className="w-4 rounded-full mr-2">
+                        <img
+                            alt="Profile"
+                            src={event.user.profileImg || "/avatar-placeholder.png"} />
                         </div>
-                        By {event.user.fullName}
+                        {event.user.fullName}
                     </p>
-                    <p className="text-gray-500 flex items-center mt-2">
+                    <p className="text-gray-500 flex items-center lg:absolute lg:bottom-12">
                         <MdLocationOn className="mr-2" /> {event.location}
                     </p>
-                    <p className="text-gray-500 flex items-center mt-2">
-                        <MdDateRange className="mr-2" /> {formatDate(event.startDate)}
+                    <p className="text-gray-500 flex items-center lg:absolute lg:bottom-4">
+                        <div className="flex -space-x-2">
+                            {event.attendees && event.attendees.length > 0 ? (
+                            event.attendees.slice(0, 5).map((attendee, index) => (
+                                <div key={index} className="w-4 h-4 rounded-full border-1 border-slate-900 overflow-hidden">
+                                <img
+                                    alt="Profile"
+                                    src={attendee.profileImg || "/avatar-placeholder.png"}
+                                    className="w-full h-full object-cover"
+                                />
+                                </div>
+                            ))
+                            ) : (
+                                <p className='flex items-center'><IoPeople className='mr-2'/>No Volunteers</p>
+                            )}
+                        </div>
+                        {event.attendees.length > 5 && (
+                        <span className="ml-2 text-sm">+{event.attendees.length - 5} more</span>
+                    )}
                     </p>
-
-                    <div className="card-actions justify-end mt-4">
-                        <button
-                            className="btn btn-primary"
-                            onClick={toggleSidebar}
-                        >
-                            See Details
-                        </button>
-                    </div>
                 </div>
             </div>
 
@@ -136,10 +169,10 @@ const Event = ({ event }) => {
             {/* Sidebar */}
             <div
                 ref={sidebarRef}
-                className={`fixed z-10000 top-0 right-0 h-full w-100 w-full bg-gray-900 rounded-3xl shadow-lg transform transition-transform duration-300 z-20 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}
+                className={`fixed z-10000 top-0 md:text-start right-0 h-full w-100 w-full bg-gray-900 rounded-3xl shadow-lg transform transition-transform duration-300 z-20 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}
             >
                 <button
-                    className="absolute top-4 right-4 text-gray-500 text-2xl hover:text-white"
+                    className="absolute top-4 right-4 text-gray-500"
                     onClick={toggleSidebar}
                 >
                     &times;
@@ -167,9 +200,19 @@ const Event = ({ event }) => {
                         </p>
                     </div>
                     <div className="card-actions justify-center mt-4 mb-5">
-                        <button className="btn w-full btn-primary" onClick={handleJoinEvent} disabled={isJoining || !authUser}>
-                            {isJoining ? <LoadingSpinner size="sm" /> : (isJoined ? <FaCheck /> : "Join")}
-                        </button>
+                        {!isOwner && (
+                            <button className="btn w-full btn-primary" onClick={handleJoinEvent} disabled={isJoining || !authUser || !isEventInFuture}>
+                                {   
+                                    isEventInFuture &&
+                                    (isJoining ? <LoadingSpinner size="sm" /> : (isJoined ? <FaCheck /> : "Join"))
+                                }
+                                {!isEventInFuture && ("Event is Over")}
+                            </button>
+                        )}   
+                        {   
+                            isOwner &&
+                            <Link className='btn w-full btn-primary' to={`/event/manage/${event._id}`}>Manage</Link>
+                        }
                     </div>
                 </div>
             </div>

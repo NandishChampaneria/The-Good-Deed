@@ -4,6 +4,13 @@ import { MdLocationOn, MdDateRange, MdAccessTime } from 'react-icons/md'; // Imp
 import { toast } from'react-hot-toast';
 import { CiImageOn } from "react-icons/ci";
 
+
+const defaultImage = 'https://res.cloudinary.com/diytnzged/image/upload/v1723141022/retro4_j5u6k2.avif';
+const previewImage = 'posts/retro4.png';
+
+
+
+
 const CreateEvent = () => {
     const now = new Date();
     const startDateDefault = new Date(now.getTime() + (5.5 * 60 * 60 * 1000)).toISOString().slice(0, 16); // Current date and time
@@ -15,7 +22,7 @@ const CreateEvent = () => {
     const [startDate, setStartDate] = useState(startDateDefault);
     const [endDate, setEndDate] = useState(endDateDefault);
     const [img, setImg] = useState(null);
-    const [imgPreview, setImgPreview] = useState('/posts/post1.png');// Replace with default image path
+    const [imgPreview, setImgPreview] = useState(previewImage);// Replace with default image path
     const imgRef = useRef(null)
 
     const{data:authUser} = useQuery({queryKey: ['authUser']});
@@ -54,6 +61,7 @@ const CreateEvent = () => {
 			const reader = new FileReader();
 			reader.onload = () => {
 				setImg(reader.result);
+                setImgPreview(reader.result);
 			};
 			reader.readAsDataURL(file);
 		}
@@ -61,18 +69,18 @@ const CreateEvent = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        createEvent({title, description, location, startDate, endDate, img})
+        createEvent({title, description, location, startDate, endDate, img: img || defaultImage})
     };
 
     return (
         <div className="max-w-4xl mx-auto p-6">
             <form onSubmit={handleSubmit} className=" shadow-lg rounded-lg p-6 flex flex-col lg:flex-row items-center lg:items-center">
                 {/* Image Section */}
-                <div className="w-full sm:w-80 h-80 object-cover mb-20 mx-auto flex justify-center items-center">
+                <div className="relative w-full sm:w-80 h-80 object-cover mb-56 mx-auto flex justify-center items-center">
                     <img
-                        src={img}
+                        src={imgPreview}
                         alt="Event"
-                        className=" sm:w-80 h-80 object-cover rounded-lg"
+                        className=" w-80 h-80 object-cover rounded-lg"
                     />
                     <input
                         type='file' 
@@ -81,7 +89,7 @@ const CreateEvent = () => {
                         className="mt-4 w-full"
                     />
                     <CiImageOn
-						className='fill-primary w-6 h-6 cursor-pointer'
+						className='absolute bottom-2 sm:right-2 w-10 h-10 hover:bg-black hover:text-white cursor-pointer btn-ghost bg-white text-black rounded-full p-1'
 						onClick={() => imgRef.current.click()}
 					/>
                 </div>

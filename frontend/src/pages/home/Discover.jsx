@@ -3,7 +3,7 @@ import Events from '../../components/common/Events'
 
 const Discover = () => {
   return (
-    <div><Events /></div>
+    <div><Events feedType="active" /></div>
   )
 }
 

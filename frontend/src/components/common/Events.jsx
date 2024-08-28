@@ -10,6 +10,8 @@ const Events = ({ feedType, username, userId }) => {
         return `/api/events/user/${username}`;
       case "joined":
         return `/api/events/joined/${userId}`;
+      case "active":
+        return "/api/events/all/active";
       default:
         return "/api/events/all";
     }
@@ -39,11 +41,13 @@ const Events = ({ feedType, username, userId }) => {
     refetch();
   }, [feedType, refetch]);
 
+
   return (
     <>
       {isLoading && (
         <div className="container mx-auto p-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <EventSkeleton />
             <EventSkeleton />
             <EventSkeleton />
             <EventSkeleton />
@@ -54,7 +58,7 @@ const Events = ({ feedType, username, userId }) => {
         <p className="text-center my-4">No events in this tab</p>
       )}
       {!isLoading && events && (
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto ">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {events.map((event) => (
               <Event key={event._id} event={event} />

@@ -101,7 +101,7 @@ const SignUpPage = () => {
 							value={formData.password}
 						/>
 					</label>
-					<button className='btn rounded-full btn-primary text-white'>{isPending ? "Loading..." : "Sign Up"}</button>
+					<button className='btn rounded-full btn-primary text-black'>{isPending ? "Loading..." : "Sign Up"}</button>
 					{isError && <p className='text-red-500'>{error.message}</p>}
 				</form>
 				<div className='flex flex-col lg:w-2/3 gap-2 mt-4'>

@@ -25,8 +25,62 @@
     display: flex;
     align-items: center;
 }
-.w-100 {
-  width: 40rem;
+
+/* Add this to your global CSS file or a <style> tag */
+.gradient-text {
+  background: linear-gradient(90deg, #0066ff, #df3400);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%; /* Adjust size for smoother gradient */
+  animation: gradientAnimation 3s ease infinite; /* Optional: animation for dynamic effect */
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+
+@media(min-width: 1080px) {
+  .w-100 {
+    width: 40rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:w-100 {
+      width: 40rem /* 384px */;
+  }
+}
+
+@media (min-width: 500px) {
+  .smm\:w-9 {
+      width: 2.25rem;
+  }
+  .smm\:h-9 {
+    height: 2.25rem;
+  }
+  .smm\:text-3xl {
+    font-size: 1.875rem /* 30px */;
+    line-height: 2.25rem /* 36px */;
+  }
+}
+
+@media (max-width: 1280px) {
+  .lgg\:w-44 {
+      width: 12rem;
+  }
+  .lgg\:h-44 {
+    height: 12rem;
+  }
+
 }
 
 .ph {
@@ -68,6 +122,19 @@
     border-radius: var(--rounded-btn, 0.5rem);
 }
 
+.btn-ceh {
+  display: block;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  height: 3rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  align-items: center;
+  justify-content: center;
+  display: inline-flex;
+  border-radius: var(--rounded-btn, 0.5rem);
+}
+
 .btn-ce:hover {
   background-color: black;
 }
@@ -89,6 +156,12 @@
   display: none;
 }
 
+@media (min-width: 1024px) {
+  .w-101 {
+    width: 30rem;
+  }
+}
+
 @media (max-width: 768px) {
     .btn-ce {
         display: none;
@@ -97,6 +170,19 @@
     .svg-icon-ce {
         display: block;
     }
+
+    .flex-row-small {
+      flex-direction: row;
+      width: 100%;
+      
+    }
+}
+
+@media (max-width: 617px) {
+  .flex-row-small {
+    flex-direction: column;
+    width: 100%;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -121,3 +207,5 @@
 }
 
   
+
+/******/

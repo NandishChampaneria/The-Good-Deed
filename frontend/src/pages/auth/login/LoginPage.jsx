@@ -47,6 +47,7 @@ const LoginPage = () => {
 	const handleInputChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
+	
 
 	return (
 		<div className='max-w-screen-xl mx-auto flex h-screen'>
@@ -76,7 +77,7 @@ const LoginPage = () => {
 							value={formData.password}
 						/>
 					</label>
-					<button className='btn rounded-full btn-primary text-white'>{isPending ? "Loading..." : "Login"}</button>
+					<button className='btn rounded-full btn-primary text-black'>{isPending ? "Loading..." : "Login"}</button>
 					{isError && <p className='text-red-500'>{error.message}</p>}
 				</form>
 				<div className='flex flex-col gap-2 mt-4'>
@@ -85,6 +86,7 @@ const LoginPage = () => {
 						<button className='btn rounded-full btn-primary text-white btn-outline w-full'>Sign up</button>
 					</Link>
 				</div>
+
 			</div>
 		</div>
 	);

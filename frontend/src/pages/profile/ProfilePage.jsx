@@ -53,7 +53,7 @@ const ProfilePage = () => {
 		refetch()
 	}, [username, refetch]);
 
-	const isMyProfile = authUser._id === user?._id;
+	
 
 	return (
 		<>
@@ -64,67 +64,42 @@ const ProfilePage = () => {
 				<div className='flex flex-col'>
 					{!isLoading && !isRefetching && user && (
 						<>
-							{/* COVER IMG */}
-							<div className='relative group/cover mt-16'>
-								<input
-									type='file'
-									hidden
-									ref={profileImgRef}
-									onChange={(e) => handleImgChange(e, "profileImg")}
-								/>
-								{/* USER AVATAR */}
-								<div className='avatar flex justify-center '>
-									<div className='w-32 rounded-full relative group/avatar'>
-										<img src={profileImg || user?.profileImg || "/avatar-placeholder.png"} />
-										<div className='absolute top-5 right-3 p-1 bg-primary rounded-full group-hover/avatar:opacity-100 opacity-0 cursor-pointer'>
-											{isMyProfile && (
-												<MdEdit
-													className='w-4 h-4 text-white'
-													onClick={() => profileImgRef.current.click()}
-												/>
-											)}
+							<div className="flex justify-center mb-10 gap-5">
+								<div className='relative group/cover mt-16'>
+									{/* USER AVATAR */}
+									<div className='avatar flex justify-center '>
+										<div className='w-32 rounded-full relative group/avatar'>
+											<img src={profileImg || user?.profileImg || "/avatar-placeholder.png"} />
 										</div>
 									</div>
 								</div>
-							</div>
-							<div className='flex justify-end px-4 mt-5'>
-								{isMyProfile}
-								{(profileImg) && (
-									<button
-										className='btn btn-primary rounded-full btn-sm text-white px-4 ml-2'
-										onClick={() => alert("Profile updated successfully")}
-									>
-										Update
-									</button>
-								)}
-							</div>
-
-							<div className='flex justify-center mt-1 px-4'>
-								<div className='flex justify-center flex-col gap-2'>
-									<span className='font-bold text-lg'>{user?.fullName}</span>
-                                    <div className="flex flex-row gap-10">
-                                        <span className='text-sm text-slate-500'>@{user?.username}</span>
-                                        <div className='flex gap-2 items-center'>
-                                            <IoCalendarOutline className='w-4 h-4 text-slate-500' />
-                                            <span className='text-sm text-slate-500'>{memberSinceDate}</span>
-                                        </div>
-                                    </div>
-                                    {user?.link && (
-										<div className='flex gap-1 items-center '>
-											<>
-												<FaLink className='w-3 h-3 text-slate-500' />
-												<a
-													href='https://youtube.com/@asaprogrammer_'
-													target='_blank'
-													rel='noreferrer'
-													className='text-sm text-blue-500 hover:underline'
-												>
-													{user?.link}
-												</a>
-											</>
+								<div className='flex justify-center mt-1 px-4'>
+									<div className='flex justify-center flex-col gap-2'>
+										<span className='font-bold text-2xl'>{user?.fullName}</span>
+										<div className="flex flex-row gap-5">
+											<span className='text-sm text-slate-500'>@{user?.username}</span>
+											<div className='flex gap-2 items-center'>
+												<IoCalendarOutline className='w-4 h-4 text-slate-500' />
+												<span className='text-sm text-slate-500'>{memberSinceDate}</span>
+											</div>
 										</div>
-									)}
-									<span className='text-sm my-1'>{user?.bio}</span>
+										{user?.link && (
+											<div className='flex gap-1 items-center '>
+												<>
+													<FaLink className='w-3 h-3 text-slate-500' />
+													<a
+														href='https://youtube.com/@asaprogrammer_'
+														target='_blank'
+														rel='noreferrer'
+														className='text-sm text-blue-500 hover:underline'
+													>
+														{user?.link}
+													</a>
+												</>
+											</div>
+										)}
+										{/* <span className='text-sm my-1'>{user?.bio}</span> */}
+									</div>
 								</div>
 							</div>
 							{/* <div className='flex w-full border-b border-gray-700 mt-4'>

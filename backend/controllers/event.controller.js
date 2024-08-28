@@ -112,6 +112,27 @@ export const getAllEvents = async (req, res) => {
     }
 };
 
+export const getAllActiveEvents = async (req, res) => {
+    try {
+        const events = await Event.find({ active: true }).sort({createdAt: -1}).populate({
+            path: "user",
+            select: "-password"
+        })
+        .populate({
+            path: "attendees",
+            select: "-password"
+        });
+        if(events.length ===0) {
+            return res.status(200).json([]);
+        }
+
+        res.status(200).json(events);
+    } catch(error) {
+        console.log("error in getallpsot controller ", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
 export const getJoinedEvents = async (req, res) => {
     const userId = req.params.id;
 
@@ -177,6 +198,9 @@ export const updateEvent = async (req, res) => {
             if (event.img) {
                 const imgId = event.img.split("/").pop().split(".")[0];
                 await cloudinary.uploader.destroy(imgId);
+            }
+            if (typeof img !== 'string') {
+                throw new Error("Invalid image format. Expected a base64 string.");
             }
             const uploadedResponse = await cloudinary.uploader.upload(img);
             event.img = uploadedResponse.secure_url;
