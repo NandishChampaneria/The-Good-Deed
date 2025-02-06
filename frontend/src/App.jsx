@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import LoginPage from "./pages/auth/login/LoginPage"
 import SignUpPage from "./pages/auth/signup/SignUpPage"
 import HomePage from "./pages/home/HomePage"
@@ -37,6 +37,8 @@ function App() {
     retry: false
   });
 
+  const location = useLocation();
+
   if(isLoading) {
     return (
       <div className="h-screen flex justify-center items-center">
@@ -47,7 +49,7 @@ function App() {
 
   return (
     <div className="">
-      <Navbar />
+      {location.pathname !== "/login" && location.pathname !== "/signup" && <Navbar />}
       <Routes>
         <Route path='/home' element={authUser ? <HomePage /> : <Navigate to="/" />} />
         <Route path='/' element={!authUser ? <Home /> : <Navigate to="/home" />} />

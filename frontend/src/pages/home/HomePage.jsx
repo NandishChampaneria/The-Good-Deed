@@ -68,7 +68,7 @@ const HomePage = () => {
   // Filter events based on feedType
   const now = new Date();
   const filteredEvents = events?.filter(event => {
-    const eventDate = new Date(event.startDate);
+    const eventDate = new Date(event.endDate);
     return feedType === "upcoming" ? eventDate >= now : eventDate < now;
   });
   

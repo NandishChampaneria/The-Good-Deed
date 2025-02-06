@@ -26,7 +26,7 @@ const Event = ({ event }) => {
             minute: '2-digit',
             hour12: true, // Use 12-hour clock
         });
-        return `${formattedDate} at ${formattedTime}`;
+        return `${formattedDate}`;
     };
 
     const { mutate: joinEvent, isPending: isJoining } = useMutation({
@@ -91,38 +91,27 @@ const Event = ({ event }) => {
 
     return (
         <div className="relative">
-            <div className="card lg:card-side bg-base-100 shadow-xl p-2">
-                <figure>
-                    <img
-                        className="w-72 h-72 object-cover"
-                        src={event.img}
-                        alt="Album"
-                    />
-                </figure>
-                <div className="card-body">
-                    <h2 className="card-title text-2xl font-bold">{event.title}</h2>
-                    <p className='text-gray-500 items-center flex flex-row'>
-                        <div className='w-4 h-4 mr-2'>
-                            <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" />  
-                        </div>
-                        By {event.user.fullName}
-                    </p>
-                    <p className="text-gray-500 flex items-center mt-2">
-                        <MdLocationOn className="mr-2" /> {event.location}
-                    </p>
-                    <p className="text-gray-500 flex items-center mt-2">
-                        <MdDateRange className="mr-2" /> {formatDate(event.startDate)}
-                    </p>
+            <div className="flex flex-col items-center p-4 border sm:p-6 rounded-xl dark:border-gray-700 hover:bg-gray-300" onClick={toggleSidebar}>
+                
+                <img
+                    className="object-cover w-72 rounded-xl aspect-square"
+                    src={event.img}
+                    alt=""
+                />
 
-                    <div className="card-actions justify-end mt-4">
-                        <button
-                            className="btn btn-primary"
-                            onClick={toggleSidebar}
-                        >
-                            See Details
-                        </button>
+                <h1 class="mt-4 text-2xl font-semibold text-gray-700 capitalize dark:text-black">{event.title}</h1>
+                <p className='text-gray-500 items-center flex flex-row'>
+                    <div className='w-4 h-4 mr-2'>
+                        <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" />  
                     </div>
-                </div>
+                    By {event.user.fullName}
+                </p>
+                <p className="text-gray-500 flex items-center mt-2">
+                    <MdLocationOn className="mr-2" /> {event.location}
+                </p>
+                <p className="text-gray-500 flex items-center mt-2">
+                    <MdDateRange className="mr-2" /> {formatDate(event.startDate)}
+                </p>
             </div>
 
             {/* Overlay */}

@@ -58,8 +58,8 @@ const Events = ({ feedType, username, userId }) => {
         <p className="text-center my-4">No events in this tab</p>
       )}
       {!isLoading && events && (
-        <div className="container mx-auto ">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
             {events.map((event) => (
               <Event key={event._id} event={event} />
             ))}

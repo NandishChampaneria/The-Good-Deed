@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .navbar {
     transition: border-bottom 0.1s ease;
   }
@@ -209,3 +210,6 @@
   
 
 /******/
+
+
+

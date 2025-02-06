@@ -17,6 +17,7 @@ export default {
       "forest",
       "aqua",
       "night",
+      "pastel",
       {
         mytheme: {        
           "primary": "#f3f4f6", 
