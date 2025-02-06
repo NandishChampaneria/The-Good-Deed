@@ -4,6 +4,7 @@ import SignUpPage from "./pages/auth/signup/SignUpPage"
 import HomePage from "./pages/home/HomePage"
 import Navbar from "./components/common/Navbar";
 import Discover from "./pages/home/Discover";
+import About from "./pages/home/About";
 import EventPage from "./pages/event/EventPage";
 import CreateEvent from "./pages/home/CreateEvent";
 import ProfilePage from "./pages/profile/ProfilePage";
@@ -14,6 +15,7 @@ import LoadingSpinner from "./components/common/LoadingSpinner";
 import EditProfileModal from "./pages/profile/EditProfileModal";
 import Home from "./pages/home/Home";
 import ManageEvent from "./pages/event/ManageEvent";
+
 
 function App() {
   const{ data: authUser, isLoading } = useQuery({
@@ -50,6 +52,7 @@ function App() {
         <Route path='/home' element={authUser ? <HomePage /> : <Navigate to="/" />} />
         <Route path='/' element={!authUser ? <Home /> : <Navigate to="/home" />} />
         <Route path='/discover' element={<Discover />} />
+        <Route path='/about' element={<About />} />
         <Route path='/event/:eventId' element={<EventPage />} />
         <Route path='/createevent' element={authUser ? <CreateEvent /> : <Navigate to="/" />} />
         <Route path='/event/manage/:eventId' element={authUser ? <ManageEvent /> : <Navigate to="/" />} />

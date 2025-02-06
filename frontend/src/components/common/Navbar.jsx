@@ -80,7 +80,7 @@ const Navbar = () => {
                             className="menu menu-sm dropdown-content  bg-gray-800 bg-opacity-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                             <li onClick={closeDropdown}><Link to="/home">Events</Link></li>
                             <li onClick={closeDropdown}><Link to="/discover">Discover</Link></li>
-                            <li onClick={closeDropdown}><a>About</a></li>
+                            {/* <li onClick={closeDropdown}><Link to="/about">About</Link></li> */}
                         </ul>
                         
                     </div>
@@ -97,7 +97,7 @@ const Navbar = () => {
                         <MdAdd className="svg-icon-ce" />
                     </div>
                 )}
-                <button className="btn btn-ghost btn-circle">
+                {/* <button className="btn btn-ghost btn-circle">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-5 w-5"
@@ -110,10 +110,10 @@ const Navbar = () => {
                             strokeWidth="2"
                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
-                </button>
+                </button> */}
                 {authUser && (
                     <div className="dropdown">
-                        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+                        {/* <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="h-5 w-5"
@@ -126,7 +126,7 @@ const Navbar = () => {
                                     strokeWidth="2"
                                     d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                             </svg>
-                        </div>
+                        </div> */}
                         <ul
                             tabIndex={0}
                             className="absolute right-0 dropdown-content bg-gray-800 bg-opacity-100 rounded-box z-[1] mt-3 w-64 sm:w-64 md:w-72 lg:w-80 p-4 shadow h-80">
