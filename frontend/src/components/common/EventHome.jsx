@@ -102,6 +102,18 @@ const Event = ({ event }) => {
         };
     }, [isSidebarOpen]);
 
+    useEffect(() => {
+        if (isSidebarOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+    
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [isSidebarOpen]);
+
     const now = new Date();
     const isEventInFuture = new Date(event.startDate) >= now;
 
@@ -119,7 +131,7 @@ const Event = ({ event }) => {
                     <div>
                         <p className='text-gray-500 text-start lg:absolute lg:top-2'>{formatTime(event.startDate)}</p>
                         {isOwner && (
-                            <Link to={`/event/manage/${event._id}`} className='lg:absolute lg:top-2 right-2 bg-gray-700 text-white hover:bg-white hover:text-black p-1 rounded-lg text-sm'>Manage</Link>
+                            <Link to={`/event/manage/${event._id}`} className='lg:absolute lg:top-2 right-2 bg-gray-600 text-white hover:bg-white hover:text-black p-1 rounded-lg text-sm'>Manage</Link>
                         )}
                     </div>
                     <h2 className="card-title md:text-start text-2xl font-bold">{event.title}</h2>                            
@@ -169,14 +181,23 @@ const Event = ({ event }) => {
             {/* Sidebar */}
             <div
                 ref={sidebarRef}
-                className={`fixed z-10000 top-0 md:text-start right-0 h-full w-100 w-full bg-gray-900 rounded-3xl shadow-lg transform transition-transform duration-300 z-20 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}
+                className={`fixed z-10000 top-0 md:text-start right-0 h-full w-100 w-full bg-secondary rounded-l-3xl shadow-lg transform transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'} overflow-y-auto`}
+                style={{ maxHeight: '100vh' }}
             >
-                <button
-                    className="absolute top-4 right-4 text-gray-500"
-                    onClick={toggleSidebar}
-                >
-                    &times;
-                </button>
+                <div className="sticky top-0 left-0 w-full h-16 bg-secondary border-b border-b-gray-600 p-4 shadow-md z-30">
+                    <button
+                        className="text-gray-500 text-2xl ml-3 mr-7 hover:text-white"
+                        onClick={toggleSidebar}
+                    >
+                        &times;
+                    </button>
+                    <Link to={`/event/${event._id}`} 
+                        className="text-white bg-gray-500 rounded-md p-2 hover:text-black hover:bg-white"
+                    >
+                        Event Page
+                    </Link>
+                </div>
+
                 <div className='flex justify-center mt-8'>
                     <figure>
                         <img
@@ -187,21 +208,24 @@ const Event = ({ event }) => {
                     </figure>
                 </div>
                 <div className="p-11">
-                    <h2 className="text-5xl font-bold mb-6"><Link to={`/event/${event._id}`}>{event.title}</Link></h2>
-                    <div className='mb-6'>
-                        <p className="text-white-800 mt-3">{event.user.fullName}</p>
-                    </div>
-                    <div className='flex justify-between'>
-                        <p className="text-gray-500 flex items-center mb-2">
-                            <MdLocationOn className="mr-2" /> {event.location}
+                    <h2 className="text-5xl text-white font-bold mb-4">{event.title}</h2>
+                    <p className='text-gray-300 text-xl items-center flex flex-row mb-6'>
+                        <div className='w-5 h-5 mr-2 rounded-full'>
+                            <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" />  
+                        </div>
+                        {event.user.fullName}
+                    </p>
+                    <div className='flex flex-col justify-between'>
+                        <p className="text-white flex items-center mb-4">
+                            <MdLocationOn className="mr-2 text-4xl border p-1 border-gray-500 rounded-md" /> {event.location}
                         </p>
-                        <p className="text-gray-500 flex items-center mb-2">
-                            <MdDateRange className="mr-2" /> {formatDate(event.startDate)}
+                        <p className="text-white flex items-center mb-2">
+                            <MdDateRange className="mr-2 text-4xl border p-1 border-gray-500 rounded-md" /> {formatDate(event.startDate)}
                         </p>
                     </div>
                     <div className="card-actions justify-center mt-4 mb-5">
                         {!isOwner && (
-                            <button className="btn w-full btn-primary" onClick={handleJoinEvent} disabled={isJoining || !authUser || !isEventInFuture}>
+                            <button className="btn w-full bg-white" onClick={handleJoinEvent} disabled={isJoining || !authUser || !isEventInFuture}>
                                 {   
                                     isEventInFuture &&
                                     (isJoining ? <LoadingSpinner size="sm" /> : (isJoined ? <FaCheck /> : "Join"))
@@ -211,7 +235,7 @@ const Event = ({ event }) => {
                         )}   
                         {   
                             isOwner &&
-                            <Link className='btn w-full btn-primary' to={`/event/manage/${event._id}`}>Manage</Link>
+                            <Link className='btn w-full bg-white' to={`/event/manage/${event._id}`}>Manage</Link>
                         }
                     </div>
                 </div>

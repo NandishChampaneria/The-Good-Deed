@@ -29,7 +29,7 @@
 
 /* Add this to your global CSS file or a <style> tag */
 .gradient-text {
-  background: linear-gradient(90deg, #0066ff, #df3400);
+  background: linear-gradient(90deg, #8800ff, #ffee00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: 200% 200%; /* Adjust size for smoother gradient */
@@ -210,6 +210,7 @@
   
 
 /******/
+
 
 
 

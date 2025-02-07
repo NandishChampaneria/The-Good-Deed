@@ -129,7 +129,7 @@ const LoginPage = () => {
                 </div>
 
                 <div className="mt-6">
-                  <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                  <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-black rounded-lg hover:bg-gray-800 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                     {isPending ? "Loading..." : "Sign in"}
                   </button>
                 </div>
@@ -138,7 +138,7 @@ const LoginPage = () => {
 
               <p className="mt-6 text-sm text-center text-gray-400">
                 Don&#x27;t have an account yet?{" "}
-                <Link to="/signup" className="text-blue-500 focus:outline-none focus:underline hover:underline">
+                <Link to="/signup" className="text-black focus:outline-none focus:underline hover:underline">
                   Sign up
                 </Link>
                 .

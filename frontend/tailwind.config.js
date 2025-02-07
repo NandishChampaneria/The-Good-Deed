@@ -18,6 +18,7 @@ export default {
       "aqua",
       "night",
       "pastel",
+      "lofi",
       {
         mytheme: {        
           "primary": "#f3f4f6", 

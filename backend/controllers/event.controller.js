@@ -212,6 +212,9 @@ export const updateEvent = async (req, res) => {
         event.startDate = startDate || event.startDate;
         event.endDate = endDate || event.endDate;
 
+        const now = new Date();
+        event.active = new Date(event.startDate) > now;
+
         await event.save();
 
         res.status(200).json(event);

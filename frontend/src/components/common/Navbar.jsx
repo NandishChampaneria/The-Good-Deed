@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {MdAdd} from "react-icons/md";
 import { BsMoonStars } from "react-icons/bs";
+import { IoLogOut, IoSettingsSharp } from "react-icons/io5";
 import { GoArrowUpRight } from "react-icons/go";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {toast} from "react-hot-toast";
+
 
 const Navbar = () => {
     const{data:authUser, error, isPending} = useQuery({queryKey: ["authUser"]});
     const [scrolled, setScrolled] = useState(false);
 
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
     const{mutate:logout} = useMutation({
         mutationFn: async() => {
@@ -29,6 +32,7 @@ const Navbar = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ["authUser"]});
+            navigate("/");
         },
         onError: () => {
             toast.error("Failed to log out");
@@ -134,15 +138,15 @@ const Navbar = () => {
                                 <div className='flex justify-center mb-7'>   
                                     <BsMoonStars className='text-5xl text-gray-400'/>
                                 </div>
-                                <h3 className='flex justify-center text-xl font-bold mb-3'>It's Quite Here</h3>
-                                <p className='flex justify-center text-center text-gray-500'>Create an event to make someone smile.</p>
+                                <h3 className='flex justify-center text-xl font-bold mb-3'>It's Quite in Here</h3>
+                                <p className='flex justify-center text-center text-gray-500'>You’re all caught up with your good deeds!</p>
                             </div>
                         </ul>
                     </div>
                 )}
                 {!authUser && (
                     <div className="">
-                        <Link to="/login" className="btn bg-transparent shadow-none border-none hover:bg-white hover:text-black">Sign In</Link>
+                        <Link to="/login" className="btn bg-transparent shadow-none border-none ">Sign In</Link>
                     </div>
                 )}
                 {authUser && (
@@ -162,8 +166,8 @@ const Navbar = () => {
                                     {authUser.fullName}
                                 </Link>
                             </li>
-                            <li onClick={closeDropdown}><Link to={`/profile/settings/${authUser.username}`}>Settings</Link></li>
-                            <li onClick={(e)=>{e.preventDefault();logout()}}><a>Logout</a></li>
+                            <li onClick={closeDropdown}><Link to={`/profile/settings/${authUser.username}`}><IoSettingsSharp />Settings</Link></li>
+                            <li className='hover:text-red-600' onClick={(e)=>{e.preventDefault();logout()}}><a><IoLogOut />Sign Out</a></li>
                         </ul>
                     </div>
                 )}

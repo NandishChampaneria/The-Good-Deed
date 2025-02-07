@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { MdOutlineMail, MdPassword, MdDriveFileRenameOutline } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
@@ -12,6 +12,8 @@ const SignUpPage = () => {
     fullName: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const { mutate, isError, isPending, error } = useMutation({
     mutationFn: async ({ email, username, fullName, password }) => {
@@ -33,6 +35,7 @@ const SignUpPage = () => {
     },
     onSuccess: () => {
       toast.success("Account created successfully. You can now log in.");
+      navigate("/login");
     }
   });
 
