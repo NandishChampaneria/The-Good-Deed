@@ -27,7 +27,16 @@ const Event = ({ event }) => {
             minute: '2-digit',
             hour12: true, // Use 12-hour clock
         });
-        return `${formattedDate}`;
+        return `${formattedDate} at ${formattedTime}`;
+    };
+
+    const formatGoogleCalendarDate = (startDate, endDate) => {
+        const toISOStringWithoutMs = (date) => new Date(date).toISOString().replace(/[-:.]/g, "").slice(0, 15) + "Z";
+        
+        const formattedStart = toISOStringWithoutMs(startDate);
+        const formattedEnd = toISOStringWithoutMs(endDate);
+        
+        return `${formattedStart}/${formattedEnd}`;
     };
 
     const { mutate: joinEvent, isPending: isJoining } = useMutation({
@@ -177,10 +186,26 @@ const Event = ({ event }) => {
                     </p>
                     <div className='flex flex-col justify-between'>
                         <p className="text-white flex items-center mb-4">
-                            <MdDateRange className="mr-2 text-4xl border p-1 border-gray-500 rounded-md" /> {formatDate(event.startDate)}
+                            <MdDateRange className="mr-2 text-4xl border p-1 border-gray-500 rounded-md" />
+                            <a
+                                href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${formatGoogleCalendarDate(event.startDate, event.endDate)}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hover:underline"
+                            >
+                                {formatDate(event.startDate)}
+                            </a>
                         </p>
                         <p className="text-white flex items-center mb-2">
-                            <MdLocationOn className="mr-2 text-4xl border p-1 border-gray-500 rounded-md" /> {event.location}
+                            <MdLocationOn className="mr-2 text-4xl border p-1 border-gray-500 rounded-md" />
+                            <a
+                                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hover:underline"
+                            >
+                                {event.location}
+                            </a>
                         </p>
                     </div>
                     <div className="card-actions justify-center mt-4 mb-5">
