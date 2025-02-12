@@ -3,6 +3,13 @@
 @tailwind utilities;
 
 
+
+  /* Hide the default calendar and clock icons */
+  input[type="date"]::-webkit-calendar-picker-indicator,
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+
 .navbar {
     transition: border-bottom 0.1s ease;
   }

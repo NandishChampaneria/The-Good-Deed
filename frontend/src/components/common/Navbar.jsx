@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import {MdAdd} from "react-icons/md";
+import {MdAdd, MdOutlineNotifications } from "react-icons/md";
 import { BsMoonStars } from "react-icons/bs";
 import { IoLogOut, IoSettingsSharp } from "react-icons/io5";
+import { LuMenu } from "react-icons/lu";
 import { GoArrowUpRight } from "react-icons/go";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {toast} from "react-hot-toast";
@@ -14,6 +15,40 @@ const Navbar = () => {
 
     const queryClient = useQueryClient();
     const navigate = useNavigate();
+
+    const { data: notifications, isLoading } = useQuery({
+        queryKey: ["notifications"],
+        queryFn: async () => {
+            const res = await fetch("/api/notifications");
+            if (!res.ok) throw new Error("Failed to fetch notifications");
+            return res.json();
+        },
+        enabled: !!authUser, // Only fetch when user is authenticated
+    });
+
+    const { mutate: deleteNotifications } = useMutation({
+        mutationFn: async () => {
+            try {
+                const res = await fetch("/api/notifications", {
+                    method: "DELETE",
+                });
+                const data = await res.json();
+
+                if(!res.ok) {
+                    throw new Error(data.error || "Failed to delete notifications");
+                }
+            } catch(error) {
+                throw new Error(error);
+            }
+        },
+        onSuccess: () => {
+            toast.success("Notifications deleted successfully");
+            queryClient.invalidateQueries({queryKey: ["notifications"]});
+        },
+        onError: () => {
+            toast.error("Failed to delete notifications");
+        }
+    });
 
     const{mutate:logout} = useMutation({
         mutationFn: async() => {
@@ -66,18 +101,7 @@ const Navbar = () => {
                 {authUser && (
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M4 6h16M4 12h16M4 18h7" />
-                            </svg>
+                            <LuMenu className='text-2xl'/>
                         </div>
                         <ul
                             tabIndex={0}
@@ -98,7 +122,7 @@ const Navbar = () => {
                 {authUser && (
                     <div className="responsive-content">
                         <Link to="/createevent" className="btn-ce hover:bg-black bg-white text-black hover:text-white">Create Event</Link>
-                        <MdAdd className="svg-icon-ce" />
+                        <Link to="/createevent" ><MdAdd className="svg-icon-ce" /></Link>
                     </div>
                 )}
                 {/* <button className="btn btn-ghost btn-circle">
@@ -116,32 +140,57 @@ const Navbar = () => {
                     </svg>
                 </button> */}
                 {authUser && (
-                    <div className="dropdown">
-                        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                            </svg>
-                        </div>
-                        <ul
-                            tabIndex={0}
-                            className="absolute right-0 dropdown-content bg-gray-300 bg-opacity-100 rounded-box z-[1] mt-3 w-64 sm:w-64 md:w-72 lg:w-80 p-4 shadow h-80">
-                            <div onClick={closeDropdown} className='flex justify-center p-10 flex-col'>
-                                <div className='flex justify-center mb-7'>   
-                                    <BsMoonStars className='text-5xl text-gray-400'/>
-                                </div>
-                                <h3 className='flex justify-center text-xl font-bold mb-3'>It's Quite in Here</h3>
-                                <p className='flex justify-center text-center text-gray-500'>You’re all caught up with your good deeds!</p>
+                    <div>
+                        <div className="dropdown hidden sm:block">
+                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle ">
+                                <MdOutlineNotifications className='text-2xl'/>
                             </div>
-                        </ul>
+                            <ul
+                                tabIndex={0}
+                                className="absolute right-0 dropdown-content bg-black bg-opacity-100 rounded-box z-[1] mt-3 w-80  shadow h-80">
+                                {isLoading ? (
+                                    <div className="flex justify-center items-center h-full">
+                                        <p>Loading...</p>
+                                    </div>
+                                ) : notifications?.length === 0 ? (
+                                    <div className="flex justify-center p-12 flex-col text-white">
+                                        <div className="flex justify-center mb-7">
+                                            <BsMoonStars className="text-5xl text-gray-400" />
+                                        </div>
+                                        <h3 className="flex justify-center text-xl font-bold mb-3">No new notifications</h3>
+                                        <p className="flex justify-center text-center text-gray-400">You’re all caught up with your good deeds!</p>
+                                    </div>
+                                ) : (
+                                    <ul className="h-full overflow-y-auto relative">
+                                        {notifications.map((notif) => (
+                                            <li key={notif._id} className="p-2  border-white">
+                                                <Link to={`/event/${notif.event?._id}`} className="block hover:bg-white text-white hover:text-black p-2 rounded">
+                                                    <div className="flex items-center justify-between ">
+                                                        <div className="flex items-center">
+                                                            <img src={notif.from?.profileImg || "/default-avatar.png"} alt="User" className="w-8 h-8 rounded-full mr-2" />
+                                                            <p className="text-sm">
+                                                                <span className="font-semibold">{notif.from?.fullName}</span> joined <span className="font-semibold">{notif.event?.title}</span>
+                                                            </p>
+                                                        </div>
+                                                        <img src={notif.event?.img || "/default-event.png"} alt="Event" className="w-8 h-8 rounded-md ml-auto" />
+                                                    </div>
+                                                    <span className="text-xs text-gray-400">{new Date(notif.createdAt).toLocaleString()}</span>
+                                                </Link>
+                                            </li>
+                                        ))}
+                                            <button onClick={deleteNotifications} className="text-sm w-full font-semibold cursor-pointer rounded-b-box bg-gray-700 hover:bg-slate-600 text-white p-2 text-center shadow-md fixed bottom-0">
+                                                Clear all
+                                            </button>
+                                    </ul>                
+                                )}
+                            </ul>
+                        </div>
+
+                        <div className="block sm:hidden">
+                        <Link to="/notifications" className="btn btn-ghost btn-circle">
+                            <MdOutlineNotifications className="text-2xl" />
+                        </Link>
+                        </div>
                     </div>
                 )}
                 {!authUser && (

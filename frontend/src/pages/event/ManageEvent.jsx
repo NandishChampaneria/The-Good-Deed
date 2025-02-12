@@ -42,7 +42,7 @@ const ManageEvent = () => {
 			}
 		},
 		onSuccess: () => {
-			toast.success("Post deleted successfully");
+			toast.success("Event deleted successfully");
 			queryClient.invalidateQueries({ queryKey: ["events"] });
 		},
 	});

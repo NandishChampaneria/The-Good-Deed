@@ -15,6 +15,7 @@ import EditProfileModal from "./pages/profile/EditProfileModal";
 import Home from "./pages/home/Home";
 import ManageEvent from "./pages/event/ManageEvent";
 import Footer from "./components/common/Footer";
+import Notifications from "./pages/notifications/Notifications";
 
 function App() {
   const { data: authUser, isLoading } = useQuery({
@@ -60,6 +61,7 @@ function App() {
           <Route path='/event/manage/:eventId' element={authUser ? <ManageEvent /> : <Navigate to="/" />} />
           <Route path='/profile/:username' element={<ProfilePage />} />
           <Route path='/profile/settings/:username' element={authUser ? <EditProfileModal /> : <Navigate to="/login" />} />
+          <Route path='/notifications' element={authUser ? <Notifications /> : <Navigate to="/" />} />
           <Route path='/login' element={!authUser ? <LoginPage /> : <Navigate to="/home" />} />
           <Route path='/signup' element={!authUser ? <SignUpPage /> : <Navigate to="/home" />} />
         </Routes>

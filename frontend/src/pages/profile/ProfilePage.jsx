@@ -64,16 +64,16 @@ const ProfilePage = () => {
 				<div className='flex flex-col'>
 					{!isLoading && !isRefetching && user && (
 						<>
-							<div className="flex justify-center mb-10 gap-5">
+							<div className="flex justify-start sm:justify-center mb-10 gap-5 px-6 flex-col sm:flex-row">
 								<div className='relative group/cover mt-16'>
 									{/* USER AVATAR */}
-									<div className='avatar flex justify-center '>
-										<div className='w-32 rounded-full relative group/avatar'>
+									<div className='avatar flex'>
+										<div className='w-24 sm:w-32 rounded-full relative group/avatar'>
 											<img src={profileImg || user?.profileImg || "/avatar-placeholder.png"} />
 										</div>
 									</div>
 								</div>
-								<div className='flex justify-center mt-1 px-4'>
+								<div className='flex justify-start sm:justify-center mt-1 pl-1'>
 									<div className='flex justify-center flex-col gap-2'>
 										<span className='font-bold text-2xl'>{user?.fullName}</span>
 										<div className="flex flex-row gap-5">
@@ -123,10 +123,10 @@ const ProfilePage = () => {
 								</div>
 							</div> */}
 							<div className="join flex justify-center w-full">
-								<input className="join-item btn w-36 sm:w-60" type="radio" name="options" aria-label="My Events" defaultChecked onClick={() => setFeedType("events")} />
+								<input className="join-item btn w-32 sm:w-48 lg:w-60" type="radio" name="options" aria-label="My Events" defaultChecked onClick={() => setFeedType("events")} />
 								{feedType === "events"}
 							
-								<input className="join-item btn w-36 sm:w-60" type="radio" name="options" aria-label="Joined Events" onClick={() => setFeedType("joined")} />
+								<input className="join-item btn w-32 sm:w-48 lg:w-60" type="radio" name="options" aria-label="Joined Events" onClick={() => setFeedType("joined")} />
 								{feedType === "joined"}
 							</div>
 						</>

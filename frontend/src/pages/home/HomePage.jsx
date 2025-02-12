@@ -4,7 +4,8 @@ import Navbar from "../../components/common/Navbar.jsx";
 import { format } from "date-fns";
 import EventHome from "../../components/common/EventHome.jsx";
 import { useState } from "react";
-import { SlCalender } from "react-icons/sl";
+import { MdEventBusy} from "react-icons/md";
+import { GoHourglass } from "react-icons/go";
 import HomeSkeleton from "../../components/skeletons/HomeSkeleton.jsx";
 
 const HomePage = () => {
@@ -70,7 +71,7 @@ const HomePage = () => {
   const filteredEvents = events?.filter(event => {
     const eventDate = new Date(event.endDate);
     return feedType === "upcoming" ? eventDate >= now : eventDate < now;
-  });
+  }).sort((a,b) => new Date(a.startDate) - new Date(b.startDate));
   
   
   // Handle loading and error states
@@ -132,12 +133,22 @@ const HomePage = () => {
         )}
       </ul>
       <div className="items-center">
-        { filteredEvents.length <= 0 &&
+        { filteredEvents.length <= 0 && feedType === "upcoming" &&
           <div className="flex justify-center flex-col gap-10">
             <div className="flex justify-center">
-              <SlCalender className="text-9xl flex"/>
+              <MdEventBusy className="text-9xl flex"/>
             </div>
             <h1 className="flex justify-center font-bold text-3xl">No Upcoming Events</h1>
+          </div>
+        }   
+      </div>
+      <div className="items-center">
+        { filteredEvents.length <= 0 && feedType === "past" &&
+          <div className="flex justify-center flex-col gap-10">
+            <div className="flex justify-center">
+              <GoHourglass className="text-9xl flex"/>
+            </div>
+            <h1 className="flex justify-center font-bold text-3xl">You have no past Events</h1>
           </div>
         }   
       </div>

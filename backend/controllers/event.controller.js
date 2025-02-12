@@ -1,5 +1,6 @@
 import Event from "../models/event.model.js";
 import User from "../models/user.model.js";
+import Notification from "../models/notification.model.js";
 import {v2 as cloudinary} from "cloudinary";
 
 export const createEvent = async (req, res) => {
@@ -83,6 +84,16 @@ export const joinUnjoinEvent = async (req, res) => {
             event.attendees.push(userId);
             await User.updateOne({ _id: userId }, { $push: {joinedEvents: eventId} });
             await event.save();
+
+            const newNotification = new Notification({
+                type: "join",
+                from: userId,
+                to: event.user,
+                event: eventId,
+                
+            });
+
+            await newNotification.save();
             res.status(200).json({message: "Event joined successfully"});
         }
     } catch(error) {

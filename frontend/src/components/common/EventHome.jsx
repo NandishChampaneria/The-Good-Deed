@@ -1,21 +1,24 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MdLocationOn, MdDateRange } from 'react-icons/md';
+import { MdLocationOn, MdDateRange, MdManageAccounts, MdDelete } from 'react-icons/md';
 import { IoPeople } from "react-icons/io5"; // Import icons for location, date, and time
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { FaCheck } from 'react-icons/fa';
 import { format } from "date-fns";
+import Popup from './Popup';
 
 import LoadingSpinner from './LoadingSpinner';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const Event = ({ event }) => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
+    const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
     const { data: authUser } = useQuery({ queryKey: ["authUser"], enabled: true });
     const queryClient = useQueryClient();
     const sidebarRef = useRef(null);
     const isJoined = authUser ? authUser.joinedEvents.includes(event._id) : false;
     const isOwner = authUser._id === event.user._id;
+    const eventId = event._id;
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -50,6 +53,30 @@ const Event = ({ event }) => {
         
         return `${formattedStart}/${formattedEnd}`;
     };
+
+    const { mutate: deleteEvent, isPending: isDeleting } = useMutation({
+		mutationFn: async () => {
+			try {
+				const res = await fetch(`/api/events/${eventId}`, {
+					method: "DELETE",
+				});
+				const data = await res.json();
+
+				if (!res.ok) {
+					throw new Error(data.error || "Something went wrong");
+				}
+				return data;
+			} catch (error) {
+				throw new Error(error);
+			}
+		},
+		onSuccess: () => {
+			toast.success("Post deleted successfully");
+			queryClient.invalidateQueries({ queryKey: ["events"] });
+            setDeletePopupOpen(false); 
+            window.location.reload();
+		},
+	});
 
     const { mutate: joinEvent, isPending: isJoining } = useMutation({
         mutationFn: async () => {
@@ -128,7 +155,7 @@ const Event = ({ event }) => {
 
     return (
         <div className="relative">
-            <div className="card flex-row-small lg:card-side bg-base-100 w-101 shadow-xl p-2 cursor-pointer hover:bg-base-300" onClick={toggleSidebar}>
+            {/* <div className="card flex-row-small lg:card-side bg-base-100 w-101 shadow-xl p-2 cursor-pointer hover:bg-base-300" onClick={toggleSidebar}>
                 <figure>
                     <img
                         className="w-60 h-60 object-cover"
@@ -174,9 +201,64 @@ const Event = ({ event }) => {
                         </div>
                         {event.attendees.length > 5 && (
                         <span className="ml-2 text-sm">+{event.attendees.length - 5} more</span>
-                    )}
+                        )}
                     </p>
                 </div>
+            </div> */}
+            <div className="flex flex-col items-center p-4 border sm:p-6 rounded-xl dark:border-gray-700 hover:bg-gray-300" onClick={toggleSidebar}> 
+                <img
+                    className="object-cover w-72 rounded-xl aspect-square"
+                    src={event.img}
+                    alt=""
+                />
+
+                <div>
+                    {isOwner && (
+                        <div className='absolute top-7 right-7 '>
+                            <Link to={`/event/manage/${event._id}`}><MdManageAccounts className='rounded-t-lg border-b bg-gray-600 text-white hover:bg-white hover:text-black p-1 text-4xl' /></Link>
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setDeletePopupOpen(true); // Open popup on click
+                                }}
+                                >
+                                <MdDelete className="rounded-b-lg bg-gray-600 text-white hover:bg-white hover:text-red-600 p-1 text-4xl" />
+                            </button>
+                            <Popup isOpen={isDeletePopupOpen} onClose={() => setDeletePopupOpen(false)}>
+                                <h2 className="text-lg font-semibold mb-1">Confirm Deletion</h2>
+                                <p>Are you sure you want to delete this event?</p>
+                                <div className="flex justify-center mt-4">
+                                    <button
+                                        className="px-4 py-2 bg-gray-300 rounded-md mr-2"
+                                        onClick={() => setDeletePopupOpen(false)}
+                                    >
+                                    Cancel
+                                    </button>
+                                    <button
+                                        className="px-4 py-2 bg-red-600 text-white rounded-md"
+                                        onClick={deleteEvent} // Ensure this function deletes the event
+                                    >
+                                    Delete
+                                    </button>
+                                </div>
+                            </Popup>
+                        </div>
+                    )}
+                </div>
+
+                <h1 class="mt-4 text-2xl font-semibold text-gray-700 capitalize dark:text-black">{event.title}</h1>
+                <p className='text-gray-500 items-center flex flex-row'>
+                    <div className='w-4 h-4 mr-2'>
+                        <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" />  
+                    </div>
+                    By {event.user.fullName}
+                </p>
+                <p className="text-gray-500 flex items-center mt-2">
+                    <MdLocationOn className="mr-2" /> {event.location}
+                </p>
+                <p className="text-gray-500 flex items-center mt-2">
+                    <MdDateRange className="mr-2" /> {formatDate(event.startDate)}
+                </p>
             </div>
 
             {/* Overlay */}

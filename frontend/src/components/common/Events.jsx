@@ -2,6 +2,8 @@ import Event from "./Event";
 import EventSkeleton from "../skeletons/EventSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { IoCalendarOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const Events = ({ feedType, username, userId }) => {
   const getEventEndpoint = () => {
@@ -54,7 +56,25 @@ const Events = ({ feedType, username, userId }) => {
         </div>
       )}
       {!isLoading && events?.length === 0 && (
-        <p className="text-center my-4">No events in this tab</p>
+        <div className="flex flex-col items-center justify-center py-6 px-6">
+          <div className="text-lg ">
+            {feedType === "joined" ? 
+              <div className="flex justify-center flex-col gap-3 text-center">
+                <span>
+                  You haven't joined any events yet. <br />
+                </span>
+                <Link to="/discover" className="btn btn-primary">Explore</Link>
+              </div> 
+              : 
+              <div> 
+                <span>
+                  You haven't created any events yet. <br />              
+                </span>
+                <Link to="/createevent" className="btn btn-primary">Create Event</Link>
+              </div>
+            }
+          </div>
+        </div>
       )}
       {!isLoading && events && (
         <div className="container mx-auto px-6">
