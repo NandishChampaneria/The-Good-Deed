@@ -8,6 +8,7 @@ import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import eventRoutes from "./routes/event.routes.js";
 import notificationRoutes from "./routes/notifications.routes.js";
+import contactRoutes from "./routes/contact.routes.js";
 
 import connectMongoDB from "./db/connectMongoDB.js";
 
@@ -46,6 +47,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/notifications", notificationRoutes);
+app.use("/api/contact", contactRoutes);
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     connectMongoDB();

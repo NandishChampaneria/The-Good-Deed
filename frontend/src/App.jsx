@@ -16,6 +16,8 @@ import Home from "./pages/home/Home";
 import ManageEvent from "./pages/event/ManageEvent";
 import Footer from "./components/common/Footer";
 import Notifications from "./pages/notifications/Notifications";
+import Contact from "./pages/home/Contact";
+import { useEffect } from "react";
 
 function App() {
   const { data: authUser, isLoading } = useQuery({
@@ -37,6 +39,10 @@ function App() {
     retry: false
   });
 
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", "myCustomTheme");
+  }, []);
+
   const location = useLocation();
 
   if (isLoading) {
@@ -56,6 +62,7 @@ function App() {
           <Route path='/' element={!authUser ? <Home /> : <Navigate to="/home" />} />
           <Route path='/discover' element={<Discover />} />
           <Route path='/about' element={<About />} />
+          <Route path='/contact' element={<Contact />} />
           <Route path='/event/:eventId' element={<EventPage />} />
           <Route path='/createevent' element={authUser ? <CreateEvent /> : <Navigate to="/" />} />
           <Route path='/event/manage/:eventId' element={authUser ? <ManageEvent /> : <Navigate to="/" />} />

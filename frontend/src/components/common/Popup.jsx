@@ -24,7 +24,7 @@ const Popup = ({ isOpen, onClose, children }) => {
       }}  // Close when clicking outside
     >
       <div
-        className="bg-white p-6 rounded-lg shadow-lg text-center"
+        className="bg-[#121213] p-6 rounded-lg shadow-lg text-center"
         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
       >
         {children}

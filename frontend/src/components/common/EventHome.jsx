@@ -205,31 +205,31 @@ const Event = ({ event }) => {
                     </p>
                 </div>
             </div> */}
-            <div className="flex flex-col items-center p-4 border sm:p-6 rounded-xl dark:border-gray-700 hover:bg-gray-300" onClick={toggleSidebar}> 
-                <img
-                    className="object-cover w-72 rounded-xl aspect-square"
-                    src={event.img}
-                    alt=""
-                />
+            <div className="flex flex-col items-start p-4 border-2 border-transparent rounded-xl bg-secondary hover:border-accent transition-all duration-300 ease-in-out " onClick={toggleSidebar}> 
+                <div className="relative">    
+                    <img
+                        className="object-cover w-72 rounded-xl aspect-square"
+                        src={event.img}
+                        alt=""
+                    />
 
-                <div>
                     {isOwner && (
-                        <div className='absolute top-7 right-7 '>
-                            <Link to={`/event/manage/${event._id}`}><MdManageAccounts className='rounded-t-lg border-b bg-gray-600 text-white hover:bg-white hover:text-black p-1 text-4xl' /></Link>
+                        <div className='absolute top-1 right-1 '>
+                            <Link to={`/event/manage/${event._id}`}><MdManageAccounts className='rounded-t-lg border-b border-accent bg-white text-base-content  hover:text-black p-1 text-3xl sm:text-4xl' /></Link>
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setDeletePopupOpen(true); // Open popup on click
                                 }}
                                 >
-                                <MdDelete className="rounded-b-lg bg-gray-600 text-white hover:bg-white hover:text-red-600 p-1 text-4xl" />
+                                <MdDelete className="rounded-b-lg bg-white text-base-content hover:text-red-600 p-1 text-3xl sm:text-4xl" />
                             </button>
                             <Popup isOpen={isDeletePopupOpen} onClose={() => setDeletePopupOpen(false)}>
-                                <h2 className="text-lg font-semibold mb-1">Confirm Deletion</h2>
+                                <h2 className="text-lg text-white font-semibold mb-1">Confirm Deletion</h2>
                                 <p>Are you sure you want to delete this event?</p>
                                 <div className="flex justify-center mt-4">
                                     <button
-                                        className="px-4 py-2 bg-gray-300 rounded-md mr-2"
+                                        className="px-4 py-2 text-black bg-gray-300 rounded-md mr-2"
                                         onClick={() => setDeletePopupOpen(false)}
                                     >
                                     Cancel
@@ -245,26 +245,27 @@ const Event = ({ event }) => {
                         </div>
                     )}
                 </div>
-
-                <h1 class="mt-4 text-2xl font-semibold text-gray-700 capitalize dark:text-black">{event.title}</h1>
-                <p className='text-gray-500 items-center flex flex-row'>
-                    <div className='w-4 h-4 mr-2'>
-                        <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" />  
-                    </div>
-                    By {event.user.fullName}
-                </p>
-                <p className="text-gray-500 flex items-center mt-2">
-                    <MdLocationOn className="mr-2" /> {event.location}
-                </p>
-                <p className="text-gray-500 flex items-center mt-2">
-                    <MdDateRange className="mr-2" /> {formatDate(event.startDate)}
-                </p>
+                <div className='flex items-start flex-col gap-1'>
+                    <h1 class="mt-2 text-2xl font-semibold text-black capitalize">{event.title}</h1>
+                    <p className='text-gray-700 items-center flex flex-row'>
+                        <div className='w-5 h-5 mr-2'>
+                            <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" />  
+                        </div>
+                        By {event.user.fullName}
+                    </p>
+                    <p className="text-gray-700 flex items-center">
+                        <MdLocationOn className="mr-2 text-xl" /> {event.location}
+                    </p>
+                    <p className="text-gray-700 flex items-center">
+                        <MdDateRange className="mr-2 text-xl" /> {formatDate(event.startDate)}
+                    </p>
+                </div>
             </div>
 
             {/* Overlay */}
             {isSidebarOpen && (
                 <div
-                    className="fixed inset-0 bg-gray-800 bg-opacity-50 z-10000"
+                    className="fixed inset-0 bg-black bg-opacity-50 z-10000"
                     onClick={toggleSidebar}
                 />
             )}
@@ -272,43 +273,43 @@ const Event = ({ event }) => {
             {/* Sidebar */}
             <div
                 ref={sidebarRef}
-                className={`fixed z-10000 top-0 md:text-start right-0 h-full w-100 w-full bg-secondary rounded-l-3xl shadow-lg transform transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'} overflow-y-auto`}
+                className={`fixed z-10000 top-0 md:text-start right-0 h-full w-100 w-full bg-gradient-to-r from-secondary to-purple-200 rounded-l-3xl shadow-lg transform transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'} overflow-y-auto`}
                 style={{ maxHeight: '100vh' }}
             >
-                <div className="sticky top-0 left-0 w-full h-16 bg-secondary border-b border-b-gray-600 p-4 shadow-md z-30">
+                <div className="sticky top-0 left-0 w-full h-16 bg-gradient-to-r from-secondary to-purple-200 border-b border-b-neutral p-4 z-30">
                     <button
-                        className="text-gray-500 text-2xl ml-3 mr-7 hover:text-white"
+                        className="text-accent text-2xl ml-3 mr-7 hover:text-black"
                         onClick={toggleSidebar}
                     >
                         &times;
                     </button>
                     <Link to={`/event/${event._id}`} 
-                        className="text-white bg-gray-500 rounded-md p-2 hover:text-black hover:bg-white"
+                        className="text-base-content bg-accent rounded-md p-2 hover:text-black"
                     >
                         Event Page
                     </Link>
                 </div>
 
                 <div className='flex justify-center mt-8'>
-                    <figure>
+                    <figure className='max-w-xs'>
                         <img
-                            className="w-80 h-80 object-cover rounded-lg"
+                            className="w-full h-full object-cover p-4 rounded-3xl"
                             src={event.img}
                             alt={event.title}
                         />
                     </figure>
                 </div>
-                <div className="p-11">
-                    <h2 className="text-5xl text-white font-bold mb-4">{event.title}</h2>
-                    <p className='text-gray-300 text-xl items-center flex flex-row mb-6'>
+                <div className="px-4 py-11 sm:p-11">
+                    <h2 className="text-5xl text-black font-bold mb-4">{event.title}</h2>
+                    <p className='text-gray-700 text-xl items-center flex flex-row mb-6'>
                         <div className='w-5 h-5 mr-2 rounded-full'>
                             <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" />  
                         </div>
                         {event.user.fullName}
                     </p>
                     <div className='flex flex-col justify-between'>
-                        <p className="text-white flex items-center mb-4">
-                            <MdDateRange className="mr-2 text-4xl border p-1 border-gray-500 rounded-md" />
+                        <p className="text-black flex items-center mb-4">
+                            <MdDateRange className="mr-2 text-4xl border-2 p-1 border-gray-700 rounded-md" />
                             <a
                                 href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${formatGoogleCalendarDate(event.startDate, event.endDate)}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`}
                                 target="_blank"
@@ -318,8 +319,8 @@ const Event = ({ event }) => {
                                 {formatDate(event.startDate)}
                             </a>
                         </p>
-                        <p className="text-white flex items-center mb-2">
-                            <MdLocationOn className="mr-2 text-4xl border p-1 border-gray-500 rounded-md" />
+                        <p className="text-black flex items-center mb-2">
+                            <MdLocationOn className="mr-2 text-4xl border-2 p-1 border-gray-700 rounded-md" />
                             <a
                                 href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}`}
                                 target="_blank"
@@ -332,7 +333,7 @@ const Event = ({ event }) => {
                     </div>
                     <div className="card-actions justify-center mt-4 mb-5">
                         {!isOwner && (
-                            <button className="btn w-full bg-white" onClick={handleJoinEvent} disabled={isJoining || !authUser || !isEventInFuture}>
+                            <button className="btn w-full hover:bg-accent hover:text-black text-accent bg-black border-none" onClick={handleJoinEvent} disabled={isJoining || !authUser || !isEventInFuture}>
                                 {   
                                     isEventInFuture &&
                                     (isJoining ? <LoadingSpinner size="sm" /> : (isJoined ? <FaCheck /> : "Join"))
@@ -342,7 +343,7 @@ const Event = ({ event }) => {
                         )}   
                         {   
                             isOwner &&
-                            <Link className='btn w-full bg-white' to={`/event/manage/${event._id}`}>Manage</Link>
+                            <Link className='btn w-full hover:bg-accent hover:text-black text-accent bg-black border-none' to={`/event/manage/${event._id}`}>Manage</Link>
                         }
                     </div>
                 </div>

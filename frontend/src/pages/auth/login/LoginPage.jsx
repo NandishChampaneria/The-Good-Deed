@@ -67,37 +67,27 @@ const LoginPage = () => {
         </div>
 
         {/* Form Section */}
-        <div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
+        <div className="flex items-center bg-gradient-to-b to-yellow-200 from-orange-400 w-full px-6 mx-auto lg:w-2/6">
           <div className="flex-1">
             <div className="text-center">
               <div className="flex justify-center mx-auto">
-                <img
-                  className="w-auto h-7 sm:h-8"
-                  src="https://merakiui.com/images/logo.svg"
-                  alt=""
-                />
+                <img src="/logo.svg" alt="SVG Icon" className="w-20 h-20 text-white" />
               </div>
 
-              <p className="mt-3 text-gray-400 dark:text-gray-400">
-                Sign in to access your account
-              </p>
+              <h1 className="mt-3 text-2xl text-gray-100 sm:text-3xl capitalize font-semibold">
+                Sign In to your account
+              </h1>
             </div>
 
             <div className="mt-8">
               <form onSubmit={handleSubmit}>
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="block mb-2 text-sm text-gray-700 dark:text-gray-700"
-                  >
-                    Username
-                  </label>
-                  <div className="input input-bordered rounded flex items-center gap-2">
+                  <div className="input input-bordered rounded flex items-center border-none gap-2 bg-secondary text-black">
                     <MdOutlineMail />
                     <input
                       type="text"
-                      className="grow"
-                      placeholder="username"
+                      className="grow placeholder:text-gray-700"
+                      placeholder="Username"
                       name="username"
                       onChange={handleInputChange}
                       value={formData.username}
@@ -106,20 +96,11 @@ const LoginPage = () => {
                 </div>
 
                 <div className="mt-6">
-                  <div className="flex justify-between mb-2">
-                    <label
-                      htmlFor="password"
-                      className="text-sm text-gray-700 dark:text-gray-700"
-                    >
-                      Password
-                    </label>
-                  </div>
-
-                  <div className="input input-bordered rounded flex items-center gap-2">
+                  <div className="input input-bordered rounded flex items-center border-none gap-2 bg-secondary focus:outline-none text-black">
                     <MdPassword />
                     <input
                       type="password"
-                      className="grow"
+                      className="grow placeholder:text-gray-700 focus:outline-none"
                       placeholder="Password"
                       name="password"
                       onChange={handleInputChange}
@@ -129,14 +110,14 @@ const LoginPage = () => {
                 </div>
 
                 <div className="mt-6">
-                  <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-black rounded-lg hover:bg-gray-800 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                  <button className="w-full px-4 py-2 tracking-wide text-black font-semibold transition-colors duration-300 transform bg-accent rounded-lg hover:bg-black hover:text-white focus:outline-none focus:bg-black focus:ring focus:ring-none">
                     {isPending ? "Loading..." : "Sign in"}
                   </button>
                 </div>
                 {isError && <p className="text-red-500">{error.message}</p>}
               </form>
 
-              <p className="mt-6 text-sm text-center text-gray-400">
+              <p className="mt-6 text-sm text-center text-gray-700">
                 Don&#x27;t have an account yet?{" "}
                 <Link to="/signup" className="text-black focus:outline-none focus:underline hover:underline">
                   Sign up

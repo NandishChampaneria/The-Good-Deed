@@ -5,7 +5,7 @@ import { FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-gray-800 to-black text-white py-6 mt-10">
+    <footer className="bg-gradient-to-b from-black to-[#121213] text-white py-6 mt-10">
       <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
         
         {/* Left Section - Brand Name & Navigation */}

@@ -67,6 +67,31 @@ const EventPage = () => {
         },
     });
 
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const formattedDate = date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        });
+        const formattedTime = date.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true, // Use 12-hour clock
+        });
+        return `${formattedDate} at ${formattedTime}`;
+    };
+
+    const formatGoogleCalendarDate = (startDate, endDate) => {
+        const toISOStringWithoutMs = (date) => new Date(date).toISOString().replace(/[-:.]/g, "").slice(0, 15) + "Z";
+        
+        const formattedStart = toISOStringWithoutMs(startDate);
+        const formattedEnd = toISOStringWithoutMs(endDate);
+        
+        return `${formattedStart}/${formattedEnd}`;
+    };
+
     useEffect(() => {
         if (authUser) {
             setIsJoined(authUser.joinedEvents.includes(eventId));
@@ -81,37 +106,63 @@ const EventPage = () => {
 
     return (
         <div className="p-4 max-w-4xl mx-auto">
-            <div className="card lg:card-side bg-base-100  p-4">
-                <div className='flex flex-col gap-10'>
-                    <figure>
+            <div className="card lg:card-side bg-transparent">
+                <div className='flex flex-col items-center sm:p-4 px-0 py-4 lg:items-start gap-10'>
+                    <figure className='max-w-xs'>
                         <img
-                            className="w-96 h-96 object-cover rounded-lg"
+                            className="w-full h-full object-cover rounded-lg"
                             src={event.img}
                             alt={event.title}
                         />
                     </figure>
                     <div className='ep'>
-                        <p className="text-gray-500 mb-3">Organiser</p>
-                        <hr className='opacity-20' />
-                        <p className="text-white-800 mt-3">{event.user.fullName}</p>
+                        <p className="text-gray-600 mb-3">Organiser</p>
+                        <hr className='bg-neutral' />
+                        <div className='flex items-center mt-3'>
+                            <div className='w-5 h-5 mr-2 rounded-full'>
+                                <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" />  
+                            </div>
+                            <p className="text-black">{event.user.fullName}</p>
+                        </div>
                     </div>
                 </div>
-                <div className="card-body">
-                    <h2 className="card-title text-7xl font-bold mb-10">{event.title}</h2>
+                <div className="card-body px-0 py-2 sm:p-2">
+                    <h2 className="card-title text-6xl sm:text-7xl text-black font-bold mb-7">{event.title}</h2>
                     <div className='mb-6 ep1'>
-                        <p className="text-white-800 text-3xl mt-3">{event.user.fullName}</p>
-                    </div>
-                    <p className="flex flex-col gap-5">
-                        <div className='flex flex-row'>
-                            <MdDateRange className="mr-2 text-2xl" /> {event.startDate}
+                        <div className="text-black text-2xl flex items-center sm:text-3xl">
+                            <div className='w-10 h-10 mr-2 rounded-full'>
+                                <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" />  
+                            </div>
+                            {event.user.fullName}
                         </div>
-                        <div className='flex flex-row'>
-                            <MdLocationOn className="mr-2 text-2xl" /> {event.location}
+                    </div>
+                    <p className="flex text-black flex-col gap-5">
+                        <div className='flex items-center flex-row'>
+                            <MdDateRange className="mr-2 border-2 p-1 border-gray-700 rounded-md text-4xl" />
+                            <a
+                                href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${formatGoogleCalendarDate(event.startDate, event.endDate)}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hover:underline"
+                            >
+                                {formatDate(event.startDate)}
+                            </a>
+                        </div>
+                        <div className='flex items-center flex-row'>
+                            <MdLocationOn className="mr-2 border-2 p-1 border-gray-700 rounded-md text-4xl" />
+                            <a
+                                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hover:underline"
+                            >
+                                {event.location}
+                            </a>
                         </div>
                     </p>
                     <div className="card-actions mt-4 mb-5">
                         <button 
-                            className="btn w-full btn-primary" 
+                            className="btn w-full bg-black text-accent hover:text-black hover:bg-white border-none" 
                             onClick={() => joinEvent()} 
                             disabled={isJoining || !authUser}
                         >
@@ -119,9 +170,9 @@ const EventPage = () => {
                         </button>
                     </div>
                     <div className=''>
-                        <p className="text-gray-500 mb-3">About the Event</p>
-                        <hr className='opacity-20' />
-                        <p className="text-white-800 mt-3">{event.description}</p>
+                        <p className="text-gray-600 mb-3">About the Event</p>
+                        <hr className='bg-neutral' />
+                        <p className="text-black mt-3">{event.description}</p>
                     </div>
                 </div>
             </div>

@@ -75,12 +75,12 @@ const ProfilePage = () => {
 								</div>
 								<div className='flex justify-start sm:justify-center mt-1 pl-1'>
 									<div className='flex justify-center flex-col gap-2'>
-										<span className='font-bold text-2xl'>{user?.fullName}</span>
+										<span className='font-bold text-black text-2xl'>{user?.fullName}</span>
 										<div className="flex flex-row gap-5">
-											<span className='text-sm text-slate-500'>@{user?.username}</span>
+											<span className='text-sm text-gray-600'>@{user?.username}</span>
 											<div className='flex gap-2 items-center'>
-												<IoCalendarOutline className='w-4 h-4 text-slate-500' />
-												<span className='text-sm text-slate-500'>{memberSinceDate}</span>
+												<IoCalendarOutline className='w-4 h-4 text-gray-600' />
+												<span className='text-sm text-gray-600'>{memberSinceDate}</span>
 											</div>
 										</div>
 										{user?.link && (

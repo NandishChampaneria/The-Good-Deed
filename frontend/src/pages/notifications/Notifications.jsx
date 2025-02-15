@@ -55,17 +55,17 @@ const Notifications = () => {
                     ) : notifications?.length === 0 ? (
                         <div className="flex justify-center p-12 flex-col text-white">
                             <div className="flex justify-center mb-7">
-                                <BsMoonStars className="text-5xl text-gray-400" />
+                                <BsMoonStars className="text-5xl text-accent" />
                             </div>
                             <h3 className="flex justify-center text-xl font-bold mb-3">No new notifications</h3>
-                            <p className="flex justify-center text-center text-gray-400">You’re all caught up with your good deeds!</p>
+                            <p className="flex justify-center text-center text-gray-600">You’re all caught up with your good deeds!</p>
                         </div>
                     ) : (
                         <ul className="overflow-y-auto p-4 w-[52rem]">
                             <div className=''>
                                 {notifications.map((notif) => (
                                     <li key={notif._id} className="p-2  border-white">
-                                        <Link to={`/event/${notif.event?._id}`} className="block hover:bg-black text-black hover:text-white p-2 rounded">
+                                        <Link to={`/event/${notif.event?._id}`} className="block hover:bg-white text-white hover:text-black p-2 rounded">
                                             <div className="flex items-center justify-between ">
                                                 <div className="flex items-center">
                                                     <img src={notif.from?.profileImg || "/default-avatar.png"} alt="User" className="w-8 h-8 rounded-full mr-2" />
@@ -75,11 +75,11 @@ const Notifications = () => {
                                                 </div>
                                                 <img src={notif.event?.img || "/default-event.png"} alt="Event" className="w-8 h-8 rounded-md ml-auto" />
                                             </div>
-                                            <span className="text-xs text-gray-400">{new Date(notif.createdAt).toLocaleString()}</span>
+                                            <span className="text-xs text-gray-600">{new Date(notif.createdAt).toLocaleString()}</span>
                                         </Link>
                                     </li>
                                 ))}
-                                    <button onClick={deleteNotifications} className="text-sm w-full font-semibold cursor-pointer rounded-box bg-gray-700 hover:bg-slate-600 text-white p-2 text-center shadow-md sticky bottom-0">
+                                    <button onClick={deleteNotifications} className="text-sm w-full font-semibold cursor-pointer rounded-lg bg-black hover:text-black hover:bg-white text-white p-2 text-center sticky bottom-0">
                                         Clear all
                                     </button>
                             </div>

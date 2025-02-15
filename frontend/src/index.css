@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  @apply bg-gradient-to-b to-yellow-200 from-orange-400;
+}
+
+.navbar {
+    pointer-events: auto;
+    overflow: visible;
+}
 
 
   /* Hide the default calendar and clock icons */
@@ -36,7 +44,7 @@
 
 /* Add this to your global CSS file or a <style> tag */
 .gradient-text {
-  background: linear-gradient(90deg, #8800ff, #ffee00);
+  background: linear-gradient(90deg, #b300ff, #006aff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: 200% 200%; /* Adjust size for smoother gradient */

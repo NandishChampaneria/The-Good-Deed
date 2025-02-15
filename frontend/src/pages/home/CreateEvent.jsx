@@ -112,21 +112,21 @@ const CreateEvent = () => {
                 </div>
 
                 {/* Details Section */}
-                <div className="w-full lg:w-2/3 lg:pl-6">
+                <div className="w-ful lg:w-2/3 lg:pl-6">
                     <input
                         type="text"
                         placeholder="Event Title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        className="w-full h-20  bg-transparent font-semibold ph text-3xl sm:text-6xl rounded-lg text-white-800 mb-4"
+                        className="w-full h-20 placeholder:text-base-200 text-black bg-transparent font-semibold ph text-3xl sm:text-6xl rounded-lg text-white-800 mb-4"
                         required
                     />
-                    <div className="bg-primary text-white p-2 rounded-lg w-full mb-4">
+                    <div className="bg-secondary text-black p-2 rounded-lg w-full mb-4">
                         <div className="flex flex-col gap-2">
                             {/* Start Date & Time */}
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <span className="w-16 font-semibold ml-2 text-gray-100">Start</span>
+                                    <span className="w-16 font-semibold ml-2 text-gray-800">Start</span>
                                 </div>
                                 <div>
                                     <input
@@ -134,14 +134,14 @@ const CreateEvent = () => {
                                         value={startDate}
                                         onChange={(e) => setStartDate(e.target.value)}
                                         onClick={(e) => e.target.showPicker()} 
-                                        className="bg-gray-800 w-28 text-white p-2 rounded-lg cursor-pointer hover:bg-white hover:text-black focus:outline-none focus:ring-0 select-none"
+                                        className="bg-primary w-28 text-black p-2 rounded-lg cursor-pointer hover:bg-black hover:text-accent focus:outline-none focus:ring-0 select-none"
                                     />
                                     <input
                                         type="time"
                                         value={startTime}
                                         onChange={(e) => setStartTime(e.target.value)}
                                         onClick={(e) => e.target.showPicker()} 
-                                        className="bg-gray-800 w-24 text-white p-2 rounded-lg cursor-pointer ml-2 hover:bg-white hover:text-black focus:outline-none focus:ring-0 select-none"
+                                        className="bg-primary w-24 text-black p-2 rounded-lg cursor-pointer ml-2 hover:bg-black hover:text-accent focus:outline-none focus:ring-0 select-none"
                                     />
                                 </div>
                             </div>
@@ -149,7 +149,7 @@ const CreateEvent = () => {
                             {/* End Date & Time */}
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <span className="w-16 font-semibold text-gray-100 ml-2">End</span>
+                                    <span className="w-16 font-semibold text-gray-800 ml-2">End</span>
                                 </div>
                                 <div>
                                     <input
@@ -157,43 +157,43 @@ const CreateEvent = () => {
                                         value={endDate}
                                         onChange={(e) => setEndDate(e.target.value)}
                                         onClick={(e) => e.target.showPicker()} 
-                                        className="bg-gray-800 w-28 text-white p-2 rounded-lg cursor-pointer hover:bg-white hover:text-black focus:outline-none focus:ring-0 select-none"
+                                        className="bg-primary w-28 text-black p-2 rounded-lg cursor-pointer hover:bg-black hover:text-accent focus:outline-none focus:ring-0 select-none"
                                     />
                                     <input
                                         type="time"
                                         value={endTime}
                                         onChange={(e) => setEndTime(e.target.value)}
                                         onClick={(e) => e.target.showPicker()} 
-                                        className="bg-gray-800 w-24 text-white p-2 rounded-lg cursor-pointer ml-2 hover:bg-white hover:text-black focus:outline-none focus:ring-0 select-none"
+                                        className="bg-primary w-24 text-black p-2 rounded-lg cursor-pointer ml-2 hover:bg-black hover:text-accent focus:outline-none focus:ring-0 select-none"
                                     />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="mb-4 flex items-center bg-primary rounded-lg p-2">
-                        <MdLocationOn className="mr-2 text-3xl text-gray-100" />
+                    <div className="mb-4 flex items-center bg-secondary rounded-lg p-2">
+                        <MdLocationOn className="mr-2 text-3xl text-gray-800" />
                         <input
                             type="text"
                             placeholder="Location"
                             value={location}
                             onChange={(e) => setLocation(e.target.value)}
-                            className="w-full bg-transparent outline-none text-white placeholder:text-gray-100"
+                            className="w-full bg-transparent outline-none text-black placeholder:text-gray-800 placeholder:font-semibold"
                             required
                         />
                     </div>
-                    <div className="mb-4 flex items-center bg-primary rounded-lg p-2">
+                    <div className="mb-4 flex items-center bg-secondary rounded-lg p-2">
                         
                         <textarea
                             placeholder="Description"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            className="w-full p-3 bg-transparent text-white outline-none placeholder:text-gray-100"
+                            className="w-full p-3 bg-transparent text-black outline-none placeholder:text-gray-800 placeholder:font-semibold"
                             rows="4"
                             required
                         />
                     </div>
                     <button
-                        className="btn btn-primary w-full py-3"
+                        className="btn bg-black text-accent hover:text-black hover:bg-accent border-none w-full py-3"
                     >
                         {isPending ? "Creating Event..." : "Create Event"}
                     </button>

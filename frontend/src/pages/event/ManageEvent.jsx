@@ -324,21 +324,19 @@ const ManageEvent = () => {
                 </div>
             )}
             {feedType === "guestlist" && (
-                <div key={event._id} className='flex justify-center min-h-screen'>
+                <div key={event._id} className='flex items-center justify-center'>
                     {event.attendees.length > 0 ? (
-                        <div className='m-10 mt-24'>
-                            <div className='md:w-100 flex flex-col items-center relative'>
-                                <div className='absolute left-0 -top-6 mb-2 text-3xl'>{event.attendees.length}<span className='text-sm'> Guests</span></div>
-                                <progress className="progress mt-6 h-3 mb-6" value={event.attendees.length} max="100"></progress>
-                            </div>
+                        <div className='m-10 mt-24 flex justify-center flex-col'>   
+                            <div className='sm:text-3xl text-xl'>{event.attendees.length}<span className='text-lg sm:text-2xl'> Guests</span></div>
+                            <progress className="progress w-[15rem] sm:w-[36rem] md:w-[42rem] mt-6 h-2 sm:h-3 mb-6" value={event.attendees.length} max="50"></progress>
                             {event.attendees.map((attendee) => (
                                 <div key={attendee._id}>
                                     <div className='flex flex-col mb-5'>
-                                        <div className='flex flex-row gap-8'>
-                                            <div className='smm:w-9 smm:h-9 h-6 w-6 rounded-full'>
+                                        <div className='flex flex-row gap-6 items-center'>
+                                            <div className='sm:w-16 sm:h-16 h-10 w-10 rounded-full'>
                                                 <img src={attendee.profileImg || "/avatar-placeholder.png"} alt="Profile" className="w-full h-full object-cover" />
                                             </div>
-                                            <div className='smm:text-3xl'>{attendee.fullName}</div>
+                                            <div className=' text-xl sm:text-3xl'>{attendee.fullName}</div>
                                         </div>
                                     </div>
                                 </div>

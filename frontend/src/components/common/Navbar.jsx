@@ -76,7 +76,7 @@ const Navbar = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            const isScrolled = window.scrollY > 30;
+            const isScrolled = window.scrollY > 5;
             setScrolled(isScrolled);
         };
 
@@ -93,36 +93,36 @@ const Navbar = () => {
     };
 
     return (
-        <div className={`navbar bg-base-100 z-10000 sticky top-0 ${scrolled ? 'scrolled' : ''}`}>
+        <div className={`navbar bg-transparent z-10000 sticky top-0 ${scrolled ? 'bg-opacity-50 backdrop-blur-md bg-gray-900' : 'bg-transparent'}`}>
             <div className="navbar-start">
                 {!authUser && (
-                    <Link to="/discover" className="btn btn-ghost">Explore<GoArrowUpRight className='w-5 h-5'/></Link>
+                    <Link to="/discover" className="btn text-accent hover:text-black hover:bg-transparent btn-ghost">Explore<GoArrowUpRight className='w-5 h-5'/></Link>
                 )}
                 {authUser && (
                     <div className="dropdown">
-                        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+                        <div tabIndex={0} role="button" className="btn hover:text-black hover:bg-transparent text-accent btn-ghost btn-circle">
                             <LuMenu className='text-2xl'/>
                         </div>
                         <ul
                             tabIndex={0}
-                            className="menu menu-sm dropdown-content  bg-gray-300 bg-opacity-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                            <li onClick={closeDropdown}><Link to="/home">Events</Link></li>
-                            <li onClick={closeDropdown}><Link to="/discover">Discover</Link></li>
+                            className="menu menu-sm dropdown-content text-gray-600 bg-accent bg-opacity-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                            <li className='hover:text-black' onClick={closeDropdown}><Link to="/home">Events</Link></li>
+                            <li className='hover:text-black' onClick={closeDropdown}><Link to="/discover">Discover</Link></li>
                             {/* <li onClick={closeDropdown}><Link to="/about">About</Link></li> */}
                         </ul>
                         
                     </div>
                 )}
-                <Link to="/" className="btn btn-ghost text-xl title-hidden">TGD</Link>
+                <Link to="/" className="btn text-accent hover:text-black hover:bg-transparent btn-ghost text-xl title-hidden">TGD</Link>
             </div>
             <div className="navbar-center">
-                <Link to="/home" className="btn btn-ghost text-xl title-block">The Good Deed</Link>
+                <Link to="/home" className="btn text-accent hover:text-black hover:bg-transparent btn-ghost text-xl title-block">The Good Deed</Link>
             </div>
             <div className="navbar-end">
                 {authUser && (
                     <div className="responsive-content">
-                        <Link to="/createevent" className="btn-ce hover:bg-black bg-white text-black hover:text-white">Create Event</Link>
-                        <Link to="/createevent" ><MdAdd className="svg-icon-ce" /></Link>
+                        <Link to="/createevent" className="btn-ce hover:bg-accent bg-black text-accent hover:text-black">Create Event</Link>
+                        <Link to="/createevent" ><MdAdd className="svg-icon-ce text-accent hover:text-black hover:bg-transparent" /></Link>
                     </div>
                 )}
                 {/* <button className="btn btn-ghost btn-circle">
@@ -142,12 +142,12 @@ const Navbar = () => {
                 {authUser && (
                     <div>
                         <div className="dropdown hidden sm:block">
-                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle ">
+                            <div tabIndex={0} role="button" className="btn hover:text-black hover:bg-transparent text-accent btn-ghost btn-circle ">
                                 <MdOutlineNotifications className='text-2xl'/>
                             </div>
                             <ul
                                 tabIndex={0}
-                                className="absolute right-0 dropdown-content bg-black bg-opacity-100 rounded-box z-[1] mt-3 w-80  shadow h-80">
+                                className="absolute right-0 dropdown-content bg-accent  rounded-box z-[1] mt-3 w-80  shadow h-80">
                                 {isLoading ? (
                                     <div className="flex justify-center items-center h-full">
                                         <p>Loading...</p>
@@ -155,16 +155,16 @@ const Navbar = () => {
                                 ) : notifications?.length === 0 ? (
                                     <div className="flex justify-center p-12 flex-col text-white">
                                         <div className="flex justify-center mb-7">
-                                            <BsMoonStars className="text-5xl text-gray-400" />
+                                            <BsMoonStars className="text-5xl text-black" />
                                         </div>
-                                        <h3 className="flex justify-center text-xl font-bold mb-3">No new notifications</h3>
+                                        <h3 className="flex justify-center text-xl font-bold text-black mb-3">No new notifications</h3>
                                         <p className="flex justify-center text-center text-gray-400">You’re all caught up with your good deeds!</p>
                                     </div>
                                 ) : (
                                     <ul className="h-full overflow-y-auto relative">
                                         {notifications.map((notif) => (
                                             <li key={notif._id} className="p-2  border-white">
-                                                <Link to={`/event/${notif.event?._id}`} className="block hover:bg-white text-white hover:text-black p-2 rounded">
+                                                <Link to={`/event/${notif.event?._id}`} className="block hover:bg-gray-200 text-black hover:text-black p-2 rounded-xl">
                                                     <div className="flex items-center justify-between ">
                                                         <div className="flex items-center">
                                                             <img src={notif.from?.profileImg || "/default-avatar.png"} alt="User" className="w-8 h-8 rounded-full mr-2" />
@@ -174,11 +174,11 @@ const Navbar = () => {
                                                         </div>
                                                         <img src={notif.event?.img || "/default-event.png"} alt="Event" className="w-8 h-8 rounded-md ml-auto" />
                                                     </div>
-                                                    <span className="text-xs text-gray-400">{new Date(notif.createdAt).toLocaleString()}</span>
+                                                    <span className="text-xs text-gray-800">{new Date(notif.createdAt).toLocaleString()}</span>
                                                 </Link>
                                             </li>
                                         ))}
-                                            <button onClick={deleteNotifications} className="text-sm w-full font-semibold cursor-pointer rounded-b-box bg-gray-700 hover:bg-slate-600 text-white p-2 text-center shadow-md fixed bottom-0">
+                                            <button onClick={deleteNotifications} className="text-sm w-full font-semibold cursor-pointer rounded-b-box bg-base-200 hover:text-black text-base-content p-2 text-center shadow-md fixed bottom-0">
                                                 Clear all
                                             </button>
                                     </ul>                
@@ -187,7 +187,7 @@ const Navbar = () => {
                         </div>
 
                         <div className="block sm:hidden">
-                        <Link to="/notifications" className="btn btn-ghost btn-circle">
+                        <Link to="/notifications" className="btn text-accent hover:text-black hover:bg-transparent btn-ghost btn-circle">
                             <MdOutlineNotifications className="text-2xl" />
                         </Link>
                         </div>
@@ -195,12 +195,12 @@ const Navbar = () => {
                 )}
                 {!authUser && (
                     <div className="">
-                        <Link to="/login" className="btn bg-transparent shadow-none border-none ">Sign In</Link>
+                        <Link to="/login" className="btn bg-transparent text-accent hover:text-black hover:bg-transparent shadow-none border-none ">Sign In</Link>
                     </div>
                 )}
                 {authUser && (
                     <div className="dropdown dropdown-end">
-                        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                        <div tabIndex={0} role="button" className="btn hover:bg-black btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
                                 <img
                                     alt="Profile"
@@ -209,14 +209,14 @@ const Navbar = () => {
                         </div>
                         <ul
                             tabIndex={0}
-                            className="menu menu-sm dropdown-content  bg-gray-300 bg-opacity-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                            className="menu menu-sm dropdown-content bg-accent bg-opacity-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                             <li onClick={closeDropdown}>
-                                <Link to={`/profile/${authUser.username}`} className="justify-between text-2xl text-blue-400">
+                                <Link to={`/profile/${authUser.username}`} className="justify-between text-2xl text-black hover:text-yellow-500">
                                     {authUser.fullName}
                                 </Link>
                             </li>
-                            <li onClick={closeDropdown}><Link to={`/profile/settings/${authUser.username}`}><IoSettingsSharp />Settings</Link></li>
-                            <li className='hover:text-red-600' onClick={(e)=>{e.preventDefault();logout()}}><a><IoLogOut />Sign Out</a></li>
+                            <li className='text-gray-600 hover:text-black' onClick={closeDropdown}><Link to={`/profile/settings/${authUser.username}`}><IoSettingsSharp />Settings</Link></li>
+                            <li className='text-gray-600 hover:text-red-600' onClick={(e)=>{e.preventDefault();logout()}}><a><IoLogOut />Sign Out</a></li>
                         </ul>
                     </div>
                 )}
