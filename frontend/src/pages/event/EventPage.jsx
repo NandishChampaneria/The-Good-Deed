@@ -114,7 +114,7 @@ const EventPage = () => {
                 <div className='flex flex-col items-center sm:p-4 px-0 py-4 lg:items-start gap-10'>
                     <figure className='max-w-xs'>
                         <img
-                            className="w-full h-full object-cover rounded-lg"
+                            className="w-full h-full object-cover rounded-[1rem]"
                             src={event.img}
                             alt={event.title}
                         />

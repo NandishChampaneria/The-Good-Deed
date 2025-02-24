@@ -4,7 +4,7 @@ const EventSkeleton = () => {
   return (
     <div className="animate-pulse flex flex-col items-center p-4 border sm:p-6 rounded-xl bg-gray-200">
       {/* Image Skeleton */}
-      <div className="w-72 h-72 bg-gray-300rounded-xl"></div>
+      <div className="w-72 h-72 bg-gray-300 rounded-[2rem]"></div>
 
       {/* Title Skeleton */}
       <div className="w-3/4 h-6 bg-gray-400  rounded mt-4"></div>

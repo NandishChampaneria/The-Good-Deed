@@ -5,6 +5,7 @@
 html, body {
   @apply bg-gradient-to-b to-white via-purple-300 from-cyan-400;
   /* background: radial-gradient(circle at top, rgb(10, 190, 255) 30%, rgb(237, 177, 249) 60%); */
+  font-family: 'Poppins', 'sans-serif';
 }
 
 

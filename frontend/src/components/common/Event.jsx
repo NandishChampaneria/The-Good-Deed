@@ -116,10 +116,10 @@ const Event = ({ event }) => {
 
     return (
         <div className="relative flex flex-col items-center">
-            <div className="flex flex-col items-start p-4 border-2 border-transparent rounded-xl bg-secondary hover:border-accent transition-all duration-300 ease-in-out" onClick={toggleSidebar}>
+            <div className="flex flex-col items-start p-4 border-2 border-transparent rounded-[2rem] bg-secondary hover:border-accent transition-all duration-300 ease-in-out" onClick={toggleSidebar}>
                 
                 <img
-                    className="object-cover w-72 rounded-xl aspect-square"
+                    className="object-cover w-72 rounded-[1rem] aspect-square"
                     src={event.img}
                     alt=""
                 />
@@ -169,7 +169,7 @@ const Event = ({ event }) => {
                 <div className='flex justify-center mt-8'>
                     <figure className='max-w-xs'>
                         <img
-                            className="w-full h-full object-cover p-4 rounded-3xl"
+                            className="w-full h-full object-cover p-4 rounded-[2rem]"
                             src={event.img}
                             alt={event.title}
                         />

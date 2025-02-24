@@ -101,7 +101,7 @@ const CreateEvent = () => {
                     <img
                         src={imgPreview}
                         alt="Event"
-                        className="w-full h-full object-cover rounded-lg"
+                        className="w-full h-full object-cover rounded-[1rem]"
                     />
                     <input
                         type="file"
@@ -110,7 +110,7 @@ const CreateEvent = () => {
                         onChange={handleImgChange}
                     />
                     <CiImageOn
-                        className="absolute bottom-2 right-2 w-10 h-10 bg-white text-black rounded-full p-1 cursor-pointer hover:bg-black hover:text-white"
+                        className="absolute bottom-2 right-2 w-10 h-10 bg-white text-black rounded-[1.75rem] p-1 cursor-pointer hover:bg-black hover:text-white"
                         onClick={() => imgRef.current.click()}
                     />
                 </div>

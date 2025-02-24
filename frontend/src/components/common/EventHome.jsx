@@ -204,24 +204,24 @@ const Event = ({ event }) => {
                     </p>
                 </div>
             </div> */}
-            <div className="flex flex-col items-start p-4 border-2 border-transparent rounded-xl bg-secondary hover:border-accent transition-all duration-300 ease-in-out " onClick={toggleSidebar}> 
+            <div className="flex flex-col items-start p-4 border-2 border-transparent rounded-[2rem] bg-secondary hover:border-accent transition-all duration-300 ease-in-out " onClick={toggleSidebar}> 
                 <div className="relative">    
                     <img
-                        className="object-cover w-72 rounded-xl aspect-square"
+                        className="object-cover w-72 rounded-[1rem] aspect-square"
                         src={event.img}
                         alt=""
                     />
 
                     {isOwner && (
                         <div className='absolute top-1 right-1 '>
-                            <Link to={`/event/manage/${event._id}`}><MdManageAccounts className='rounded-t-lg border-b border-accent bg-white text-base-content  hover:text-black p-1 text-3xl sm:text-4xl' /></Link>
+                            <Link to={`/event/manage/${event._id}`}><MdManageAccounts className='rounded-t-[0.75rem] border-b border-accent bg-white text-base-content  hover:text-black p-1 text-3xl sm:text-4xl' /></Link>
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setDeletePopupOpen(true); // Open popup on click
                                 }}
                                 >
-                                <MdDelete className="rounded-b-lg bg-white text-base-content hover:text-red-600 p-1 text-3xl sm:text-4xl" />
+                                <MdDelete className="rounded-b-[0.75rem] bg-white text-base-content hover:text-red-600 p-1 text-3xl sm:text-4xl" />
                             </button>
                             <Popup isOpen={isDeletePopupOpen} onClose={() => setDeletePopupOpen(false)}>
                                 <h2 className="text-lg text-black font-semibold mb-1">Confirm Deletion</h2>
@@ -292,7 +292,7 @@ const Event = ({ event }) => {
                 <div className='flex justify-center mt-8'>
                     <figure className='max-w-xs'>
                         <img
-                            className="w-full h-full object-cover p-4 rounded-3xl"
+                            className="w-full h-full object-cover p-4 rounded-[2rem]"
                             src={event.img}
                             alt={event.title}
                         />
