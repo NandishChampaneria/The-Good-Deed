@@ -27,34 +27,34 @@ export default {
         //   "warning": "#eab308",             
         //   "error": "#ff0000",
         // },
-        // mytheme2: {
-        //   "primary": "white",   // Soft Sky Blue
-        //   "primary-content": "black", //
-        //   "secondary": "#BFDBFE", // Light Pastel Blue
-        //   "accent": "white",    // Gentle Azure Blue
-        //   "base-200": "rgb(223, 228, 238)", //
-        //   "base-content": "#b7c1d2",
-        //   "neutral": "#E0F2FE",   // Pale Ice Blue
-        //   "base-100": "transparent",  // Near White
-        //   "info": "#7DD3FC",      // Baby Blue
-        //   "success": "#81C784", // Soft green
-        //   "warning": "#FFA726", // Warm amber
-        //   "error": "#FF6B6B", // Soft red
-        // },
         mytheme: {
           "primary": "white",   // Soft Sky Blue
           "primary-content": "black", //
-          "secondary": "#F4D793", // Light Pastel Blue
+          "secondary": "#d0e9ff", // Light Pastel Blue
           "accent": "white",    // Gentle Azure Blue
           "base-200": "rgb(223, 228, 238)", //
           "base-content": "#b7c1d2",
-          "neutral": "#FADA7A",   // Pale Ice Blue
+          "neutral": "#E0F2FE",   // Pale Ice Blue
           "base-100": "transparent",  // Near White
           "info": "#7DD3FC",      // Baby Blue
           "success": "#81C784", // Soft green
           "warning": "#FFA726", // Warm amber
           "error": "#FF6B6B", // Soft red
-        }
+        },
+        // mytheme: {
+        //   "primary": "white",   // Soft Sky Blue
+        //   "primary-content": "black", //
+        //   "secondary": "#F4D793", // Light Pastel Blue
+        //   "accent": "white",    // Gentle Azure Blue
+        //   "base-200": "rgb(223, 228, 238)", //
+        //   "base-content": "#b7c1d2",
+        //   "neutral": "#FADA7A",   // Pale Ice Blue
+        //   "base-100": "transparent",  // Near White
+        //   "info": "#7DD3FC",      // Baby Blue
+        //   "success": "#81C784", // Soft green
+        //   "warning": "#FFA726", // Warm amber
+        //   "error": "#FF6B6B", // Soft red
+        // }
       },
       // "night",
     ]

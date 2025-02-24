@@ -65,7 +65,7 @@ function App() {
           <Route path='/contact' element={<Contact />} />
           <Route path='/event/:eventId' element={<EventPage />} />
           <Route path='/createevent' element={authUser ? <CreateEvent /> : <Navigate to="/" />} />
-          <Route path='/event/manage/:eventId' element={authUser ? <ManageEvent /> : <Navigate to="/" />} />
+          <Route path='/event/manage/:eventId' element={authUser ? <ManageEvent /> : <Navigate to="/login" />} />
           <Route path='/profile/:username' element={<ProfilePage />} />
           <Route path='/profile/settings/:username' element={authUser ? <EditProfileModal /> : <Navigate to="/login" />} />
           <Route path='/notifications' element={authUser ? <Notifications /> : <Navigate to="/" />} />

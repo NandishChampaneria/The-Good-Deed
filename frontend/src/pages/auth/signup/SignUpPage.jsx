@@ -72,7 +72,7 @@ const SignUpPage = () => {
         </div>
 
         {/* Form Section */}
-        <section className="flex items-center bg-gradient-to-b to-yellow-200 from-orange-400 w-full px-1 mx-auto lg:w-2/6">
+        <section className="flex items-center bg-gradient-to-b to-white via-purple-300 from-cyan-400; w-full px-1 mx-auto lg:w-2/6">
           <div className="container flex items-center justify-center h-full px-6 mx-auto">
             <form
               className="w-full max-w-md bg-transparent rounded-lg "
@@ -142,7 +142,7 @@ const SignUpPage = () => {
               </div>
 
               <button
-                className="w-full px-6 py-3 mt-6 text-sm font-md tracking-wide text-black capitalize transition-colors duration-300 transform bg-white rounded-lg hover:bg-black hover:text-white focus:outline-none font-semibold focus:ring focus:ring-none "
+                className="w-full px-6 py-3 mt-6 text-sm font-md tracking-wide text-white capitalize transition-colors duration-300 transform bg-black rounded-lg hover:bg-white hover:text-black focus:outline-none font-semibold focus:ring focus:ring-none "
               >
                 {isPending ? "Loading..." : "Sign Up"}
               </button>

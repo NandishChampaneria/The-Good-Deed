@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { MdDateRange, MdLocationOn } from 'react-icons/md'; 
 import { FaCheck } from 'react-icons/fa';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -104,6 +104,10 @@ const EventPage = () => {
         return <div className="p-4">Event not found</div>;
     }
 
+    const isOwner = authUser._id === event.user._id;
+    const now = new Date();
+    const isEventInFuture = new Date(event.startDate) >= now;
+
     return (
         <div className="p-4 max-w-4xl mx-auto">
             <div className="card lg:card-side bg-transparent">
@@ -118,25 +122,25 @@ const EventPage = () => {
                     <div className='ep'>
                         <p className="text-gray-600 mb-3">Organiser</p>
                         <hr className='bg-neutral' />
-                        <div className='flex items-center mt-3'>
-                            <div className='w-5 h-5 mr-2 rounded-full'>
-                                <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" />  
+                        <Link to={`/profile/${event.user.username}`} className='flex items-center mt-3'>
+                            <div className='w-5 h-5 mr-2'>
+                                <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" className='rounded-full' />  
                             </div>
                             <p className="text-black">{event.user.fullName}</p>
-                        </div>
+                        </Link>
                     </div>
                 </div>
                 <div className="card-body px-0 py-2 sm:p-2">
-                    <h2 className="card-title text-6xl sm:text-7xl text-black font-bold mb-7">{event.title}</h2>
+                    <h2 className="card-title text-6xl sm:text-7xl text-black font-bold mb-7 break-all">{event.title}</h2>
                     <div className='mb-6 ep1'>
                         <div className="text-black text-2xl flex items-center sm:text-3xl">
-                            <div className='w-10 h-10 mr-2 rounded-full'>
-                                <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" />  
+                            <div className='w-10 h-10 mr-2'>
+                                <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" className='rounded-full' />  
                             </div>
                             {event.user.fullName}
                         </div>
                     </div>
-                    <p className="flex text-black flex-col gap-5">
+                    <div className="flex text-black flex-col gap-5">
                         <div className='flex items-center flex-row'>
                             <MdDateRange className="mr-2 border-2 p-1 border-gray-700 rounded-md text-4xl" />
                             <a
@@ -159,15 +163,25 @@ const EventPage = () => {
                                 {event.location}
                             </a>
                         </div>
-                    </p>
-                    <div className="card-actions mt-4 mb-5">
-                        <button 
-                            className="btn w-full bg-black text-accent hover:text-black hover:bg-white border-none" 
-                            onClick={() => joinEvent()} 
-                            disabled={isJoining || !authUser}
-                        >
-                            {isJoining ? <LoadingSpinner size="sm" /> : (isJoined ? <FaCheck /> : "Join")}
-                        </button>
+                        <div className="card-actions flex mt-[3.75rem] mb-8">
+                            {!isOwner && (
+                                <button 
+                                    className="btn w-full bg-black text-accent hover:text-black hover:bg-white border-none" 
+                                    onClick={() => joinEvent()} 
+                                    disabled={isJoining || !authUser || !isEventInFuture}
+                                >
+                                    {isJoining ? <LoadingSpinner size="sm" /> : (isJoined ? <FaCheck /> : "Join")}
+                                </button>
+                            )}
+                            {isOwner && (
+                                <Link 
+                                    className="btn w-full bg-black text-accent hover:text-black hover:bg-white border-none" 
+                                    to={`/event/manage/${event._id}`}
+                                >
+                                    Manage
+                                </Link>
+                            )}
+                        </div>
                     </div>
                     <div className=''>
                         <p className="text-gray-600 mb-3">About the Event</p>

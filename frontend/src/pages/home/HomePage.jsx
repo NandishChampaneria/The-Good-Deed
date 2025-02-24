@@ -72,7 +72,7 @@ const HomePage = () => {
     const eventDate = new Date(event.endDate);
     return feedType === "upcoming" ? eventDate >= now : eventDate < now;
   }).sort((a,b) => new Date(a.startDate) - new Date(b.startDate));
-  
+
   
   // Handle loading and error states
   if (isLoading) return <div><HomeSkeleton /></div>;

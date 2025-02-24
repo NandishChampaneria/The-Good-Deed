@@ -125,8 +125,8 @@ const Event = ({ event }) => {
                 />
                 <h1 class="mt-4 mb-4 text-2xl font-semibold text-black capitalize">{event.title}</h1>
                 <p className='text-gray-700 items-center flex flex-row'>
-                    <div className='w-4 h-4 mr-2 flex'>
-                        <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" />  
+                    <div className='w-5 h-5 mr-2 flex'>
+                        <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" className='rounded-full' />  
                     </div>
                     By {event.user.fullName}
                 </p>
@@ -149,10 +149,10 @@ const Event = ({ event }) => {
             {/* Sidebar */}
             <div
                 ref={sidebarRef}
-                className={`fixed z-10000 top-0 right-0 h-full w-100 w-full bg-gradient-to-r from-secondary to-purple-200 rounded-l-3xl shadow-lg transform transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'} overflow-y-auto`}
+                className={`fixed z-10000 top-0 right-0 h-full w-100 w-full bg-gradient-to-r from-purple-300 to-secondary rounded-l-3xl shadow-lg transform transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'} overflow-y-auto`}
                 style={{ maxHeight: "100vh" }}
             >
-                <div className="sticky top-0 left-0 w-full h-16 bg-gradient-to-r from-secondary to-purple-200 border-b border-b-neutral p-4 z-30">
+                <div className="sticky top-0 left-0 w-full h-16 bg-gradient-to-r to-secondary from-purple-300  p-4 z-30">
                     <button
                         className="text-accent text-2xl ml-3 mr-7 hover:text-black"
                         onClick={toggleSidebar}
@@ -160,7 +160,7 @@ const Event = ({ event }) => {
                         &times;
                     </button>
                     <Link to={`/event/${event._id}`} 
-                        className="text-base-content bg-accent rounded-md p-2 hover:text-black"
+                        className="text-base-content bg-accent font-semibold rounded-md p-2 hover:text-black"
                     >
                         Event Page
                     </Link>
@@ -178,8 +178,8 @@ const Event = ({ event }) => {
                 <div className="p-11">
                     <h2 className="text-5xl text-black font-bold mb-4">{event.title}</h2>
                     <p className='text-gray-700 text-xl items-center flex flex-row mb-6'>
-                        <div className='w-5 h-5 mr-2 rounded-full'>
-                            <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" />  
+                        <div className='w-7 h-7 mr-2'>
+                            <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" className='rounded-full' />  
                         </div>
                         {event.user.fullName}
                     </p>

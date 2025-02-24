@@ -71,7 +71,6 @@ const Event = ({ event }) => {
 			}
 		},
 		onSuccess: () => {
-			toast.success("Post deleted successfully");
 			queryClient.invalidateQueries({ queryKey: ["events"] });
             setDeletePopupOpen(false); 
             window.location.reload();
@@ -225,8 +224,8 @@ const Event = ({ event }) => {
                                 <MdDelete className="rounded-b-lg bg-white text-base-content hover:text-red-600 p-1 text-3xl sm:text-4xl" />
                             </button>
                             <Popup isOpen={isDeletePopupOpen} onClose={() => setDeletePopupOpen(false)}>
-                                <h2 className="text-lg text-white font-semibold mb-1">Confirm Deletion</h2>
-                                <p>Are you sure you want to delete this event?</p>
+                                <h2 className="text-lg text-black font-semibold mb-1">Confirm Deletion</h2>
+                                <p className='text-gray-700'>Are you sure you want to delete this event?</p>
                                 <div className="flex justify-center mt-4">
                                     <button
                                         className="px-4 py-2 text-black bg-gray-300 rounded-md mr-2"
@@ -249,7 +248,7 @@ const Event = ({ event }) => {
                     <h1 class="mt-2 text-2xl font-semibold text-black capitalize">{event.title}</h1>
                     <p className='text-gray-700 items-center flex flex-row'>
                         <div className='w-5 h-5 mr-2'>
-                            <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" />  
+                            <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" className='rounded-full' />  
                         </div>
                         By {event.user.fullName}
                     </p>
@@ -273,18 +272,18 @@ const Event = ({ event }) => {
             {/* Sidebar */}
             <div
                 ref={sidebarRef}
-                className={`fixed z-10000 top-0 md:text-start right-0 h-full w-100 w-full bg-gradient-to-r from-secondary to-purple-200 rounded-l-3xl shadow-lg transform transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'} overflow-y-auto`}
+                className={`fixed z-10000 top-0 md:text-start right-0 h-full w-100 w-full bg-gradient-to-r from-purple-300 to-secondary rounded-l-3xl shadow-lg transform transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'} overflow-y-auto`}
                 style={{ maxHeight: '100vh' }}
             >
-                <div className="sticky top-0 left-0 w-full h-16 bg-gradient-to-r from-secondary to-purple-200 border-b border-b-neutral p-4 z-30">
+                <div className="sticky top-0 left-0 w-full h-16 bg-gradient-to-r from-purple-300 to-secondary p-4 z-30">
                     <button
-                        className="text-accent text-2xl ml-3 mr-7 hover:text-black"
+                        className="text-accent text-2xl font-semibold ml-3 mr-7 hover:text-black"
                         onClick={toggleSidebar}
                     >
                         &times;
                     </button>
                     <Link to={`/event/${event._id}`} 
-                        className="text-base-content bg-accent rounded-md p-2 hover:text-black"
+                        className="text-base-content bg-accent rounded-md p-2 font-semibold hover:text-black"
                     >
                         Event Page
                     </Link>
@@ -302,8 +301,8 @@ const Event = ({ event }) => {
                 <div className="px-4 py-11 sm:p-11">
                     <h2 className="text-5xl text-black font-bold mb-4">{event.title}</h2>
                     <p className='text-gray-700 text-xl items-center flex flex-row mb-6'>
-                        <div className='w-5 h-5 mr-2 rounded-full'>
-                            <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" />  
+                        <div className='w-7 h-7 mr-2'>
+                            <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" className='rounded-full' />  
                         </div>
                         {event.user.fullName}
                     </p>

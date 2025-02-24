@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const AboutPage = () => {
   return (
-    <div className="absolute top-0 left-0 w-full bg-black text-white h-screen overflow-y-scroll snap-y snap-mandatory">
+    <div className="absolute top-0 left-0 w-full bg-gradient-to-b to-white via-purple-300 from-cyan-400 text-white h-screen overflow-y-scroll snap-y snap-mandatory">
       {/* Heading Section */}
       <section className="h-screen flex flex-col items-center justify-center px-6 text-center snap-start">
         <motion.h1
@@ -12,15 +12,15 @@ const AboutPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          About <span className="bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">Good Deeds</span>
+          About <span className="bg-gradient-to-r from-blue-700 to-purple-600 text-transparent bg-clip-text">The Good Deed</span>
         </motion.h1>
         <motion.p
-          className="text-lg md:text-xl text-gray-300 max-w-3xl"
+          className="text-lg md:text-xl text-gray-700 max-w-3xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
         >
-          The <span className="text-gray-400">Good Deeds App</span> makes it effortless to create, join, and manage social causes. 
+          <span className="text-gray-800"> The Good Deed </span> makes it effortless to create, join, and manage social causes. 
           Whether you want to organize an event, participate in one, or track your contributions, we've got you covered.
         </motion.p>
       </section>
@@ -72,7 +72,7 @@ const AboutPage = () => {
 
           <motion.a
             href={feature.link}
-            className="mt-6 px-6 py-3 bg-gray-800 text-white rounded-full text-lg font-medium hover:bg-gray-700 transition-all duration-300"
+            className="mt-6 px-6 py-3 bg-black text-white rounded-lg text-lg font-medium hover:bg-white hover:text-black transition-all duration-300"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0, ease: "easeOut" }}
             transition={{ duration: 1, delay: 0.5 }} 

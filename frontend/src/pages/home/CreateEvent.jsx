@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { MdLocationOn } from 'react-icons/md';
 import { toast } from 'react-hot-toast';
 import { CiImageOn } from "react-icons/ci";
+import { useNavigate } from 'react-router-dom';
 
 const defaultImage = 'https://res.cloudinary.com/diytnzged/image/upload/v1723141022/retro4_j5u6k2.avif';
 
@@ -22,6 +23,8 @@ const CreateEvent = () => {
     const [img, setImg] = useState(null);
     const [imgPreview, setImgPreview] = useState(defaultImage);
     const imgRef = useRef(null);
+
+    const navigate = useNavigate()
 
     const queryClient = useQueryClient();
     const { mutate: createEvent, isPending } = useMutation({
@@ -45,6 +48,7 @@ const CreateEvent = () => {
             setImgPreview(defaultImage);
             toast.success("Event created successfully");
             queryClient.invalidateQueries({ queryKey: ["events"] });
+            navigate('/');
         },
     });
 

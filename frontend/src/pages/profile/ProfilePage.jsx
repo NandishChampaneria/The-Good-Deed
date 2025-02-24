@@ -8,6 +8,7 @@ import {formatMemberSinceDate} from "../../utils/date"
 
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoCalendarOutline } from "react-icons/io5";
+import { FaUserAltSlash } from "react-icons/fa";
 import { FaLink } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { useQueries, useQuery } from "@tanstack/react-query";
@@ -60,7 +61,14 @@ const ProfilePage = () => {
 			<div className='flex-[4_4_0] min-h-screen '>
 				{/* HEADER */}
 				{(isLoading || isRefetching) && <ProfileHeaderSkeleton />}
-				{!isLoading && !isRefetching && !user && <p className='text-center text-lg mt-4'>User not found</p>}
+				{!isLoading && !isRefetching && !user && (
+					<div className="flex justify-center flex-col px-4 text-center gap-10 text-accent">						  
+						<div className="flex justify-center">
+							<FaUserAltSlash className="text-9xl flex"/>
+					  	</div>
+					  	<h1 className="flex justify-center font-bold text-3xl">No User Found</h1>
+					</div>
+				)}
 				<div className='flex flex-col'>
 					{!isLoading && !isRefetching && user && (
 						<>
@@ -77,16 +85,16 @@ const ProfilePage = () => {
 									<div className='flex justify-center flex-col gap-2'>
 										<span className='font-bold text-black text-2xl'>{user?.fullName}</span>
 										<div className="flex flex-row gap-5">
-											<span className='text-sm text-gray-600'>@{user?.username}</span>
+											<span className='text-sm text-gray-700'>@{user?.username}</span>
 											<div className='flex gap-2 items-center'>
 												<IoCalendarOutline className='w-4 h-4 text-gray-600' />
-												<span className='text-sm text-gray-600'>{memberSinceDate}</span>
+												<span className='text-sm text-gray-700'>{memberSinceDate}</span>
 											</div>
 										</div>
 										{user?.link && (
 											<div className='flex gap-1 items-center '>
 												<>
-													<FaLink className='w-3 h-3 text-slate-500' />
+													<FaLink className='w-3 h-3 text-gray-700' />
 													<a
 														href='https://youtube.com/@asaprogrammer_'
 														target='_blank'
@@ -123,7 +131,7 @@ const ProfilePage = () => {
 								</div>
 							</div> */}
 							<div className="join flex justify-center w-full">
-								<input className="join-item btn w-32 sm:w-48 lg:w-60" type="radio" name="options" aria-label="My Events" defaultChecked onClick={() => setFeedType("events")} />
+								<input className="join-item btn w-32 sm:w-48 lg:w-60" type="radio" name="options" aria-label="Created Events" defaultChecked onClick={() => setFeedType("events")} />
 								{feedType === "events"}
 							
 								<input className="join-item btn w-32 sm:w-48 lg:w-60" type="radio" name="options" aria-label="Joined Events" onClick={() => setFeedType("joined")} />

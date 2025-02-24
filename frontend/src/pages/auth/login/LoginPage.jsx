@@ -67,7 +67,7 @@ const LoginPage = () => {
         </div>
 
         {/* Form Section */}
-        <div className="flex items-center bg-gradient-to-b to-yellow-200 from-orange-400 w-full px-6 mx-auto lg:w-2/6">
+        <div className="flex items-center bg-gradient-to-b to-white via-purple-300 from-cyan-400; w-full px-6 mx-auto lg:w-2/6">
           <div className="flex-1">
             <div className="text-center">
               <div className="flex justify-center mx-auto">
@@ -82,11 +82,11 @@ const LoginPage = () => {
             <div className="mt-8">
               <form onSubmit={handleSubmit}>
                 <div>
-                  <div className="input input-bordered rounded flex items-center border-none gap-2 bg-secondary text-black">
+                  <div className="input input-bordered rounded flex items-center border-none gap-2 bg-secondary text-black focus:outline-none">
                     <MdOutlineMail />
                     <input
                       type="text"
-                      className="grow placeholder:text-gray-700"
+                      className="grow placeholder:text-gray-700 focus:outline-none"
                       placeholder="Username"
                       name="username"
                       onChange={handleInputChange}
@@ -110,7 +110,7 @@ const LoginPage = () => {
                 </div>
 
                 <div className="mt-6">
-                  <button className="w-full px-4 py-2 tracking-wide text-black font-semibold transition-colors duration-300 transform bg-accent rounded-lg hover:bg-black hover:text-white focus:outline-none focus:bg-black focus:ring focus:ring-none">
+                  <button className="w-full px-4 py-2 tracking-wide text-white font-semibold transition-colors duration-300 transform bg-black rounded-lg hover:bg-white hover:text-black focus:outline-none focus:bg-black focus:ring focus:ring-none">
                     {isPending ? "Loading..." : "Sign in"}
                   </button>
                 </div>
