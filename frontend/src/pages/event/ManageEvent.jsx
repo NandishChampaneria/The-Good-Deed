@@ -9,6 +9,8 @@ import { CiImageOn } from 'react-icons/ci';
 import { FaCheck } from 'react-icons/fa';
 import Popup from '../../components/common/Popup';
 import { useNavigate } from 'react-router-dom';
+import ReactQuill from 'react-quill'; 
+import 'react-quill/dist/quill.snow.css'; // Import the necessary Quill styles
 
 const ManageEvent = () => {
     const { eventId } = useParams();
@@ -191,6 +193,13 @@ const ManageEvent = () => {
         updateEvent(formData);
     };
 
+    const handleDescriptionChange = (value) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            description: value,
+        }));
+    };
+
     const toggleSidebar = () => {
         setSidebarOpen(!isSidebarOpen);
     };
@@ -360,13 +369,12 @@ const ManageEvent = () => {
                                             onChange={handleInputChange}
                                         />
                                         <h2 className="text-3xl text-black font-bold mb-2">Description</h2>
-                                        <textarea
-                                            type='text'
+                                        <ReactQuill
                                             placeholder={event?.description}
-                                            className='input border-none text-black bg-white focus:outline-none rounded p-2 input-md w-full mb-5 h-16'
+                                            className='input border-none text-black bg-white focus:outline-none rounded p-2 input-md w-full mb-5 h-56 overflow-y-auto'
                                             value={formData.description}
                                             name='description'
-                                            onChange={handleInputChange}
+                                            onChange={handleDescriptionChange}
                                         />
                                         <h2 className="text-3xl text-black font-bold mb-2">Date and Time</h2>
                                         <p className='mb-1 text-black'>Start</p>
@@ -396,7 +404,7 @@ const ManageEvent = () => {
                                             name='location'
                                             onChange={handleInputChange}
                                         />
-                                        <button type='submit' className='w-full btn hover:bg-white hover:text-black bg-black text-white'>
+                                        <button type='submit' className='w-full btn hover:bg-white mb-10 hover:text-black bg-black text-white'>
                                             {isUpdating ? <LoadingSpinner size='sm'/> : "Update"}
                                         </button>
                                     </div>

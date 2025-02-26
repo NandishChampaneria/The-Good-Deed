@@ -186,7 +186,10 @@ const EventPage = () => {
                     <div className=''>
                         <p className="text-gray-600 mb-3">About the Event</p>
                         <hr className='bg-neutral' />
-                        <p className="text-black mt-3">{event.description}</p>
+                        <p
+                            className="text-black mt-3"
+                            dangerouslySetInnerHTML={{ __html: event.description }}
+                        />
                     </div>
                 </div>
             </div>

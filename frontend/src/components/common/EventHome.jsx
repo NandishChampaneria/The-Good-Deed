@@ -381,7 +381,11 @@ const Event = ({ event }) => {
                     </div>
                     <div>
                         <p className='text-gray-700 mb-2'>Description</p>
-                        <p className='text-black'>{event.description}</p>
+                        <p 
+                            className='text-black'
+                            dangerouslySetInnerHTML={{ __html: event.description }}
+                        >
+                        </p>
                     </div>
                 </div>
             </div>

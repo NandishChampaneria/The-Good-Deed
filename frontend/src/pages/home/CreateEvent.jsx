@@ -5,6 +5,10 @@ import { toast } from 'react-hot-toast';
 import { CiImageOn } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';
 
+import ReactQuill from 'react-quill'; 
+import 'react-quill/dist/quill.snow.css'; // Import the necessary Quill styles
+
+
 const defaultImage = 'https://res.cloudinary.com/diytnzged/image/upload/v1723141022/retro4_j5u6k2.avif';
 
 
@@ -86,6 +90,10 @@ const CreateEvent = () => {
         const newTime = e.target.value;
         setEndTime(newTime);
         setEndDate((prev) => `${endDate.split("T")[0]}T${newTime}`); // Combine with date
+    };
+
+    const handleDescriptionChange = (value) => {
+        setDescription(value);
     };
 
     const handleSubmit = (event) => {
@@ -186,13 +194,11 @@ const CreateEvent = () => {
                         />
                     </div>
                     <div className="mb-4 flex items-center bg-secondary rounded-lg p-2">
-                        
-                        <textarea
+                        <ReactQuill
                             placeholder="Description"
                             value={description}
-                            onChange={(e) => setDescription(e.target.value)}
+                            onChange={handleDescriptionChange}
                             className="w-full p-3 bg-transparent text-black outline-none placeholder:text-gray-800 placeholder:font-semibold"
-                            rows="4"
                             required
                         />
                     </div>
