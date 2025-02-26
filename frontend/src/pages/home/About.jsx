@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const AboutPage = () => {
   return (
-    <div className="absolute top-0 left-0 w-full bg-gradient-to-b to-white via-purple-300 from-cyan-400 text-white h-screen overflow-y-scroll snap-y snap-mandatory">
+    <div className="absolute top-0 left-0 w-full bg-gradient-to-b to-purple-400 from-cyan-400 text-white h-screen overflow-y-scroll snap-y snap-mandatory">
       {/* Heading Section */}
       <section className="h-screen flex flex-col items-center justify-center px-6 text-center snap-start">
         <motion.h1

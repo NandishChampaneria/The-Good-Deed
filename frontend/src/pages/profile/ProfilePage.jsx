@@ -58,7 +58,7 @@ const ProfilePage = () => {
 
 	return (
 		<> 
-			{(user?.userType === "individual" &&
+			{(
 				<div className='flex-[4_4_0] min-h-screen '>
 					{/* HEADER */}
 					{(isLoading || isRefetching) && <ProfileHeaderSkeleton />}

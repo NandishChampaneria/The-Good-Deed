@@ -116,7 +116,7 @@ const Navbar = () => {
     return (
         <>
             <SearchModal isOpen={isModalOpen} closeModal={closeModal} />
-            <div className={`navbar bg-transparent z-10000 sticky top-0 ${scrolled ? 'bg-opacity-50 backdrop-blur-md bg-gray-900' : 'bg-transparent'}`}>
+            <div className={`navbar bg-transparent z-10000 sticky top-0 ${scrolled ? 'bg-opacity-50 backdrop-blur-lg bg-gray-900' : 'bg-transparent'}`}>
                 <div className="navbar-start">
                     {!authUser && (
                         <Link to="/discover" className="btn text-accent hover:text-black hover:bg-transparent btn-ghost">Explore<GoArrowUpRight className='w-5 h-5'/></Link>

@@ -22,6 +22,8 @@ import AllEevents from "./pages/home/AllEevents";
 import AllOrganizations from "./pages/home/AllOrganizations";
 import OrgSignUpPage from "./pages/auth/orgsignup/OrgSignUpPage";
 import Test from "./pages/home/test";
+import PrivacyPolicy from "./pages/home/PrivacyPolicy";
+import Terms from "./pages/home/Terms";
 
 function App() {
   const { data: authUser, isLoading } = useQuery({
@@ -78,7 +80,8 @@ function App() {
           <Route path='/login' element={!authUser ? <LoginPage /> : <Navigate to="/discover" />} />
           <Route path='/signup' element={!authUser ? <SignUpPage /> : <Navigate to="/discover" />} />
           <Route path='/orgsignup' element={!authUser ? <OrgSignUpPage /> : <Navigate to="/home" />} />
-          <Route path='/test' element={<Test />} />
+          <Route path='/privacypolicy' element={<PrivacyPolicy />} />
+          <Route path='/terms' element={<Terms />} />
         </Routes>
       </div>
       {location.pathname !== "/login" && location.pathname !== "/signup" && location.pathname !== "/orgsignup" && <Footer/>}

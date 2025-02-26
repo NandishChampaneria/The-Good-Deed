@@ -53,19 +53,19 @@ const SearchModal = ({ isOpen, closeModal }) => {
                 <div className="fixed px-2 inset-0 bg-gray-900 bg-opacity-50 flex justify-center z-[10001]">
                     <div 
                         ref={modalRef} 
-                        className="bg-gradient-to-r from-purple-300 to-secondary p-3 rounded-lg h-60 shadow-lg w-[30rem] mt-10 "
+                        className="bg-gradient-to-r from-purple-400 to-cyan-400 p-3 rounded-lg h-60 shadow-lg w-[30rem] mt-10 "
                     >
                         <div>
                             <input
                                 type="text"
-                                className="input text-2xl bg-transparent placeholder:text-gray-500 text-black border-none focus:outline-none w-full"
+                                className="input text-2xl bg-transparent placeholder:text-gray-300 text-black border-none focus:outline-none w-full"
                                 placeholder="Search events"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 onKeyUp={handleSearch}
                             />
                         </div>
-                        <hr className='border-gray-400'/>
+                        <hr className='border-gray-300'/>
 
                         {/* Display Search Results */}
                         <div className="mt-4 px-4 max-h-40 overflow-y-auto"> {/* Add max height and scrollable behavior */}
@@ -76,10 +76,10 @@ const SearchModal = ({ isOpen, closeModal }) => {
                                     {searchResults.length > 0 ? (
                                         searchResults.map((event) => (
                                             <div key={event._id}>
-                                                <li className="hover:bg-white rounded-md">
+                                                <li className="hover:bg-white text-white hover:text-black rounded-md">
                                                     <Link 
                                                         to={`/event/${event._id}`} 
-                                                        className="text-2xl p-1 flex flex-row items-center text-gray-800"
+                                                        className="text-2xl p-1 flex flex-row items-center"
                                                         onClick={() => closeModal()} // Close the modal when an event is clicked
                                                     >
                                                         <img

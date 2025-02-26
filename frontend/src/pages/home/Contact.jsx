@@ -33,7 +33,7 @@ const ContactPage = () => {
   });
 
   return (
-    <div className="absolute top-0 left-0 w-full bg-gradient-to-b to-white via-purple-300 from-cyan-400 text-white min-h-screen flex flex-col items-center justify-center px-6">
+    <div className="absolute top-0 left-0 w-full bg-gradient-to-b to-purple-400 from-cyan-400 text-white min-h-screen flex flex-col items-center justify-center px-6">
       {/* Heading */}
       <motion.h1
         className="text-4xl md:text-5xl font-bold mb-6 text-center"
