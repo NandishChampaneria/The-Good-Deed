@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { MdOutlineMail, MdPassword, MdDriveFileRenameOutline } from "react-icons/md";
+import { MdOutlineMail, MdPassword, MdDriveFileRenameOutline, MdPhone, MdHome, MdMail } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
@@ -12,17 +12,21 @@ const SignUpPage = () => {
     username: "",
     fullName: "",
     password: "",
+    contactPhone: "",
+    address:""
   });
 
+  const [userType, setUserType] = useState("individual"); // Default to 'individual'
   const navigate = useNavigate();
 
+
   const { mutate, isError, isPending, error } = useMutation({
-    mutationFn: async ({ email, username, fullName, password }) => {
+    mutationFn: async ({ email, username, fullName, password, userType, contactPhone, address }) => {
       try {
         const res = await fetch("/api/auth/signup", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, username, fullName, password }),
+          body: JSON.stringify({ email, username, fullName, password, userType, contactPhone, address }),
         });
 
         const data = await res.json();
@@ -42,11 +46,17 @@ const SignUpPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    mutate(formData);
+    
+    const formDataWithUserType = { ...formData, userType};
+    mutate(formDataWithUserType);
   };
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleUserTypeChange = (e) => {
+    setUserType(e.target.value);
   };
 
   return (
@@ -84,9 +94,21 @@ const SignUpPage = () => {
                 Create an account
               </h1>
 
+              <div className="mt-4">
+                <select
+                  className="w-full py-3 px-3 mt-2 bg-secondary text-black border-none rounded-lg focus:outline-none"
+                  name="userType"
+                  onChange={handleUserTypeChange}
+                  value={userType}
+                >
+                  <option value="individual">Individual</option>
+                  <option value="organization">Organization</option>
+                </select>
+              </div>
+
               <div className="relative flex items-center mt-8">
                 <span className="absolute">
-                  <MdOutlineMail className="w-6 h-6 mx-3 text-black" />
+                  <MdMail className="w-6 h-6 mx-3 text-black" />
                 </span>
                 <input
                   type="email"
@@ -119,7 +141,7 @@ const SignUpPage = () => {
                   <input
                     type="text"
                     className="block w-full py-3 text-black bg-secondary border-none rounded-lg px-11 placeholder:text-gray-700 focus:outline-none"
-                    placeholder="Full Name"
+                    placeholder={userType === "individual" ? "Full Name" : "Org. Name"}
                     name="fullName"
                     onChange={handleInputChange}
                     value={formData.fullName}
@@ -141,6 +163,39 @@ const SignUpPage = () => {
                 />
               </div>
 
+              {/* Show these fields only if userType is "ngo" */}
+              {userType === "organization" && (
+                <>
+                  <div className="relative flex items-center mt-4">
+                    <span className="absolute">
+                      <MdPhone className="w-6 h-6 mx-3 text-black" />
+                    </span>
+                    <input
+                      type="text"
+                      className="block w-full py-3 text-black bg-secondary border-none rounded-lg px-11 placeholder:text-gray-700 focus:outline-none"
+                      placeholder="Contact Phone"
+                      name="contactPhone"
+                      onChange={handleInputChange}
+                      value={formData.contactPhone}
+                    />
+                  </div>
+
+                  <div className="relative flex items-center mt-4">
+                    <span className="absolute">
+                      <MdHome className="w-6 h-6 mx-3 text-black" />
+                    </span>
+                    <input
+                      type="text"
+                      className="block w-full py-3 text-black bg-secondary border-none rounded-lg px-11 placeholder:text-gray-700 focus:outline-none"
+                      placeholder="Address"
+                      name="address"
+                      onChange={handleInputChange}
+                      value={formData.address}
+                    />
+                  </div>
+                </>
+              )}
+
               <button
                 className="w-full px-6 py-3 mt-6 text-sm font-md tracking-wide text-white capitalize transition-colors duration-300 transform bg-black rounded-lg hover:bg-white hover:text-black focus:outline-none font-semibold focus:ring focus:ring-none "
               >
@@ -149,16 +204,16 @@ const SignUpPage = () => {
 
               {isError && <p className="text-red-500 mt-2">{error.message}</p>}
 
-          <div className="mt-6 text-center ">
-          <p className="text-gray-700 dark:text-gray-400">
-            Already have an account?{" "}
-            <Link to="/login">
-            <button className="text-black hover:underline">
-              Sign in
-            </button>
-            </Link>
-          </p>
-          </div>
+              <div className="mt-6 text-center ">
+                <p className="text-gray-700 dark:text-gray-400">
+                  Already have an account?{" "}
+                  <Link to="/login">
+                  <button className="text-black hover:underline">
+                    Sign in
+                  </button>
+                  </Link>
+                </p>
+              </div>
             </form>
           </div>
         </section>

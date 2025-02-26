@@ -38,7 +38,26 @@ const userSchema = new mongoose.Schema({
                 ref: "Event",
                 default: []
             }
-        ]
+        ],
+        userType: {
+            type: String,
+            enum: ['individual', 'organization'],
+            required: true
+        },
+        contactPhone: {
+            type: String,
+            default: "",
+            required: function() {
+                return this.userType === 'organization';
+            }
+        },
+        address: {
+            type: String,
+            default: "",
+            required: function() {
+                return this.userType === 'organization';
+            }
+        },
     }, 
     {timestamps: true}
 );

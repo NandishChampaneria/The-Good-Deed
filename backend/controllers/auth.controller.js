@@ -6,7 +6,7 @@ import passport from "passport";
 
 export const signup = async (req, res) => {
     try {
-        const { fullName, username, email, password } = req.body;
+        const { fullName, username, email, password, userType, contactPhone, address } = req.body;
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
@@ -27,6 +27,16 @@ export const signup = async (req, res) => {
             return res.status(400).json({ error: "Password must be at least 6 characters long" });
         }
 
+        if(!userType || !['individual', 'organization'].includes(userType)) {
+            return res.status(400).json({ error: "Invalid user type" });
+        }
+
+        if(userType === 'organization') {
+            if(!contactPhone || !address) {
+                return res.status(400).json({ error: "Organizations must provide contact phone and address" });
+            }
+        }
+
         // hash password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -35,7 +45,10 @@ export const signup = async (req, res) => {
             fullName,
             username,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            userType,
+            contactPhone: userType === 'organization' ? contactPhone: '',
+            address: userType === 'organization' ? address: '',
         });
 
         if(newUser){
@@ -49,6 +62,9 @@ export const signup = async (req, res) => {
                 email: newUser.email,
                 createdEvents: newUser.createdEvents,
                 profileImg: newUser.profileImg,
+                userType: newUser.userType,
+                contactPhone: newUser.contactPhone,
+                address: newUser.address,
             });
         } else {
             res.status(400).json({ error: "Invalid user data" });
@@ -79,6 +95,9 @@ export const login = async (req, res) => {
             email: user.email,
             createdEvents: user.createdEvents,
             profileImg: user.profileImg,
+            userType: user.userType,
+            contactPhone: user.contactPhone,
+            address: user.address,
         });
 
     } catch(error) {
