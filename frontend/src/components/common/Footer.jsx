@@ -5,35 +5,36 @@ import { FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
   return (
-    <footer className="bg-transparent text-black py-8 mt-10">
-      <div className="container mx-auto px-6 pt-6 flex flex-col items-center border-t border-black md:items-start md:flex-row justify-between gap-y-6">
+    <footer className="bg-transparent text-black py-8 mt-10 border-t border-black">
+      <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-start gap-y-6">
         
-        {/* Left Section - Brand Name & Navigation */}
-        <div className="flex flex-row items-center md:items-start w-full md:w-auto">
-          <div className="flex flex-col items-center mr-10">
-            <img src="/logo.svg" alt="SVG Icon" className="w-20 h-20 text-white" />
-            <span className="font-semibold text-xl text-white">The Good Deed</span>
+        {/* Left Section - Logo & Navigation */}
+        <div className="flex flex-col md:flex-row w-full md:w-auto gap-10">
+          {/* Logo */}
+          <div className="flex flex-col items-center">
+            <img src="/logo.svg" alt="Logo" className="w-20 h-20 -mt-3" />
+            <span className="text-xl text-white font-bold">The Good Deed</span>
           </div>
 
-          {/* Navigation Links */}
-          <div className="flex flex-wrap justify-center md:justify-start gap-x-10 gap-y-4 mt-4">
-            <nav className="flex flex-col items-center md:items-start text-gray-700">
+          {/* Navigation Links - Aligned to the top of the logo */}
+          <div className="flex flex-wrap justify-center md:justify-start gap-x-10 gap-y-4 items-start">
+            <nav className="flex flex-col text-gray-700">
               <Link to="/discover" className="hover:text-black">Discover</Link>
               <Link to="/home" className="hover:text-black">My Events</Link>
             </nav>
-            <nav className="flex flex-col items-center md:items-start text-gray-700">
+            <nav className="flex flex-col text-gray-700">
               <Link to="/about" className="hover:text-black">About</Link>
               <Link to="/contact" className="hover:text-black">Contact</Link>
             </nav>
-            <nav className="flex flex-col items-center md:items-start text-gray-700">
+            <nav className="flex flex-col text-gray-700">
               <Link to="/privacypolicy" className="hover:text-black">Privacy Policy</Link>
               <Link to="/terms" className="hover:text-black">Terms & Conditions</Link>
             </nav>
           </div>
         </div>
 
-        {/* Social Media Icons */}
-        <div className="flex gap-6 items-center justify-center md:justify-end">
+        {/* Social Media Icons - Now Aligned to Top */}
+        <div className="flex gap-6 items-start">
           <a href="#" className="text-gray-700 hover:text-black text-lg">
             <FaXTwitter />
           </a>
@@ -47,7 +48,7 @@ const Footer = () => {
       </div>
 
       {/* Copyright */}
-      <div className="text-center text-gray-500 mt-6 text-sm">
+      <div className="text-center text-gray-300 mt-6 text-sm">
         © {new Date().getFullYear()} The Good Deed. All rights reserved.
       </div>
     </footer>
