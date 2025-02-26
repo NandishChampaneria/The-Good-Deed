@@ -154,73 +154,29 @@ const Event = ({ event }) => {
 
     return (
         <div className="relative">
-            {/* <div className="card flex-row-small lg:card-side bg-base-100 w-101 shadow-xl p-2 cursor-pointer hover:bg-base-300" onClick={toggleSidebar}>
-                <figure>
+            <div 
+                className="md:flex hidden flex-col items-start p-4 border-2 border-transparent rounded-[2rem] bg-transparent hover:border-accent transition-all duration-300 ease-in-out w-80 max-w-80" 
+                onClick={toggleSidebar}
+            > 
+                {/* Image Container */}
+                <div className="relative w-full flex-shrink-0"> 
                     <img
-                        className="w-60 h-60 object-cover"
-                        src={event.img}
-                        alt="Album"
-                    />
-                </figure>
-                <div className="card-body relative">
-                    <div>
-                        <p className='text-gray-500 text-start lg:absolute lg:top-2'>{formatTime(event.startDate)}</p>
-                        {isOwner && (
-                            <Link to={`/event/manage/${event._id}`} className='lg:absolute lg:top-2 right-2 bg-gray-600 text-white hover:bg-white hover:text-black p-1 rounded-lg text-sm'>Manage</Link>
-                        )}
-                    </div>
-                    <h2 className="card-title md:text-start text-2xl font-bold">{event.title}</h2>                            
-
-                    <p className="text-gray-500 flex items-center lg:absolute lg:bottom-20">
-                        <div className="w-4 rounded-full mr-2">
-                        <img
-                            alt="Profile"
-                            src={event.user.profileImg || "/avatar-placeholder.png"} />
-                        </div>
-                        {event.user.fullName}
-                    </p>
-                    <p className="text-gray-500 flex items-center lg:absolute lg:bottom-12">
-                        <MdLocationOn className="mr-2" /> {event.location}
-                    </p>
-                    <p className="text-gray-500 flex items-center lg:absolute lg:bottom-4">
-                        <div className="flex -space-x-2">
-                            {event.attendees && event.attendees.length > 0 ? (
-                            event.attendees.slice(0, 5).map((attendee, index) => (
-                                <div key={index} className="w-4 h-4 rounded-full border-1 border-slate-900 overflow-hidden">
-                                <img
-                                    alt="Profile"
-                                    src={attendee.profileImg || "/avatar-placeholder.png"}
-                                    className="w-full h-full object-cover"
-                                />
-                                </div>
-                            ))
-                            ) : (
-                                <p className='flex items-center'><IoPeople className='mr-2'/>No Volunteers</p>
-                            )}
-                        </div>
-                        {event.attendees.length > 5 && (
-                        <span className="ml-2 text-sm">+{event.attendees.length - 5} more</span>
-                        )}
-                    </p>
-                </div>
-            </div> */}
-            <div className="flex flex-col items-start p-4 border-2 border-transparent rounded-[2rem] bg-secondary hover:border-accent transition-all duration-300 ease-in-out w-full max-w-full" onClick={toggleSidebar}> 
-                <div className="relative"> 
-                    <img
-                        className="object-cover w-72 max-w-72 rounded-[1rem] aspect-square"
+                        className="object-cover w-full h-full rounded-[1rem] aspect-square"
                         src={event.img}
                         alt=""
                     />
 
                     {isOwner && (
-                        <div className='absolute top-1 right-1 '>
-                            <Link to={`/event/manage/${event._id}`}><MdManageAccounts className='rounded-t-[0.75rem] border-b border-accent bg-white text-base-content  hover:text-black p-1 text-3xl sm:text-4xl' /></Link>
+                        <div className='absolute top-1 right-1'>
+                            <Link to={`/event/manage/${event._id}`}>
+                                <MdManageAccounts className='rounded-t-[0.75rem] border-b border-accent bg-white text-base-content hover:text-black p-1 text-3xl sm:text-4xl' />
+                            </Link>
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    setDeletePopupOpen(true); // Open popup on click
+                                    setDeletePopupOpen(true);
                                 }}
-                                >
+                            >
                                 <MdDelete className="rounded-b-[0.75rem] bg-white text-base-content hover:text-red-600 p-1 text-3xl sm:text-4xl" />
                             </button>
                             <Popup isOpen={isDeletePopupOpen} onClose={() => setDeletePopupOpen(false)}>
@@ -235,7 +191,7 @@ const Event = ({ event }) => {
                                     </button>
                                     <button
                                         className="px-4 py-2 bg-red-600 text-white rounded-md"
-                                        onClick={deleteEvent} // Ensure this function deletes the event
+                                        onClick={deleteEvent}
                                     >
                                     Delete
                                     </button>
@@ -244,23 +200,100 @@ const Event = ({ event }) => {
                         </div>
                     )}
                 </div>
-                <div className='w-full max-w-full'>
-                    <h1 className="mt-2 text-2xl font-semibold text-black capitalize truncate max-w-full overflow-hidden">
+
+                {/* Event Details */}
+                <div className="w-72 flex flex-col items-start">
+                    
+                    {/* Title with Ellipsis */}
+                    <h1 className="mt-2 mb-2 text-2xl text-start font-semibold text-black capitalize truncate w-72 whitespace-nowrap overflow-hidden text-ellipsis">
                         {event.title}
                     </h1>
-                    <p className='text-gray-700 items-center flex flex-row max-w-full truncate overflow-hidden'>
-                        <div className='w-5 h-5 mr-2'>
-                            <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" className='rounded-full' />  
+
+                    {/* User Name with Ellipsis */}
+                    <div className="flex text-gray-700 items-center w-72">
+                        <img 
+                            src={event.user.profileImg || "/avatar-placeholder.png"} 
+                            alt="" 
+                            className="w-5 h-5 mr-[10px] rounded-full flex-shrink-0"
+                        />
+                        <span className="truncate text-start w-full whitespace-nowrap overflow-hidden text-ellipsis">
+                            {event.user.fullName}
+                        </span>
+                    </div>
+
+                    {/* Location with Ellipsis */}
+                    <div className="flex text-gray-700 items-center w-72 mt-1">
+                        <MdLocationOn className="mr-2 -ml-[0.15rem] text-lg w-6 h-6 flex-shrink-0" />
+                        <span className="truncate text-start w-full whitespace-nowrap overflow-hidden text-ellipsis">
+                            {event.location}
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div 
+                className="flex md:hidden gap-2 p-2 border-2 border-transparent rounded-2xl bg-transparent hover:border-accent transition-all duration-300 w-full max-w-full ease-in-out cursor-pointer"
+                onClick={toggleSidebar}
+            >
+                <div className="flex-shrink-0 relative">
+                    <img
+                        className="object-cover w-28 h-28 sm:w-28 sm:h-28 md:w-28 md:h-28 rounded-[0.5rem]"
+                        src={event.img}
+                        alt={event.title}
+                    />
+                    {isOwner && (
+                        <div className='absolute top-1 right-1'>
+                            <Link to={`/event/manage/${event._id}`}>
+                                <MdManageAccounts className='rounded-t-[0.25rem] border-b border-accent bg-white text-base-content hover:text-black p-1 text-2xl' />
+                            </Link>
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setDeletePopupOpen(true);
+                                }}
+                            >
+                                <MdDelete className="rounded-b-[0.25rem] bg-white text-base-content hover:text-red-600 p-1 text-2xl" />
+                            </button>
+                            <Popup isOpen={isDeletePopupOpen} onClose={() => setDeletePopupOpen(false)}>
+                                <h2 className="text-lg text-black font-semibold mb-1">Confirm Deletion</h2>
+                                <p className='text-gray-700'>Are you sure you want to delete this event?</p>
+                                <div className="flex justify-center mt-4">
+                                    <button
+                                        className="px-4 py-2 text-black bg-gray-300 rounded-md mr-2"
+                                        onClick={() => setDeletePopupOpen(false)}
+                                    >
+                                    Cancel
+                                    </button>
+                                    <button
+                                        className="px-4 py-2 bg-red-600 text-white rounded-md"
+                                        onClick={deleteEvent}
+                                    >
+                                    Delete
+                                    </button>
+                                </div>
+                            </Popup>
                         </div>
-                        <span className='truncate'>{event.user.fullName}</span>
-                    </p>
-                    <p className="text-gray-700 flex items-center max-w-full">
-                        <MdLocationOn className="mr-2 text-xl flex-shrink-0" />
-                        <span className='truncate'>{event.location}</span>
+                    )}
+                </div>
+                <div className="flex flex-col justify-center w-full overflow-hidden">
+                    <h1 className="text-xl font-semibold text-black capitalize truncate">
+                        {event.title}
+                    </h1>
+                    <div className="flex items-center gap-2 mt-1">
+                        <img 
+                            src={event.user.profileImg || "/avatar-placeholder.png"} 
+                            alt={event.user.fullName}
+                            className="w-4 h-4 rounded-full"
+                        />
+                        <span className="text-gray-700 text-sm truncate">{event.user.fullName}</span>
+                    </div>
+                    <p className="text-gray-700 flex items-center mt-1 text-sm truncate">
+                        <MdLocationOn className="text-lg -ml-[0.13rem] w-5 h-5 flex-shrink-0" />
+                        <span className="truncate">{event.location}</span>
                     </p>
                 </div>
             </div>
-            
 
             {/* Overlay */}
             {isSidebarOpen && (

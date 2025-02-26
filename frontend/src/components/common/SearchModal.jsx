@@ -50,10 +50,10 @@ const SearchModal = ({ isOpen, closeModal }) => {
     return (
         <>
             {isOpen && (
-                <div className="fixed px-2 inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-[10001]">
+                <div className="fixed px-2 inset-0 bg-gray-900 bg-opacity-50 flex justify-center z-[10001]">
                     <div 
                         ref={modalRef} 
-                        className="bg-gradient-to-r from-purple-300 to-secondary p-3 rounded-lg shadow-lg w-[30rem] h-64 transform -translate-y-64 sm:-translate-y-16"
+                        className="bg-gradient-to-r from-purple-300 to-secondary p-3 rounded-lg h-60 shadow-lg w-[30rem] mt-10 "
                     >
                         <div>
                             <input
@@ -87,13 +87,15 @@ const SearchModal = ({ isOpen, closeModal }) => {
                                                             src={event.img}
                                                             alt={event.title}
                                                         />
-                                                        {event.title}
+                                                        <span className='break-all'>
+                                                            {event.title}
+                                                        </span>
                                                     </Link>
                                                 </li>
                                             </div>
                                         ))
                                     ) : (
-                                        <p className='text-gray-500'>No events found</p>
+                                        <p className='text-gray-500'></p>
                                     )}
                                 </ul>
                             )}

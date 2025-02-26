@@ -88,7 +88,9 @@ const HomePage = () => {
         <input className="join-item hover:bg-base-200 hover:text-black hover:border-none border-none btn w-28 sm:w-36 md:w-40" type="radio" name="options" aria-label="Past" onClick={() => setFeedType("past")} />
         {feedType === "past"}
       </div>
-      <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical m-10">
+      
+
+      <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical m-2 md:m-10">
         {filteredEvents && filteredEvents.length > 0 ? (
           filteredEvents.map((event, index) => (
             <li 
@@ -122,8 +124,8 @@ const HomePage = () => {
                   </svg>
                 )}
               </div>
-              <div className={`relative ${index % 2 === 0 ? "timeline-start" : "timeline-end"} mb-10 ${index % 2 === 0 ? "md:text-end": ""}`}>
-                <time className="font-mono text-accent italic">{format(new Date(event.startDate), 'MMM d, yyyy')}</time>
+              <div className={`max-md:w-full max-md:pr-7 relative md:${index % 2 === 0 ? "timeline-start" : "timeline-end"} ${index % 1 === 0 ? "timeline-start" : "timeline-end"} mb-10 ${index % 2 === 0 ? "md:text-end": ""}`}>
+                <time className="font-semibold text-purple-600">{format(new Date(event.startDate), 'MMM d, yyyy')}</time>
                 <EventHome key={event._id} event={event} mutate={updateEventMutation} />
               </div>
               <hr className="bg-accent opacity-30"/>
@@ -133,6 +135,7 @@ const HomePage = () => {
           <div></div>
         )}
       </ul>
+
       <div className="items-center">
         { filteredEvents.length <= 0 && feedType === "upcoming" &&
           <div className="flex justify-center flex-col px-4 text-center gap-10 text-accent">
