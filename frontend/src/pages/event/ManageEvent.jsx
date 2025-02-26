@@ -219,7 +219,7 @@ const ManageEvent = () => {
                     </div>
                     {feedType === "overview" && (
                         <div>
-                            <div className="p-2 max-w-4xl mx-auto">
+                            <div className="p-4 max-w-4xl mx-auto">
                                 <div className="card lg:card-side bg-transparent">
                                     <div className='flex flex-col items-center sm:p-4 px-0 py-4 lg:items-start gap-10'>
                                         <figure className='relative max-w-xs'>
@@ -257,7 +257,7 @@ const ManageEvent = () => {
                                             )}
                                         </figure>
                                     </div>
-                                    <div className="card-body px-0 py-2 sm:p-2">
+                                    <div className="card-body px-0 py-2 sm:p-4 lg:max-w-[512px] overflow-y-auto">
                                         <h2 className="card-title text-6xl sm:text-7xl text-black font-bold mb-3 break-all">{event?.title}</h2>
                                         <div className='flex text-black text-2xl sm:text-3xl items-center mt-3 mb-3'>
                                             <div className='w-9 h-9 mr-2'>
@@ -276,10 +276,10 @@ const ManageEvent = () => {
                                             </div>
                                         </p>
                                         <div className='flex gap-2 justify-between'>
-                                            <div className='mb-2 mt-3 lg:mt-0 w-full'>
+                                            <div className='mb-2 mt-3 lg:mt-[0.75rem] w-full'>
                                                 <button onClick={toggleSidebar} className="btn w-full bg-black text-accent hover:text-black hover:bg-white border-none">Edit Event</button>
                                             </div>
-                                            <div className='mb-2 mt-3 lg:mt-0 w-full'>
+                                            <div className='mb-2 mt-3 lg:mt-[0.75rem] w-full'>
                                                 <button 
                                                     onClick={(e) => {
                                                         e.stopPropagation();

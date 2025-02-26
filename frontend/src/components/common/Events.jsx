@@ -79,7 +79,7 @@ const Events = ({ feedType, username, userId }) => {
       )}
       {!isLoading && events && (
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center items-center">
             {events.map((event) => (
               <Event key={event._id} event={event} />
             ))}

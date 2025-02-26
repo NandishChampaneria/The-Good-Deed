@@ -130,7 +130,7 @@ const EventPage = () => {
                         </Link>
                     </div>
                 </div>
-                <div className="card-body px-0 py-2 sm:p-2">
+                <div className="card-body px-0 py-2 sm:p-4 lg:max-w-[512px] overflow-y-auto">
                     <h2 className="card-title text-6xl sm:text-7xl text-black font-bold mb-7 break-all">{event.title}</h2>
                     <div className='mb-6 ep1'>
                         <div className="text-black text-2xl flex items-center sm:text-3xl">
@@ -163,7 +163,7 @@ const EventPage = () => {
                                 {event.location}
                             </a>
                         </div>
-                        <div className="card-actions flex mt-[3.75rem] mb-8">
+                        <div className="card-actions flex mt-[3.25rem] mb-8">
                             {!isOwner && (
                                 <button 
                                     className="btn w-full bg-black text-accent hover:text-black hover:bg-white border-none" 

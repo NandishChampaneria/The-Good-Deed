@@ -203,6 +203,54 @@ html, body {
     width: 100%;
   }
 }
+/* For larger screens (default) */
+.e-title {
+  max-width: 18ch; /* Limit to approximately 20 characters */
+}
+
+/* For tablets */
+@media (max-width: 440px) {
+  .e-title {
+    max-width: 16ch; /* Limit to approximately 16 characters */
+  }
+}
+
+/* For smaller screens (mobile) */
+@media (max-width: 394px) {
+  .e-title {
+    max-width: 12ch; /* Limit to approximately 12 characters */
+  }
+}
+
+@media (max-width: 334px) {
+  .e-title {
+    max-width: 10ch; /* Limit to approximately 12 characters */
+  }
+}
+
+.e-title1 {
+  max-width: 18ch; /* Limit to approximately 20 characters */
+}
+
+/* For tablets */
+@media (max-width: 382px) {
+  .e-title1 {
+    max-width: 16ch; /* Limit to approximately 16 characters */
+  }
+}
+
+/* For smaller screens (mobile) */
+@media (max-width: 330px) {
+  .e-title1 {
+    max-width: 14ch; /* Limit to approximately 12 characters */
+  }
+}
+
+@media (max-width: 1px) {
+  .e-title1 {
+    max-width: 10ch; /* Limit to approximately 12 characters */
+  }
+}
 
 @media (max-width: 1024px) {
   .ep {

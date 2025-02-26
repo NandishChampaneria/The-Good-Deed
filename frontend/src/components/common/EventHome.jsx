@@ -204,10 +204,10 @@ const Event = ({ event }) => {
                     </p>
                 </div>
             </div> */}
-            <div className="flex flex-col items-start p-4 border-2 border-transparent rounded-[2rem] bg-secondary hover:border-accent transition-all duration-300 ease-in-out " onClick={toggleSidebar}> 
-                <div className="relative">    
+            <div className="flex flex-col items-start p-4 border-2 border-transparent rounded-[2rem] bg-secondary hover:border-accent transition-all duration-300 ease-in-out w-full max-w-full" onClick={toggleSidebar}> 
+                <div className="relative"> 
                     <img
-                        className="object-cover w-72 rounded-[1rem] aspect-square"
+                        className="object-cover w-72 max-w-72 rounded-[1rem] aspect-square"
                         src={event.img}
                         alt=""
                     />
@@ -244,22 +244,23 @@ const Event = ({ event }) => {
                         </div>
                     )}
                 </div>
-                <div className='flex items-start flex-col gap-1'>
-                    <h1 class="mt-2 text-2xl font-semibold text-black capitalize">{event.title}</h1>
-                    <p className='text-gray-700 items-center flex flex-row'>
+                <div className='w-full max-w-full'>
+                    <h1 className="mt-2 text-2xl font-semibold text-black capitalize truncate max-w-full overflow-hidden">
+                        {event.title}
+                    </h1>
+                    <p className='text-gray-700 items-center flex flex-row max-w-full truncate overflow-hidden'>
                         <div className='w-5 h-5 mr-2'>
                             <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" className='rounded-full' />  
                         </div>
-                        By {event.user.fullName}
+                        <span className='truncate'>{event.user.fullName}</span>
                     </p>
-                    <p className="text-gray-700 flex items-center">
-                        <MdLocationOn className="mr-2 text-xl" /> {event.location}
-                    </p>
-                    <p className="text-gray-700 flex items-center">
-                        <MdDateRange className="mr-2 text-xl" /> {formatDate(event.startDate)}
+                    <p className="text-gray-700 flex items-center max-w-full">
+                        <MdLocationOn className="mr-2 text-xl flex-shrink-0" />
+                        <span className='truncate'>{event.location}</span>
                     </p>
                 </div>
             </div>
+            
 
             {/* Overlay */}
             {isSidebarOpen && (
@@ -275,9 +276,9 @@ const Event = ({ event }) => {
                 className={`fixed z-10000 top-0 md:text-start right-0 h-full w-100 w-full bg-gradient-to-r from-purple-300 to-secondary rounded-l-3xl shadow-lg transform transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'} overflow-y-auto`}
                 style={{ maxHeight: '100vh' }}
             >
-                <div className="sticky top-0 left-0 w-full h-16 bg-gradient-to-r from-purple-300 to-secondary p-4 z-30">
+                <div className="sticky flex items-center top-0 left-0 w-full h-16 bg-gradient-to-r from-purple-300 to-secondary p-4 z-30">
                     <button
-                        className="text-accent text-2xl font-semibold ml-3 mr-7 hover:text-black"
+                        className="text-accent text-3xl font-semibold ml-3 mr-7 hover:text-black"
                         onClick={toggleSidebar}
                     >
                         &times;
@@ -299,7 +300,7 @@ const Event = ({ event }) => {
                     </figure>
                 </div>
                 <div className="px-4 py-11 sm:p-11">
-                    <h2 className="text-5xl text-black font-bold mb-4">{event.title}</h2>
+                    <h2 className="text-5xl text-black font-bold mb-4 break-all">{event.title}</h2>
                     <p className='text-gray-700 text-xl items-center flex flex-row mb-6'>
                         <div className='w-7 h-7 mr-2'>
                             <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" className='rounded-full' />  
@@ -344,6 +345,10 @@ const Event = ({ event }) => {
                             isOwner &&
                             <Link className='btn w-full hover:bg-accent hover:text-black text-accent bg-black border-none' to={`/event/manage/${event._id}`}>Manage</Link>
                         }
+                    </div>
+                    <div>
+                        <p className='text-gray-700 mb-2'>Description</p>
+                        <p className='text-black'>{event.description}</p>
                     </div>
                 </div>
             </div>

@@ -18,7 +18,8 @@ const Event = ({ event }) => {
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         const formattedDate = date.toLocaleDateString('en-US', {
-            year: 'numeric',
+            weekday: 'long', 
+            
             month: 'long',
             day: 'numeric',
         });
@@ -27,7 +28,7 @@ const Event = ({ event }) => {
             minute: '2-digit',
             hour12: true, // Use 12-hour clock
         });
-        return `${formattedDate} at ${formattedTime}`;
+        return `${formattedDate}`;
     };
 
     const formatGoogleCalendarDate = (startDate, endDate) => {
@@ -116,26 +117,65 @@ const Event = ({ event }) => {
 
     return (
         <div className="relative flex flex-col items-center">
-            <div className="flex flex-col items-start p-4 border-2 border-transparent rounded-[2rem] bg-secondary hover:border-accent transition-all duration-300 ease-in-out" onClick={toggleSidebar}>
-                
-                <img
-                    className="object-cover w-72 rounded-[1rem] aspect-square"
-                    src={event.img}
-                    alt=""
-                />
-                <h1 class="mt-4 mb-4 text-2xl font-semibold text-black capitalize">{event.title}</h1>
-                <p className='text-gray-700 items-center flex flex-row'>
-                    <div className='w-5 h-5 mr-2 flex'>
-                        <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" className='rounded-full' />  
+            <div className="md:flex hidden flex-col items-start p-4 border-2 border-transparent rounded-[2rem] bg-transparent hover:border-accent transition-all duration-300 ease-in-out w-full max-w-full" onClick={toggleSidebar}>
+                <div className=''>
+                    <img
+                        className="object-cover w-full max-w-full rounded-[1rem] aspect-square"
+                        src={event.img}
+                        alt=""
+                    />
+                </div>
+                <div className='w-full max-w-full'>
+                    <p className="text-purple-600 font-semibold flex items-center mt-2">
+                        {formatDate(event.startDate)}
+                    </p>
+                    <h1 className="mt-1 mb-1 text-2xl font-semibold text-black capitalize truncate max-w-full overflow-hidden">
+                        {event.title}
+                    </h1>
+                    <p className='text-gray-700 items-center flex flex-row max-w-full overflow-hidden'>
+                        <div className='w-5 h-5 mr-2 flex'>
+                            <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" className='rounded-full' />  
+                        </div>
+                        <span className='truncate'>{event.user.fullName}</span>
+                    </p>
+                    <p className="text-gray-700 flex items-center mt-2 max-w-full">
+                        <MdLocationOn className="mr-2 -ml-[0.15rem] text-lg w-6 h-6 flex-shrink-0" /> 
+                        <span className='truncate'>{event.location}</span>
+                    </p>
+                </div>
+            </div>
+            <div 
+                className="flex md:hidden gap-2 p-2 border-2 border-transparent rounded-2xl bg-transparent hover:border-accent transition-all duration-300 w-full max-w-full ease-in-out cursor-pointer"
+                onClick={toggleSidebar}
+            >
+                <div className="flex-shrink-0">
+                    <img
+                        className="object-cover w-28 h-28 sm:w-28 sm:h-28 md:w-28 md:h-28 rounded-xl"
+                        src={event.img}
+                        alt={event.title}
+                    />
+                </div>
+                <div className="flex flex-col justify-center w-full overflow-hidden">
+                    <p className="text-purple-600 font-semibold text-sm">
+                        {formatDate(event.startDate)}
+                    </p>
+
+                    <h1 className="text-xl font-semibold text-black capitalize truncate">
+                        {event.title}
+                    </h1>
+                    <div className="flex items-center gap-2 mt-1">
+                        <img 
+                            src={event.user.profileImg || "/avatar-placeholder.png"} 
+                            alt={event.user.fullName}
+                            className="w-4 h-4 rounded-full"
+                        />
+                        <span className="text-gray-700 text-sm truncate">{event.user.fullName}</span>
                     </div>
-                    By {event.user.fullName}
-                </p>
-                <p className="text-gray-700 flex items-center mt-2">
-                    <MdLocationOn className="mr-2" /> {event.location}
-                </p>
-                <p className="text-gray-700 flex items-center mt-2">
-                    <MdDateRange className="mr-2" /> {formatDate(event.startDate)}
-                </p>
+                    <p className="text-gray-700 flex items-center mt-1 text-sm truncate">
+                        <MdLocationOn className="text-lg -ml-[0.13rem] w-5 h-5 flex-shrink-0" />
+                        <span className="truncate">{event.location}</span>
+                    </p>
+                </div>
             </div>
 
             {/* Overlay */}
@@ -152,9 +192,9 @@ const Event = ({ event }) => {
                 className={`fixed z-10000 top-0 right-0 h-full w-100 w-full bg-gradient-to-r from-purple-300 to-secondary rounded-l-3xl shadow-lg transform transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'} overflow-y-auto`}
                 style={{ maxHeight: "100vh" }}
             >
-                <div className="sticky top-0 left-0 w-full h-16 bg-gradient-to-r to-secondary from-purple-300  p-4 z-30">
+                <div className="sticky flex items-center top-0 left-0 w-full h-16 bg-gradient-to-r to-secondary from-purple-300  p-4 z-30">
                     <button
-                        className="text-accent text-2xl ml-3 mr-7 hover:text-black"
+                        className="text-accent text-3xl font-semibold ml-3 mr-7 hover:text-black"
                         onClick={toggleSidebar}
                     >
                         &times;
@@ -176,7 +216,7 @@ const Event = ({ event }) => {
                     </figure>
                 </div>
                 <div className="p-11">
-                    <h2 className="text-5xl text-black font-bold mb-4">{event.title}</h2>
+                    <h2 className="text-5xl text-black font-bold mb-4 break-all">{event.title}</h2>
                     <p className='text-gray-700 text-xl items-center flex flex-row mb-6'>
                         <div className='w-7 h-7 mr-2'>
                             <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" className='rounded-full' />  
@@ -221,6 +261,10 @@ const Event = ({ event }) => {
                             isOwner &&
                             <Link className='btn w-full hover:bg-accent hover:text-black text-accent bg-black border-none' to={`/event/manage/${event._id}`}>Manage</Link>
                         }               
+                    </div>
+                    <div>
+                        <p className='text-gray-700 mb-2'>Description</p>
+                        <p className='text-black'>{event.description}</p>
                     </div>
                 </div>
             </div>
