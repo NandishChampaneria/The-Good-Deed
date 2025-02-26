@@ -18,6 +18,8 @@ import Footer from "./components/common/Footer";
 import Notifications from "./pages/notifications/Notifications";
 import Contact from "./pages/home/Contact";
 import { useEffect } from "react";
+import AllEevents from "./pages/home/AllEevents";
+import AllOrganizations from "./pages/home/AllOrganizations";
 
 function App() {
   const { data: authUser, isLoading } = useQuery({
@@ -61,6 +63,8 @@ function App() {
           <Route path='/home' element={authUser ? <HomePage /> : <Navigate to="/" />} />
           <Route path='/' element={!authUser ? <Home /> : <Navigate to="/home" />} />
           <Route path='/discover' element={<Discover />} />
+          <Route path='/allevents' element={<AllEevents />} />
+          <Route path='/allorganizations' element={<AllOrganizations />} />
           <Route path='/about' element={<About />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/event/:eventId' element={<EventPage />} />

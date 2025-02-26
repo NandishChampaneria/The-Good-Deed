@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { IoCalendarOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
-const Events = ({ feedType, username, userId }) => {
+const Events = ({ feedType, username, userId, limit }) => {
   const getEventEndpoint = () => {
     switch(feedType) {
       case "events":
@@ -43,7 +43,7 @@ const Events = ({ feedType, username, userId }) => {
     refetch();
   }, [feedType, refetch]);
 
-  const test = true;
+  const limitedEvents = limit ? events?.slice(0, limit) : events;
 
   return (
     <>
@@ -77,10 +77,10 @@ const Events = ({ feedType, username, userId }) => {
           </div>
         </div>
       )}
-      {!isLoading && events && (
+      {!isLoading && limitedEvents && (
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 gap-4 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center items-center">
-            {events.map((event) => (
+            {limitedEvents.map((event) => (
               <Event key={event._id} event={event} />
             ))}
           </div>

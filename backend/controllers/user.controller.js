@@ -18,6 +18,22 @@ export const getUserProfile = async (req, res) => {
     }
 };
 
+export const getOrganizations = async (req, res) => {
+    try {
+        // Fetch users with 'organization' userType
+        const organizations = await User.find({ userType: 'organization' }).select("-password");
+
+        if (!organizations || organizations.length === 0) {
+            return res.status(404).json({ error: "No organizations found" });
+        }
+
+        res.status(200).json(organizations);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+        console.log("Error in getOrganizations", error.message);
+    }
+};
+
 export const getSuggestedUsers = async (req, res) => {
     // in future
 };

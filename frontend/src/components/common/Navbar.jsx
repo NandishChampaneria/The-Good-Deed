@@ -129,17 +129,17 @@ const Navbar = () => {
                             <ul
                                 tabIndex={0}
                                 className="menu menu-sm dropdown-content text-gray-600 bg-accent bg-opacity-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                                <li className='hover:text-black' onClick={closeDropdown}><Link to="/home">Events</Link></li>
+                                <li className='hover:text-black' onClick={closeDropdown}><Link to="/home">My Events</Link></li>
                                 <li className='hover:text-black' onClick={closeDropdown}><Link to="/discover">Discover</Link></li>
                                 {/* <li onClick={closeDropdown}><Link to="/about">About</Link></li> */}
                             </ul>
                             
                         </div>
                     )}
-                    <Link to="/" className="btn text-accent hover:text-black hover:bg-transparent btn-ghost text-xl title-hidden">TGD</Link>
+                    <Link to="/discover" className="btn text-accent hover:text-black hover:bg-transparent btn-ghost text-xl title-hidden">TGD</Link>
                 </div>
                 <div className="navbar-center">
-                    <Link to="/home" className="btn text-accent hover:text-black hover:bg-transparent btn-ghost text-xl title-block">The Good Deed</Link>
+                    <Link to="/discover" className="btn text-accent hover:text-black hover:bg-transparent btn-ghost text-xl title-block">The Good Deed</Link>
                 </div>
                 <div className="navbar-end"> 
                     {authUser && (

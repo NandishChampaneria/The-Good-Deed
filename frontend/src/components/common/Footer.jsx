@@ -15,6 +15,7 @@ const Footer = () => {
           {/* Navigation Links */}
           <nav className="flex flex-wrap gap-6 justify-center align-bottom md:justify-start text-gray-700">
             <Link to="/discover" className="hover:text-black">Discover</Link>
+            <Link to="/home" className="hover:text-black">My Events</Link>
             <Link to="/about" className="hover:text-black">About</Link>
             <Link to="/contact" className="hover:text-black">Contact</Link>
           </nav>

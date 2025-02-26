@@ -124,7 +124,11 @@ const HomePage = () => {
                   </svg>
                 )}
               </div>
-              <div className={`max-md:w-full max-md:pr-7 relative md:${index % 2 === 0 ? "timeline-start" : "timeline-end"} ${index % 1 === 0 ? "timeline-start" : "timeline-end"} mb-10 ${index % 2 === 0 ? "md:text-end": ""}`}>
+              <div className={`hidden md:block max-md:w-full max-md:pr-7 relative ${index % 2 === 0 ? "timeline-start" : "timeline-end"} mb-10 ${index % 2 === 0 ? "md:text-end": ""}`}>
+                <time className="font-semibold text-purple-600">{format(new Date(event.startDate), 'MMM d, yyyy')}</time>
+                <EventHome key={event._id} event={event} mutate={updateEventMutation} />
+              </div>
+              <div className={`block md:hidden max-md:w-full max-md:pr-7 relative ${index % 1 === 0 ? "timeline-start" : "timeline-end"} mb-10 ${index % 2 === 0 ? "md:text-end": ""}`}>
                 <time className="font-semibold text-purple-600">{format(new Date(event.startDate), 'MMM d, yyyy')}</time>
                 <EventHome key={event._id} event={event} mutate={updateEventMutation} />
               </div>
