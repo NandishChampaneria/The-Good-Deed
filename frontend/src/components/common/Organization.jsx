@@ -30,7 +30,7 @@ const Organization = ({ organization }) => {
     <div className="flex gap-5 p-4 rounded-[2rem] border-2 border-transparent hover:border-accent transition-all duration-300 ease-in-out">
       <div>
         <img
-          src={organization.profileImg || '/default-avatar.png'}
+          src={organization.profileImg || '/avatar-placeholder.png'}
           alt={organization.fullName}
           className="w-28 rounded-full object-cover aspect-square"
         />

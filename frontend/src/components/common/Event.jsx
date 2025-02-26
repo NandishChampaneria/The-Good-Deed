@@ -189,10 +189,10 @@ const Event = ({ event }) => {
             {/* Sidebar */}
             <div
                 ref={sidebarRef}
-                className={`fixed z-10000 top-0 right-0 h-full w-100 w-full bg-gradient-to-r from-purple-300 to-secondary rounded-l-3xl shadow-lg transform transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'} overflow-y-auto`}
+                className={`fixed z-10000 top-0 right-0 h-full w-100 w-full bg-gradient-to-r from-purple-400 to-cyan-400 rounded-l-3xl shadow-lg transform transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'} overflow-y-auto`}
                 style={{ maxHeight: "100vh" }}
             >
-                <div className="sticky flex items-center top-0 left-0 w-full h-16 bg-gradient-to-r to-secondary from-purple-300  p-4 z-30">
+                <div className="sticky flex items-center top-0 left-0 w-full h-16 bg-gradient-to-r to-cyan-400 from-purple-400  p-4 z-30">
                     <button
                         className="text-accent text-3xl font-semibold ml-3 mr-7 hover:text-black"
                         onClick={toggleSidebar}

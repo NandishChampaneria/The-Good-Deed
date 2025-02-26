@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 html, body {
-  @apply bg-gradient-to-b to-white via-purple-300 from-cyan-400;
+  @apply bg-gradient-to-b to-purple-400 from-cyan-400;
   /* background: radial-gradient(circle at top, rgb(10, 190, 255) 30%, rgb(237, 177, 249) 60%); */
   font-family: 'Poppins', 'sans-serif';
 }
@@ -130,9 +130,8 @@ html, body {
 
 .btn-ce {
     display: block;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    height: 3rem;
+    padding: 0.5rem;
+    height: 2.5rem;
     font-weight: 600;
     transition: background-color 0.3s ease;
     align-items: center;

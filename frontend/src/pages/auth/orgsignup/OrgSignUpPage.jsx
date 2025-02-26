@@ -1,12 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { MdOutlineMail, MdPassword, MdDriveFileRenameOutline, MdPhone, MdHome, MdMail } from "react-icons/md";
-import { FaUser } from "react-icons/fa";
+import { FaAddressBook, FaUser } from "react-icons/fa";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
-import customImage from './image2.jpg'
 
-const SignUpPage = () => {
+const OrgSignUpPage = () => {
   const [formData, setFormData] = useState({
     email: "",
     username: "",
@@ -16,7 +15,7 @@ const SignUpPage = () => {
     address:""
   });
 
-  const [userType, setUserType] = useState("individual"); // Default to 'individual'
+  const [userType, setUserType] = useState("organization"); 
   const navigate = useNavigate();
 
 
@@ -58,27 +57,8 @@ const SignUpPage = () => {
   return (
     <div className="bg-white dark:white">
       <div className="flex justify-center h-screen">
-        {/* Background Image Section */}
-        <div
-          className="hidden bg-cover lg:block lg:w-2/3"
-          style={{
-            backgroundImage: `url(${customImage})`,
-          }}
-        >
-          <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
-            <div>
-              <h2 className="text-2xl font-bold text-white sm:text-3xl">The Good Deed</h2>
-              <p className="max-w-xl mt-3 text-gray-300">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. In
-                autem ipsa, nulla laboriosam dolores, repellendus perferendis
-                libero suscipit nam temporibus molestiae
-              </p>
-            </div>
-          </div>
-        </div>
-
         {/* Form Section */}
-        <section className="flex items-center bg-gradient-to-b to-white via-purple-300 from-cyan-400 w-full px-1 mx-auto lg:w-2/6">
+        <section className="flex items-center bg-gradient-to-b to-white via-purple-300 from-cyan-400 w-full px-1 mx-auto">
           <div className="container flex items-center justify-center h-full px-6 mx-auto">
             <form
               className="w-full max-w-md bg-transparent rounded-lg "
@@ -87,7 +67,7 @@ const SignUpPage = () => {
               <img src="/logo.svg" alt="SVG Icon" className="w-20 h-20 text-white" />
 
               <h1 className="mt-3 text-2xl font-semibold text-gray-100 capitalize sm:text-3xl">
-                Create an account
+                Partner with us
               </h1>
               <div className="relative flex items-center mt-8">
                 <span className="absolute">
@@ -101,6 +81,20 @@ const SignUpPage = () => {
                   onChange={handleInputChange}
                   value={formData.email}
                 />
+              </div>
+
+              <div className="relative flex items-center mt-4">
+                  <span className="absolute">
+                    <MdDriveFileRenameOutline className="w-6 h-6 mx-3 text-black" />
+                  </span>
+                  <input
+                    type="text"
+                    className="block w-full py-3 text-black bg-secondary border-none rounded-lg px-11 placeholder:text-gray-700 focus:outline-none"
+                    placeholder="Organisation Name"
+                    name="fullName"
+                    onChange={handleInputChange}
+                    value={formData.fullName}
+                  />
               </div>
 
               <div className="flex gap-4 mt-4">
@@ -119,17 +113,31 @@ const SignUpPage = () => {
                 </div>
                 <div className="relative flex items-center flex-1">
                   <span className="absolute">
-                    <MdDriveFileRenameOutline className="w-6 h-6 mx-3 text-black" />
+                    <MdPhone className="w-6 h-6 mx-3 text-black" />
                   </span>
                   <input
                     type="text"
                     className="block w-full py-3 text-black bg-secondary border-none rounded-lg px-11 placeholder:text-gray-700 focus:outline-none"
-                    placeholder="Full Name"
-                    name="fullName"
+                    placeholder="Contact No."
+                    name="contactPhone"
                     onChange={handleInputChange}
-                    value={formData.fullName}
+                    value={formData.contactPhone}
                   />
                 </div>
+              </div>
+
+              <div className="relative flex items-center mt-4">
+                <span className="absolute">
+                  <FaAddressBook className="w-6 h-6 mx-3 text-black" />
+                </span>
+                <input
+                  type="text"
+                  className="block w-full py-3 text-black bg-secondary border-none rounded-lg px-11 placeholder:text-gray-700 focus:outline-none"
+                  placeholder="Address"
+                  name="address"
+                  onChange={handleInputChange}
+                  value={formData.address}
+                />
               </div>
 
               <div className="relative flex items-center mt-4">
@@ -149,7 +157,7 @@ const SignUpPage = () => {
               <button
                 className="w-full px-6 py-3 mt-6 text-sm font-md tracking-wide text-white capitalize transition-colors duration-300 transform bg-black rounded-lg hover:bg-white hover:text-black focus:outline-none font-semibold focus:ring focus:ring-none "
               >
-                {isPending ? "Loading..." : "Sign Up"}
+                {isPending ? "Loading..." : "Join"}
               </button>
 
               {isError && <p className="text-red-500 mt-2">{error.message}</p>}
@@ -164,8 +172,8 @@ const SignUpPage = () => {
                   </Link>
                 </p>
                 <p className="text-gray-700 dark:text-gray-400">
-                  Are you an Organization?{" "}
-                  <Link to="/orgsignup">
+                  Are you an User?{" "}
+                  <Link to="/signup">
                     <button className="text-black hover:underline">
                       Click here
                     </button>
@@ -180,4 +188,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default OrgSignUpPage;

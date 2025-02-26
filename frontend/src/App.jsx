@@ -20,6 +20,8 @@ import Contact from "./pages/home/Contact";
 import { useEffect } from "react";
 import AllEevents from "./pages/home/AllEevents";
 import AllOrganizations from "./pages/home/AllOrganizations";
+import OrgSignUpPage from "./pages/auth/orgsignup/OrgSignUpPage";
+import Test from "./pages/home/test";
 
 function App() {
   const { data: authUser, isLoading } = useQuery({
@@ -57,7 +59,7 @@ function App() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {location.pathname !== "/login" && location.pathname !== "/signup" && <Navbar />}
+      {location.pathname !== "/login" && location.pathname !== "/signup" && location.pathname !== "/orgsignup" && <Navbar />}
       <div className="flex-grow">
         <Routes>
           <Route path='/home' element={authUser ? <HomePage /> : <Navigate to="/" />} />
@@ -73,11 +75,13 @@ function App() {
           <Route path='/profile/:username' element={<ProfilePage />} />
           <Route path='/profile/settings/:username' element={authUser ? <EditProfileModal /> : <Navigate to="/login" />} />
           <Route path='/notifications' element={authUser ? <Notifications /> : <Navigate to="/" />} />
-          <Route path='/login' element={!authUser ? <LoginPage /> : <Navigate to="/home" />} />
-          <Route path='/signup' element={!authUser ? <SignUpPage /> : <Navigate to="/home" />} />
+          <Route path='/login' element={!authUser ? <LoginPage /> : <Navigate to="/discover" />} />
+          <Route path='/signup' element={!authUser ? <SignUpPage /> : <Navigate to="/discover" />} />
+          <Route path='/orgsignup' element={!authUser ? <OrgSignUpPage /> : <Navigate to="/home" />} />
+          <Route path='/test' element={<Test />} />
         </Routes>
       </div>
-      {location.pathname !== "/login" && location.pathname !== "/signup" && <Footer/>}
+      {location.pathname !== "/login" && location.pathname !== "/signup" && location.pathname !== "/orgsignup" && <Footer/>}
       <Toaster
         containerStyle={{
           top: 100,
