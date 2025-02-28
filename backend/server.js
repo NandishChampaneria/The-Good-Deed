@@ -11,6 +11,10 @@ import notificationRoutes from "./routes/notifications.routes.js";
 import contactRoutes from "./routes/contact.routes.js";
 import searchRoutes from "./routes/search.routes.js";
 
+import passport from "passport";
+import session from "express-session";
+import "./middleware/googleAuth.js"
+
 import connectMongoDB from "./db/connectMongoDB.js";
 
 import Event from "./models/event.model.js";
@@ -43,6 +47,16 @@ app.use(express.urlencoded({ extended: true })); // to parse form data
 
 
 app.use(cookieParser());
+
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);

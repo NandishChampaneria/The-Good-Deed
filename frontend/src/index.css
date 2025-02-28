@@ -8,18 +8,36 @@ html, body {
   font-family: 'Poppins', 'sans-serif';
 }
 
+.icon {
+  transition: fill 0.5s ease, transform 0.3s ease;
+}
 
-.navbar {
-    pointer-events: auto;
-    overflow: visible;
+.icon:hover {
+  transform: scale(1.1); /* Optional: adds a zoom effect */
+}
+
+.icon path {
+  fill: white; /* Initial color */
 }
 
 
-  /* Hide the default calendar and clock icons */
-  input[type="date"]::-webkit-calendar-picker-indicator,
-  input[type="time"]::-webkit-calendar-picker-indicator {
-    display: none;
-  }
+/* Hide the default calendar and clock icons */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+/* Hide arrows for Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide arrows for Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 
 .navbar {
     transition: border-bottom 0.1s ease;

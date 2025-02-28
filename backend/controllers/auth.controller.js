@@ -47,6 +47,7 @@ export const signup = async (req, res) => {
             email,
             password: hashedPassword,
             userType,
+            loginType: 'normal',
             contactPhone: userType === 'organization' ? contactPhone: '',
             address: userType === 'organization' ? address: '',
         });
@@ -124,4 +125,26 @@ export const getMe = async (req, res) => {
         console.log("error in getme", error.message);
         res.status(500).json({ error: "Internal server error" });
     }
+};
+
+// Google OAuth Controller
+export const googleAuth = passport.authenticate("google", { scope: ["profile", "email"] });
+
+export const googleCallback = (req, res) => {
+    passport.authenticate('google', { failureRedirect: '/login' }, (err, user, info) => {
+        if (err) {
+            console.error('Error during authentication:', err);
+            return res.status(500).json({ error: "Internal server error" });
+        }
+
+        if (!user) {
+            return res.status(400).json({ error: "Google authentication failed" });
+        }
+
+        // If user is authenticated, generate token and set cookie
+        generateTokenAndSetCookie(user._id, res);
+
+        // Send response after successful login
+        return res.redirect('http://localhost:3000/')
+    })(req, res);  // Pass `req` and `res` to the next middleware
 };

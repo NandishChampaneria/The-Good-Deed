@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { MdOutlineMail } from "react-icons/md";
 import { MdPassword } from "react-icons/md";
+import { FcGoogle } from "react-icons/fc";  // Google Icon
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import customImage from './image2.jpg'
@@ -42,6 +43,11 @@ const LoginPage = () => {
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // 🔹 Function to Handle Google Sign-In
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:8000/api/auth/google";
   };
 
   return (
@@ -116,7 +122,16 @@ const LoginPage = () => {
                 </div>
                 {isError && <p className="text-red-500">{error.message}</p>}
               </form>
-
+                            {/* 🔹 Google Sign-In Button */}
+                            <div className="mt-4 flex items-center justify-center">
+                <button
+                  onClick={handleGoogleLogin}
+                  className="w-full px-4 py-2 flex items-center justify-center gap-2 text-black font-semibold transition-colors duration-300 transform bg-white rounded-lg border hover:bg-gray-100"
+                >
+                  <FcGoogle className="text-xl" />
+                  Sign in with Google
+                </button>
+              </div>
               <p className="mt-6 text-sm text-center text-gray-700">
                 Don&#x27;t have an account yet?{" "}
                 <Link to="/signup" className="text-black focus:outline-none focus:underline hover:underline">

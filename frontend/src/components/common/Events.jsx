@@ -62,16 +62,14 @@ const Events = ({ feedType, username, userId, limit }) => {
             {feedType === "joined" ? 
               <div className="flex justify-center text-white flex-col gap-3 text-center">
                 <span>
-                  You haven't joined any events yet. <br />
+                  No Events joined. <br />
                 </span>
-                <Link to="/discover" className="btn border-none bg-black text-accent hover:text-black hover:bg-white">Explore</Link>
               </div> 
               : 
               <div className="flex justify-center text-white flex-col gap-3 text-center"> 
                 <span>
-                  You haven't created any events yet. <br />              
+                  No Events created. <br />              
                 </span>
-                <Link to="/createevent" className="btn border-none bg-black text-accent hover:text-black hover:bg-white">Create Event</Link>
               </div>
             }
           </div>

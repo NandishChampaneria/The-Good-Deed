@@ -38,7 +38,8 @@ export default {
           "base-100": "transparent",  // Near White
           "info": "#7DD3FC",      // Baby Blue
           "success": "#81C784", // Soft green
-          "warning": "#FFA726", // Warm amber
+          "warning": "black",
+          "warning-content": "white", // Warm amber
           "error": "#FF6B6B", // Soft red
         },
         // mytheme: {

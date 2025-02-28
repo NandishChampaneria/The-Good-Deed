@@ -11,7 +11,7 @@ const Discover = () => {
   const handleScroll = () => {
     if (eventsRef.current) {
       window.scrollTo({
-        top: eventsRef.current.offsetTop - 70, // 60px below the Events section
+        top: eventsRef.current.offsetTop - 100, // 100px below the Events section
         behavior: "smooth",
       });
     }
@@ -80,7 +80,7 @@ const Discover = () => {
 
         {/* Scroll Down Button */}
         <motion.div 
-          className="absolute bottom-5  animate-bounce bg-transparent text-white z-10 hover:text-black transition-all duration-300 ease-in-out"
+          className="absolute bottom-5 cursor-pointer animate-bounce bg-transparent text-white z-10 hover:text-gray-200 transition-all duration-300 ease-in-out"
           onClick={handleScroll}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -89,8 +89,8 @@ const Discover = () => {
           <FaArrowCircleDown className='text-4xl' />
         </motion.div>
       </div>
-      <div ref={eventsRef} className="container mx-auto px-6">
-        <div className="flex flex-row gap-4 items-center">
+      <div ref={eventsRef} className="container mx-auto px-6 mt-10">
+        <div className="flex flex-row justify-between items-center">
           <h1 className="sm:text-3xl text-xl text-white font-semibold">Discover Events</h1>
           <Link to='/allevents' className="p-2 bg-black text-sm rounded-lg text-white hover:bg-white hover:text-black transition-all duration-300 ease-in-out font-semibold">View all</Link>
         </div>
@@ -99,13 +99,13 @@ const Discover = () => {
       <div className='mb-16'><Events feedType="active" limit={8} /></div>
 
       <div className="container mx-auto px-6">
-        <div className="flex flex-row gap-4 items-center">
+        <div className="flex flex-row justify-between items-center">
           <h1 className="sm:text-3xl text-xl text-white font-semibold">Discover Organizations</h1>
           <Link to='/allorganizations' className="p-2 bg-black text-sm rounded-lg text-white hover:bg-white hover:text-black transition-all duration-300 ease-in-out font-semibold">View all</Link>
         </div>
       </div>
 
-      <div><Organizations /></div>
+      <div><Organizations limit={6} /></div>
     </>
   )
 }

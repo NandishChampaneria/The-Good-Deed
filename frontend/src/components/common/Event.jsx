@@ -117,10 +117,10 @@ const Event = ({ event }) => {
 
     return (
         <div className="relative flex flex-col items-center">
-            <div className="md:flex hidden flex-col items-start p-4 border-2 border-transparent rounded-[2rem] bg-transparent hover:border-accent transition-all duration-300 ease-in-out w-full max-w-full" onClick={toggleSidebar}>
+            <div className="md:flex hidden flex-col items-start p-3 border-2 border-transparent rounded-[2rem] bg-transparent hover:border-accent cursor-pointer transition-all duration-300 ease-in-out w-full max-w-full" onClick={toggleSidebar}>
                 <div className=''>
                     <img
-                        className="object-cover w-full max-w-full rounded-[1rem] aspect-square"
+                        className="object-cover w-full max-w-full rounded-[1.25rem] aspect-square"
                         src={event.img}
                         alt=""
                     />
@@ -217,12 +217,12 @@ const Event = ({ event }) => {
                 </div>
                 <div className="p-11">
                     <h2 className="text-5xl text-black font-bold mb-4 break-all">{event.title}</h2>
-                    <p className='text-gray-700 text-xl items-center flex flex-row mb-6'>
+                    <Link to={`/profile/${event.user.username}`} className='text-gray-700 hover:text-black text-xl items-center flex flex-row mb-6'>
                         <div className='w-7 h-7 mr-2'>
                             <img src={event.user.profileImg || "/avatar-placeholder.png"} alt="" className='rounded-full' />  
                         </div>
                         {event.user.fullName}
-                    </p>
+                    </Link>
                     <div className='flex flex-col justify-between'>
                         <p className="text-black flex items-center mb-4">
                             <MdDateRange className="mr-2 text-4xl border-2 p-1 border-gray-700 rounded-md" />

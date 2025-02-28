@@ -12,8 +12,19 @@ const userSchema = new mongoose.Schema({
         },
         password: {
             type: String,
-            required: true,
-            minLength: 6
+            required: function() {
+                return this.loginType !== "google"; // Only require password if userType is not "google"
+            }, 
+            validate: {
+                // Custom validator to check minLength only if loginType is "normal"
+                validator: function(value) {
+                  if (this.loginType === 'normal' && value.length < 6) {
+                    return false;
+                  }
+                  return true;
+                },
+                message: 'Password must be at least 6 characters long.'
+            }
         },
         email: {
             type: String,
@@ -43,6 +54,12 @@ const userSchema = new mongoose.Schema({
             type: String,
             enum: ['individual', 'organization'],
             required: true
+        },
+        loginType: {
+            type: String,
+            enum: ['normal', 'google'],
+            required: true,
+            default: 'normal'
         },
         contactPhone: {
             type: String,

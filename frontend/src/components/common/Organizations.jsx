@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import Organization from './Organization';
 import OrganizationSkeleton from '../skeletons/OrganizationSkeleton';
 
-const Organizations = () => {
+const Organizations = ({limit}) => {
   // Fetch organizations data using useQuery
   const { data: organizations, isLoading, error } = useQuery({
     queryKey: ['organizations'], // Unique query key
@@ -23,6 +23,8 @@ const Organizations = () => {
     },
     enabled: true, // This will fetch immediately when component mounts
   });
+
+  const limitedOrganizations = limit ? organizations?.slice(0, limit) : organizations;
   
 
   return (
@@ -47,10 +49,10 @@ const Organizations = () => {
       )}
 
       {/* Render organizations once data is fetched */}
-      {!isLoading && organizations && organizations.length > 0 && (
+      {!isLoading && limitedOrganizations && limitedOrganizations.length > 0 && (
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 gap-4 mt-8 lg:grid-cols-2 xl:grid-cols-3 justify-center items-center">
-            {organizations.map((organization) => (
+            {limitedOrganizations.map((organization) => (
                 <Organization key={organization._id} organization={organization} />
             ))}
           </div>

@@ -8,7 +8,7 @@ import {formatMemberSinceDate} from "../../utils/date"
 
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoCalendarOutline } from "react-icons/io5";
-import { FaUserAltSlash } from "react-icons/fa";
+import { FaMapMarkerAlt, FaPhone, FaUserAltSlash } from "react-icons/fa";
 import { FaLink } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { useQueries, useQuery } from "@tanstack/react-query";
@@ -58,18 +58,20 @@ const ProfilePage = () => {
 
 	return (
 		<> 
-			{(
-				<div className='flex-[4_4_0] min-h-screen '>
-					{/* HEADER */}
-					{(isLoading || isRefetching) && <ProfileHeaderSkeleton />}
-					{!isLoading && !isRefetching && !user && (
-						<div className="flex justify-center flex-col px-4 text-center gap-10 text-accent">						  
-							<div className="flex justify-center">
-								<FaUserAltSlash className="text-9xl flex"/>
-							</div>
-							<h1 className="flex justify-center font-bold text-3xl">No User Found</h1>
+			<div className='flex-[4_4_0] min-h-screen '>
+				{/* HEADER */}
+				{(isLoading || isRefetching) && <ProfileHeaderSkeleton />}
+				{!isLoading && !isRefetching && !user && (
+					<div className="flex justify-center flex-col px-4 text-center gap-10 text-accent">						  
+						<div className="flex justify-center">
+							<FaUserAltSlash className="text-9xl flex"/>
 						</div>
-					)}
+						<h1 className="flex justify-center font-bold text-3xl">No User/Organization Found</h1>
+					</div>
+				)}
+
+				{/* for individuals */}
+				{( user?.userType === "individual" &&
 					<div className='flex flex-col'>
 						{!isLoading && !isRefetching && user && (
 							<>
@@ -143,8 +145,79 @@ const ProfilePage = () => {
 
 						<Events feedType={feedType} username={username} userId={user?._id} />
 					</div>
-				</div>
-			)}
+				)}
+
+				{/* for organisations */}
+				{( user?.userType === "organization" &&
+					<div className='flex flex-col'>
+						{!isLoading && !isRefetching && user && (
+							<>
+								<div className="container mx-auto px-6 py-10">
+									{/* Profile Section */}
+									<div className="flex flex-col sm:flex-row items-start gap-6 sm:items-center">
+										{/* Avatar */}
+										<div className="relative w-40 sm:w-64">
+											<img src={profileImg || user?.profileImg || 'avatar-placeholder.png'} alt="Profile" className="w-full rounded-2xl" />
+										</div>
+
+										{/* Info Section */}
+										<div className="w-full flex flex-col gap-2 text-left">
+											<h2 className="text-2xl font-bold text-black">{user?.fullName}</h2>
+
+											{/* Address */}
+											{user?.address && (
+												<div className="flex items-center gap-2 text-gray-700">
+													<FaMapMarkerAlt className="w-4 h-4 text-gray-600" />
+													<a 
+														className="text-sm hover:underline"
+														href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(user.address)}`}
+														target="_blank"
+														rel="noopener noreferrer"
+													>
+														{user?.address}
+													</a>
+												</div>
+											)}
+
+											{/* Contact Number */}
+											{user?.contactPhone && (
+												<div className="flex items-center gap-2 text-gray-700">
+													<FaPhone className="w-4 h-4 text-gray-600" />
+													<span className="text-sm">{user?.contactPhone}</span>
+												</div>
+											)}
+
+											{/* Website Link */}
+											{user?.link && (
+												<div className="flex items-center gap-2">
+													<a 
+														href={user.link.startsWith("http") ? user.link : `https://${user.link}`} 
+														target="_blank" 
+														rel="noopener noreferrer"
+														>
+														<button className="px-4 py-2 bg-black text-white text-sm font-semibold rounded-lg hover:bg-white hover:text-black transition">
+															Visit Organization
+														</button>
+													</a>
+												</div>
+											)}
+										</div>
+									</div>
+
+									{/* Bio Section (Now below everything) */}
+									{user?.bio && (
+										<div className="mt-6 text-left">
+											<h3 className="text-lg font-semibold text-black">About Us</h3>
+											<div dangerouslySetInnerHTML={{ __html: user?.bio }}  className="text-sm text-gray-700 mt-2" />
+										</div>
+									)}
+								</div>
+							</>
+						)}
+						<Events feedType={"events"} username={username} userId={user?._id} />
+					</div>
+				)}
+			</div>
 		</>
 	);
 };
