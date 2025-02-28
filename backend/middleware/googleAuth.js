@@ -9,7 +9,6 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:8000/api/auth/google/callback",
     scope: ["profile", "email"]
 }, async (accessToken, refreshToken, profile, done) => {
-    console.log("Google profile data:", profile);  // Debugging line
     try {
         // Check if the user already exists in the database by email
         let user = await User.findOne({ email: profile.emails[0].value });
@@ -27,8 +26,6 @@ passport.use(new GoogleStrategy({
             });
             await user.save();
         }
-
-        console.log("Authenticated user from Google:", user);  // Debugging line
 
         return done(null, user);  // Return the user object
     } catch (error) {
