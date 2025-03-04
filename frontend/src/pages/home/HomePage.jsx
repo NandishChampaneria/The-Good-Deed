@@ -78,7 +78,33 @@ const HomePage = () => {
   if (isLoading) return <div><HomeSkeleton /></div>;
   if (error) return <div>Error: {error.message}</div>;
 
-  // Ensure 'events' is an array before mapping
+  // format date (check tomorrow)
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+
+    // Check if the given date is tomorrow
+    if (date.toDateString() === tomorrow.toDateString()) {
+        return "Tomorrow";
+    }
+
+    // Format the date if it's not tomorrow
+    const formattedDate = date.toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+    });
+
+    const formattedTime = date.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true, // Use 12-hour clock
+    });
+
+    return `${formattedDate}`;
+  };
   return (
     <div>
       <div className="join flex justify-center w-full">
@@ -125,11 +151,11 @@ const HomePage = () => {
                 )}
               </div>
               <div className={`hidden md:block max-md:w-full max-md:pr-7 relative ${index % 2 === 0 ? "timeline-start" : "timeline-end"} mb-10 ${index % 2 === 0 ? "md:text-end": ""}`}>
-                <time className="font-semibold text-purple-600">{format(new Date(event.startDate), 'MMM d, yyyy')}</time>
+                <time className="font-semibold text-purple-600">{formatDate(event.startDate)}</time>
                 <EventHome key={event._id} event={event} mutate={updateEventMutation} />
               </div>
               <div className={`block md:hidden max-md:w-full max-md:pr-7 relative ${index % 1 === 0 ? "timeline-start" : "timeline-end"} mb-10 ${index % 2 === 0 ? "md:text-end": ""}`}>
-                <time className="font-semibold text-purple-600">{format(new Date(event.startDate), 'MMM d, yyyy')}</time>
+                <time className="font-semibold text-purple-600">{formatDate(event.startDate)}</time>
                 <EventHome key={event._id} event={event} mutate={updateEventMutation} />
               </div>
               <hr className="bg-accent opacity-30"/>

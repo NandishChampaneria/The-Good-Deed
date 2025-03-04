@@ -3,9 +3,10 @@ import { MdLocationOn, MdDateRange } from 'react-icons/md'; // Import icons for 
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { FaCheck } from 'react-icons/fa';
-
+import 'ol/ol.css'; // Import OpenLayers CSS
 import LoadingSpinner from './LoadingSpinner';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import EventMap from './EventMap';
 
 const Event = ({ event }) => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -17,17 +18,28 @@ const Event = ({ event }) => {
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+    
+        // Check if the given date is tomorrow
+        if (date.toDateString() === tomorrow.toDateString()) {
+            return "Tomorrow";
+        }
+    
+        // Format the date if it's not tomorrow
         const formattedDate = date.toLocaleDateString('en-US', {
-            weekday: 'long', 
-            
+            weekday: 'long',
             month: 'long',
             day: 'numeric',
         });
+    
         const formattedTime = date.toLocaleTimeString('en-US', {
             hour: '2-digit',
             minute: '2-digit',
             hour12: true, // Use 12-hour clock
         });
+    
         return `${formattedDate}`;
     };
 
@@ -265,10 +277,14 @@ const Event = ({ event }) => {
                     <div>
                         <p className='text-gray-700 mb-2'>Description</p>
                         <p 
-                            className='text-black'
+                            className='text-black mb-5'
                             dangerouslySetInnerHTML={{ __html: event.description }}
                         >
                         </p>
+                    </div>
+                    <div>
+                        <p className="text-gray-700 mb-2">Event Location</p>
+                        <EventMap location={event.location} />
                     </div>
                 </div>
             </div>

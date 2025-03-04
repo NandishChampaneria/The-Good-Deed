@@ -6,9 +6,10 @@ import toast from 'react-hot-toast';
 import { FaCheck } from 'react-icons/fa';
 import { format } from "date-fns";
 import Popup from './Popup';
-
+import 'ol/ol.css'; // Import OpenLayers CSS
 import LoadingSpinner from './LoadingSpinner';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import EventMap from './EventMap';
 
 const Event = ({ event }) => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -386,6 +387,10 @@ const Event = ({ event }) => {
                             dangerouslySetInnerHTML={{ __html: event.description }}
                         >
                         </p>
+                    </div>
+                    <div>
+                        <p className="text-gray-700 mb-2">Event Location</p>
+                        <EventMap location={event.location} />
                     </div>
                 </div>
             </div>
