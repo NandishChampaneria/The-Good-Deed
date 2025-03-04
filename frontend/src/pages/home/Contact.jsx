@@ -97,7 +97,7 @@ const ContactPage = () => {
         {/* Submit Button */}
         <motion.button
           type="submit"
-          className="w-full font-semibold py-3 mt-4 bg-black text-white rounded-md font-medium hover:bg-white hover:text-black transition-all duration-300"
+          className="w-full font-semibold py-3 mt-4 bg-black text-white rounded-md hover:bg-white hover:text-black transition-all duration-300"
 
           disabled={sendEmail.isLoading}
         >
