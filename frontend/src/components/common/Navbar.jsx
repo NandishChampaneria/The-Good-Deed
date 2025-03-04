@@ -205,7 +205,7 @@ const Navbar = () => {
                                                     <Link to={`/event/${notif.event?._id}`} className="block hover:bg-gray-200 text-black hover:text-black p-2 rounded-xl">
                                                         <div className="flex items-center justify-between ">
                                                             <div className="flex items-center">
-                                                                <img src={notif.from?.profileImg || "/default-avatar.png"} alt="User" className="w-8 h-8 rounded-full mr-2" />
+                                                                <img src={notif.from?.profileImg || "/avatar-placeholder.png"} alt="User" className="w-8 h-8 rounded-full mr-2" />
                                                                 <p className="text-sm">
                                                                     <span className="font-semibold">{notif.from?.fullName}</span> joined <span className="font-semibold">{notif.event?.title}</span>
                                                                 </p>

@@ -1,9 +1,9 @@
 import express from 'express';
 
-import { searchEvents } from '../controllers/search.controller.js';
+import { searchEventsAndOrganizations } from '../controllers/search.controller.js';
 
 const router = express.Router();
 
-router.get('/', searchEvents);
+router.get('/', searchEventsAndOrganizations);
 
 export default router;

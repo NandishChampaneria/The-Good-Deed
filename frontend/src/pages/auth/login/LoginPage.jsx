@@ -122,11 +122,11 @@ const LoginPage = () => {
                 </div>
                 {isError && <p className="text-red-500">{error.message}</p>}
               </form>
-                            {/* 🔹 Google Sign-In Button */}
-                            <div className="mt-4 flex items-center justify-center">
+              {/* 🔹 Google Sign-In Button */}
+              <div className="mt-2 flex items-center justify-center">
                 <button
                   onClick={handleGoogleLogin}
-                  className="w-full px-4 py-2 flex items-center justify-center gap-2 text-black font-semibold transition-colors duration-300 transform bg-white rounded-lg border hover:bg-gray-100"
+                  className="w-full px-4 py-2 flex items-center justify-center gap-2 text-black font-semibold transition-colors duration-300 transform bg-white rounded-lg border hover:bg-gray-200"
                 >
                   <FcGoogle className="text-xl" />
                   Sign in with Google
