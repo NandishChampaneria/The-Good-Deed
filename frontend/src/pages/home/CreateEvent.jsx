@@ -101,166 +101,151 @@ const CreateEvent = () => {
     };
 
     return (
-        <div className="max-w-5xl mx-auto p-4 sm:p-6 lg:p-8">
-            <form onSubmit={handleSubmit} className="card p-6 lg:p-8 flex flex-col lg:flex-row items-center lg:items-start gap-8">
+        <div className="max-w-5xl mx-auto p-2">
+            <form onSubmit={handleSubmit} className="rounded-lg p-2 flex flex-col lg:flex-row items-center lg:items-start">
                 {/* Image Section */}
-                <div className="relative w-full max-w-xs aspect-square group">
+                <div className="relative w-full max-w-xs aspect-square flex justify-center items-center mb-6 lg:mb-0">
                     <img
                         src={imgPreview}
                         alt="Event"
-                        className="w-full h-full object-cover rounded-2xl shadow-lg transition-transform duration-300 group-hover:scale-105"
+                        className="w-full h-full object-cover rounded-[1rem]"
                     />
-                    <div className="absolute inset-0 bg-black/40 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <CiImageOn
-                            className="w-12 h-12 text-white cursor-pointer hover:scale-110 transition-transform duration-300"
-                            onClick={openImageModal}
-                        />
-                    </div>
                     <input
                         type="file"
                         hidden
                         ref={imgRef}
                         onChange={handleImgChange}
                     />
+                    <CiImageOn
+                        className="absolute bottom-2 right-2 w-10 h-10 bg-white text-black rounded-[1.75rem] p-1 cursor-pointer hover:bg-black hover:text-white"
+                        onClick={openImageModal}
+                    />
                 </div>
 
                 {/* Details Section */}
-                <div className="w-full lg:w-2/3 space-y-6">
+                <div className="w-ful lg:w-2/3 lg:pl-6">
                     <input
                         type="text"
                         placeholder="Event Title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        className="input w-full text-3xl sm:text-4xl font-bold placeholder:text-white/50"
+                        className="w-full h-20 placeholder:text-base-200 text-black bg-transparent font-semibold ph text-3xl sm:text-6xl rounded-lg text-white-800 mb-4"
                         required
                     />
-                    
-                    <div className="card p-4 space-y-4">
-                        <div className="flex flex-col gap-4">
+                    <div className="bg-secondary text-black p-2 rounded-lg w-full mb-4">
+                        <div className="flex flex-col gap-2">
                             {/* Start Date & Time */}
                             <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-2">
-                                    <span className="text-lg font-semibold text-white">Start</span>
+                                <div>
+                                    <span className="w-16 font-semibold ml-2 text-gray-800">Start</span>
                                 </div>
-                                <div className="flex gap-2">
+                                <div>
                                     <input
                                         type="date"
                                         value={startDate}
                                         onChange={(e) => setStartDate(e.target.value)}
                                         onClick={(e) => e.target.showPicker()} 
-                                        className="input w-32 text-center cursor-pointer hover:bg-white/20"
+                                        className="bg-primary text-center w-28 text-black p-2 rounded-lg cursor-pointer hover:bg-black hover:text-accent focus:outline-none focus:ring-0 select-none"
                                     />
                                     <input
                                         type="time"
                                         value={startTime}
                                         onChange={(e) => setStartTime(e.target.value)}
                                         onClick={(e) => e.target.showPicker()} 
-                                        className="input w-28 text-center cursor-pointer hover:bg-white/20"
+                                        className="bg-primary text-center w-24 text-black p-2 rounded-lg cursor-pointer ml-2 hover:bg-black hover:text-accent focus:outline-none focus:ring-0 select-none"
                                     />
                                 </div>
                             </div>
 
                             {/* End Date & Time */}
                             <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-2">
-                                    <span className="text-lg font-semibold text-white">End</span>
+                                <div>
+                                    <span className="w-16 font-semibold text-gray-800 ml-2">End</span>
                                 </div>
-                                <div className="flex gap-2">
+                                <div>
                                     <input
                                         type="date"
                                         value={endDate}
                                         onChange={(e) => setEndDate(e.target.value)}
                                         onClick={(e) => e.target.showPicker()} 
-                                        className="input w-32 text-center cursor-pointer hover:bg-white/20"
+                                        className="bg-primary text-center w-28 text-black p-2 rounded-lg cursor-pointer hover:bg-black hover:text-accent focus:outline-none focus:ring-0 select-none"
                                     />
                                     <input
                                         type="time"
                                         value={endTime}
                                         onChange={(e) => setEndTime(e.target.value)}
                                         onClick={(e) => e.target.showPicker()} 
-                                        className="input w-28 text-center cursor-pointer hover:bg-white/20"
+                                        className="bg-primary text-center w-24 text-black p-2 rounded-lg cursor-pointer ml-2 hover:bg-black hover:text-accent focus:outline-none focus:ring-0 select-none"
                                     />
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <div className="card p-4 flex items-center gap-3">
-                        <MdLocationOn className="text-2xl text-white" />
+                    <div className="mb-4 flex items-center bg-secondary rounded-lg p-2">
+                        <MdLocationOn className="mr-2 text-3xl text-gray-800" />
                         <input
                             type="text"
                             placeholder="Location"
                             value={location}
                             onChange={(e) => setLocation(e.target.value)}
-                            className="input flex-1"
+                            className="w-full bg-transparent outline-none text-black placeholder:text-gray-800 placeholder:font-semibold"
                             required
                         />
                     </div>
-
-                    <div className="card p-4">
+                    <div className="mb-4 flex items-center bg-secondary rounded-lg p-2">
                         <ReactQuill
                             placeholder="Description"
                             value={description}
                             onChange={handleDescriptionChange}
-                            className="w-full h-36 overflow-y-auto text-white outline-none placeholder:text-white/50"
+                            className="w-full p-3 bg-transparent h-36 overflow-y-auto text-black outline-none placeholder:text-gray-800 placeholder:font-semibold"
                             required
                         />
                     </div>
-
                     <button
-                        className="btn w-full flex items-center justify-center gap-2"
+                        className="btn bg-black text-accent hover:text-black hover:bg-accent border-none w-full py-3"
                     >
-                        {isPending ? (
-                            <>
-                                <LoadingSpinner size='sm'/>
-                                <span>Creating Event...</span>
-                            </>
-                        ) : (
-                            "Create Event"
-                        )}
+                        {isPending ? <LoadingSpinner size='sm'/> : "Create Event"}
                     </button>
                 </div>
             </form>
 
             {/* Image Selection Modal */}
             <Popup isOpen={showModal} onClose={closeImageModal}>
-                <div className="modal p-6 max-w-2xl w-full mx-4">
-                    <h3 className="text-2xl font-bold text-center mb-6 text-white">Choose an Image</h3>
-                    
-                    {/* Default Image Selection */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-6">
-                        {defaultImages.map((image, index) => (
-                            <div 
-                                key={index} 
-                                className="relative group cursor-pointer aspect-square rounded-xl overflow-hidden"
-                            >
-                                <img
-                                    src={image}
-                                    alt={`Default ${index + 1}`}
-                                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                                />
-                                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <span className="text-white font-semibold">Select</span>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* File Upload Section */}
-                    <div className="text-center">
-                        <label
-                            htmlFor="file-upload"
-                            className="btn w-full sm:w-auto cursor-pointer"
+                <h3 className="text-2xl font-bold text-center mb-6 text-gray-800">Choose an Image</h3>
+                
+                {/* Default Image Selection */}
+                <div className="flex flex-wrap justify-center gap-4 mb-6">
+                    {defaultImages.map((image, index) => (
+                        <div 
+                            key={index} 
+                            className="relative group cursor-pointer w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-lg overflow-hidden transform transition duration-200 ease-in-out hover:scale-105"
                         >
-                            Choose from Device
-                        </label>
-                        <input
-                            type="file"
-                            id="file-upload"
-                            onChange={handleImgChange}
-                            className="hidden"
-                        />
-                    </div>
+                            <img
+                                src={image}
+                                alt={`Default ${index + 1}`}
+                                className="w-full h-full object-cover rounded-lg transition-all"
+                            />
+                            <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity"></div>
+                            <div className="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                                <span className="text-xl font-semibold">Select</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                {/* File Upload Section */}
+                <div className="text-center mb-4">
+                    <label
+                        htmlFor="file-upload"
+                        className="mt-3 block mx-auto bg-gray-300 hover:bg-gray-400 font-semibold text-black py-2 px-6 rounded-lg cursor-pointer hover:bg-accent-dark transition-all w-full sm:w-auto"
+                    >
+                        Choose from Device
+                    </label>
+                    <input
+                        type="file"
+                        id="file-upload"
+                        onChange={handleImgChange}
+                        className="hidden"
+                    />
                 </div>
             </Popup>
         </div>
