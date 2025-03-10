@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { toast } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion'; // Import Framer Motion components
 
 const SearchModal = ({ isOpen, closeModal }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState({ events: [], organizations: [] });
     const [isSearching, setIsSearching] = useState(false);
 
-    // Reference to the modal to check if click is inside it
     const modalRef = useRef();
 
     const handleSearch = async () => {
@@ -40,6 +39,9 @@ const SearchModal = ({ isOpen, closeModal }) => {
 
         if (isOpen) {
             document.addEventListener('mousedown', handleClickOutside);
+            document.body.style.overflow = "hidden"; // Disable scrolling
+        } else {
+            document.body.style.overflow = "auto"; // Enable scrolling
         }
 
         return () => {
@@ -48,12 +50,22 @@ const SearchModal = ({ isOpen, closeModal }) => {
     }, [isOpen, closeModal]);
 
     return (
-        <>
+        <AnimatePresence>
             {isOpen && (
-                <div className="fixed px-2 inset-0 bg-gray-900 bg-opacity-50 flex justify-center z-[10001]">
-                    <div 
-                        ref={modalRef} 
+                <motion.div
+                    className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center z-[10001]"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.1 }}
+                >
+                    <motion.div
+                        ref={modalRef}
                         className="bg-gradient-to-r from-purple-400 to-cyan-400 p-3 rounded-lg h-[18rem] shadow-lg w-[30rem] mt-10"
+                        initial={{ scale: 0.95 }}
+                        animate={{ scale: 1 }}
+                        exit={{ scale: 0.95 }}
+                        transition={{ duration: 0.1 }}
                     >
                         <div>
                             <input
@@ -65,7 +77,7 @@ const SearchModal = ({ isOpen, closeModal }) => {
                                 onKeyUp={handleSearch}
                             />
                         </div>
-                        <hr className='border-gray-300'/>
+                        <hr className='border-gray-300' />
 
                         {/* Display Search Results */}
                         <div className="mt-4 px-4 h-[12rem] overflow-y-auto">
@@ -122,10 +134,10 @@ const SearchModal = ({ isOpen, closeModal }) => {
                                 </>
                             )}
                         </div>
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
             )}
-        </>
+        </AnimatePresence>
     );
 };
 

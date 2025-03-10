@@ -128,7 +128,7 @@ const Navbar = () => {
         };
     }, []);
 
-
+    
     return (
         <>
             <SearchModal isOpen={isModalOpen} closeModal={closeModal} />

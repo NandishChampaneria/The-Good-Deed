@@ -300,18 +300,18 @@ const ManageEvent = () => {
                                                 <Popup isOpen={isDeletePopupOpen} onClose={() => setDeletePopupOpen(false)}>
                                                     <h2 className="text-lg text-black font-semibold mb-1">Confirm Deletion</h2>
                                                     <p className='text-gray-700'>Are you sure you want to delete this event?</p>
-                                                    <div className="flex justify-center mt-4">
+                                                    <div className="flex justify-center font-semibold mt-4">
                                                         <button
-                                                            className="px-4 py-2 text-black bg-gray-300 rounded-md mr-2"
+                                                            className="w-[5rem] py-2 text-black bg-gray-300 hover:bg-gray-400 rounded-md mr-2"
                                                             onClick={() => setDeletePopupOpen(false)}
                                                         >
                                                         Cancel
                                                         </button>
                                                         <button
-                                                            className="px-4 py-2 bg-red-600 text-white rounded-md"
+                                                            className="w-[5rem] py-2 bg-red-600 hover:bg-red-500 text-white rounded-md"
                                                             onClick={deleteEvent} // Ensure this function deletes the event
                                                         >
-                                                        Delete
+                                                            {isDeleting ? <LoadingSpinner size='xs' /> : "Delete"}
                                                         </button>
                                                     </div>
                                                 </Popup>
@@ -347,7 +347,7 @@ const ManageEvent = () => {
                             {/* SIDEBAR */}
                             <div
                                 ref={sidebarRef}
-                                className={`fixed z-10000 top-0 md:text-start right-0 h-full w-100 w-full bg-gradient-to-r from-purple-400 to-cyan-400 rounded-l-3xl shadow-lg transform transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'} overflow-y-auto`}
+                                className={`fixed border z-10000 top-0 md:text-start right-0 h-full w-100 w-full bg-gradient-to-r from-purple-400 to-cyan-400 rounded-l-3xl shadow-lg transform transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'} overflow-y-auto`}
                             >
                                 <div className="sticky top-0 left-0 w-full h-16 bg-gradient-to-r from-purple-400 to-cyan-400 p-4 z-30">
                                     <button
@@ -404,7 +404,7 @@ const ManageEvent = () => {
                                             name='location'
                                             onChange={handleInputChange}
                                         />
-                                        <button type='submit' className='w-full btn hover:bg-white mb-10 hover:text-black bg-black text-white'>
+                                        <button type='submit' className='w-full border-none btn hover:bg-white mb-10 hover:text-black bg-black text-white'>
                                             {isUpdating ? <LoadingSpinner size='sm'/> : "Update"}
                                         </button>
                                     </div>

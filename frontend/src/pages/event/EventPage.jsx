@@ -166,11 +166,15 @@ const EventPage = () => {
                         <div className="card-actions flex mt-[3.25rem] mb-8">
                             {!isOwner && (
                                 <button 
-                                    className="btn w-full bg-black text-accent hover:text-black hover:bg-white border-none" 
+                                    className="btn w-full bg-black text-accent hover:text-black hover:bg-white border-none
+                                    disabled:bg-black disabled:text-gray-500 disabled:cursor-not-allowed" 
                                     onClick={() => joinEvent()} 
                                     disabled={isJoining || !authUser || !isEventInFuture}
                                 >
-                                    {isJoining ? <LoadingSpinner size="sm" /> : (isJoined ? <FaCheck /> : "Join")}
+                                    {isEventInFuture 
+                                        ? (isJoining ? <LoadingSpinner size="sm" /> : (isJoined ? <FaCheck /> : "Join")) 
+                                        : "Event is Over"
+                                    }
                                 </button>
                             )}
                             {isOwner && (

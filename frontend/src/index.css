@@ -2,10 +2,131 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+}
+
 html, body {
-  @apply bg-gradient-to-b to-purple-400 from-cyan-400;
-  /* background: radial-gradient(circle at top, rgb(10, 190, 255) 30%, rgb(237, 177, 249) 60%); */
+  @apply bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 min-h-screen;
   font-family: 'Poppins', 'sans-serif';
+  background-attachment: fixed;
+}
+
+/* Modern Card Styles */
+.card {
+  @apply bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl border border-white/20;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Modern Button Styles */
+.btn {
+  @apply px-6 py-3 rounded-xl font-semibold transition-all duration-300;
+  background: var(--primary-gradient);
+  color: white;
+  border: none;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Modern Input Styles */
+.input {
+  @apply bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all duration-300;
+}
+
+/* Modern Icon Styles */
+.icon {
+  transition: all 0.3s ease;
+}
+
+.icon:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Hide default form elements */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Modern Navbar */
+.navbar {
+  @apply bg-white/10 backdrop-blur-lg border-b border-white/20;
+  transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+  @apply bg-white/20 shadow-lg;
+}
+
+/* Text Gradient */
+.text-gradient {
+  background: var(--secondary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Loading Animation */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Modern Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-white/10 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-white/20 rounded-full;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-white/30;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* Modern Modal */
+.modal {
+  @apply bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 shadow-2xl;
+}
+
+/* Modern Toast */
+.Toastify__toast {
+  @apply bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl;
 }
 
 .icon {
@@ -20,47 +141,23 @@ html, body {
   fill: white; /* Initial color */
 }
 
-
-/* Hide the default calendar and clock icons */
-input[type="date"]::-webkit-calendar-picker-indicator,
-input[type="time"]::-webkit-calendar-picker-indicator {
-  display: none;
+button:disabled {
+  cursor: not-allowed !important;
 }
 
-/* Hide arrows for Chrome, Safari, Edge, Opera */
-input[type="number"]::-webkit-inner-spin-button, 
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+.text-gradient {
+  color: linear-gradient(90deg, #0493f2, #569fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* Hide arrows for Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
+.z-10000 {
+  z-index: 10000;
 }
 
-.navbar {
-    transition: border-bottom 0.1s ease;
-  }
-  
-  .navbar.scrolled {
-    border-bottom: 0.5px solid rgb(50, 50, 50); /* Adjust color and thickness as needed */
-  }
-
-  .text-gradient {
-    color: linear-gradient(90deg, #0493f2, #569fff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .z-10000 {
-    z-index: 10000;
-  }
-
-
-  .responsive-content {
-    display: flex;
-    align-items: center;
+.responsive-content {
+  display: flex;
+  align-items: center;
 }
 
 /* Add this to your global CSS file or a <style> tag */
@@ -83,7 +180,6 @@ input[type="number"] {
     background-position: 0% 0%;
   }
 }
-
 
 @media(min-width: 1080px) {
   .w-100 {
@@ -186,7 +282,6 @@ input[type="number"] {
 .svg-icon-ce:hover {
   background-color: black;
 }
-
 
 .title-hidden {
   display: none;
