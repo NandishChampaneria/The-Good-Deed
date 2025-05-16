@@ -1,4 +1,5 @@
 import User from "../models/user.model.js";
+import Notification from "../models/notification.model.js";
 
 import bcrypt from "bcryptjs";
 import {v2 as cloudinary} from "cloudinary";
@@ -33,6 +34,54 @@ export const getOrganizations = async (req, res) => {
         console.log("Error in getOrganizations", error.message);
     }
 };
+
+export const followUnfollowOrganization = async (req, res) => {
+    const { fullName } = req.params;
+    const userId = req.user._id;
+
+    try {
+        // Find organization by fullName
+        const organization = await User.findOne({ 
+            fullName: fullName,
+            userType: 'organization'
+        });
+        const currentUser = await User.findById(userId);
+
+        // Check if both users exist
+        if (!organization || !currentUser) {
+            return res.status(404).json({ error: "User or organization not found" });
+        }
+
+        const isFollowing = currentUser.following.includes(organization._id);
+
+        if (isFollowing) {
+            // Unfollow the organization
+            await User.findByIdAndUpdate(organization._id, { $pull: { followers: userId } });
+            await User.findByIdAndUpdate(userId, { $pull: { following: organization._id } });
+
+            res.status(200).json({ message: "Organization unfollowed successfully" });
+        } else {
+            // Follow the organization
+            await User.findByIdAndUpdate(organization._id, { $push: { followers: userId } });
+            await User.findByIdAndUpdate(userId, { $push: { following: organization._id } });
+
+            // Send notification to the organization
+            // const newNotification = new Notification({
+            //     type: "follow",
+            //     from: userId,
+            //     to: organization._id,
+            // });
+
+            // await newNotification.save();
+
+            res.status(200).json({ message: "Organization followed successfully" });
+        }
+    } catch(error) {
+        res.status(500).json({ error: error.message });
+        console.log("Error in followUnfollowOrganization", error.message);
+    }
+}
+    
 
 export const getSuggestedUsers = async (req, res) => {
     // in future

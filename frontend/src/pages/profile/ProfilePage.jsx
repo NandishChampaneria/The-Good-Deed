@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-hot-toast";
 
 import Events from "../../components/common/Events";
 import ProfileHeaderSkeleton from "../../components/skeletons/ProfileHeaderSkeleton";
@@ -11,13 +13,13 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { FaMapMarkerAlt, FaPhone, FaUserAltSlash } from "react-icons/fa";
 import { FaLink } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
-import { useQueries, useQuery } from "@tanstack/react-query";
 
 const ProfilePage = () => {
-
 	const [profileImg, setProfileImg] = useState(null);
 	const [feedType, setFeedType] = useState("events");
+	const [isFollowingState, setIsFollowingState] = useState(false);
 
+	const queryClient = useQueryClient();
 	const { data: authUser } = useQuery({ queryKey: ["authUser"] });
 
 	const profileImgRef = useRef(null);
@@ -37,6 +39,56 @@ const ProfilePage = () => {
             }
         },
 	});
+
+	// Follow/Unfollow mutation
+	const { mutate: followUnfollow } = useMutation({
+		mutationFn: async () => {
+			try {
+				const res = await fetch(`/api/users/follow/${user.fullName}`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+				const data = await res.json();
+				if (!res.ok) throw new Error(data.error || "Failed to follow/unfollow");
+				return data;
+			} catch (error) {
+				throw new Error(error.message);
+			}
+		},
+		onSuccess: () => {
+			// Update the authUser cache
+			queryClient.setQueryData(["authUser"], (oldData) => {
+				if (!oldData) return oldData;
+				
+				const isCurrentlyFollowing = oldData.following?.includes(user._id);
+				const newFollowing = isCurrentlyFollowing
+					? oldData.following.filter(id => id !== user._id)
+					: [...(oldData.following || []), user._id];
+
+				return {
+					...oldData,
+					following: newFollowing
+				};
+			});
+
+			// Update local state
+			setIsFollowingState(!isFollowingState);
+			toast.success("Successfully updated follow status");
+		},
+		onError: (error) => {
+			toast.error(error.message);
+		},
+	});
+
+	// Update isFollowingState when user data changes
+	useEffect(() => {
+		if (authUser && user) {
+			setIsFollowingState(authUser.following?.includes(user._id));
+		}
+	}, [authUser, user]);
+
 	const memberSinceDate = formatMemberSinceDate(user?.createdAt)
 
 	const handleImgChange = (e, state) => {
@@ -53,8 +105,6 @@ const ProfilePage = () => {
 	useEffect(() => {
 		refetch()
 	}, [username, refetch]);
-
-	
 
 	return (
 		<> 
@@ -94,6 +144,9 @@ const ProfilePage = () => {
 													<span className='text-sm text-gray-700'>{memberSinceDate}</span>
 												</div>
 											</div>
+											<div>
+												
+											</div>
 											{user?.link && (
 												<div className='flex gap-1 items-center '>
 													<>
@@ -109,30 +162,9 @@ const ProfilePage = () => {
 													</>
 												</div>
 											)}
-											{/* <span className='text-sm my-1'>{user?.bio}</span> */}
 										</div>
 									</div>
 								</div>
-								{/* <div className='flex w-full border-b border-gray-700 mt-4'>
-									<div
-										className='flex justify-center flex-1 p-3 hover:bg-secondary transition duration-300 relative cursor-pointer'
-										onClick={() => setFeedType("events")}
-									>
-										Events
-										{feedType === "events" && (
-											<div className='absolute bottom-0 w-10 h-1 rounded-full bg-primary' />
-										)}
-									</div>
-									<div
-										className='flex justify-center flex-1 p-3 text-slate-500 hover:bg-secondary transition duration-300 relative cursor-pointer'
-										onClick={() => setFeedType("joined")}
-									>
-										Joined
-										{feedType === "joined" && (
-											<div className='absolute bottom-0 w-10  h-1 rounded-full bg-primary' />
-										)}
-									</div>
-								</div> */}
 								<div className="join flex justify-center w-full">
 									<input className="join-item btn w-32 sm:w-48 lg:w-60" type="radio" name="options" aria-label="Created Events" defaultChecked onClick={() => setFeedType("events")} />
 									{feedType === "events"}
@@ -201,10 +233,26 @@ const ProfilePage = () => {
 													</a>
 												</div>
 											)}
+
+											{/* Follow Button - Only show if logged in user is an individual */}
+											{authUser?.userType === "individual" && (
+												<div className="flex items-center gap-2 mt-2">
+													<button
+														onClick={() => followUnfollow()}
+														className={`px-4 py-2 text-sm font-semibold rounded-lg transition ${
+															isFollowingState
+																? "bg-white text-black border border-none hover:bg-black hover:text-white"
+																: "bg-black text-white hover:bg-white hover:text-black"
+														}`}
+													>
+														{isFollowingState ? "Unfollow" : "Follow"}
+													</button>
+												</div>
+											)}
 										</div>
 									</div>
 
-									{/* Bio Section (Now below everything) */}
+									{/* Bio Section */}
 									{user?.bio && (
 										<div className="mt-6 text-left">
 											<h3 className="text-lg font-semibold text-black">About Us</h3>
